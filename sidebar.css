@@ -38,60 +38,50 @@
   position: relative;
 }
 
-/* Mobile Dropdown Menu */
-.mobile-dropdown {
-  visibility: hidden;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: all 0.3s ease-in-out;
-  pointer-events: none;
+/* Bottom Navigation Menu (Mobile Only) */
+.bottom-nav {
+  display: none;
   position: fixed;
-  top: 56px; /* Just below the toggle button (16px top + 36px height + 4px gap) */
-  left: 16px;
-  background-color: var(--elevation-1-bg);
-  border: var(--elevation-border);
-  border-radius: var(--radius-md);
-  padding: 8px;
-  flex-direction: column;
-  gap: 4px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  z-index: 100;
-  min-width: 200px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(30, 30, 35, 0.85); /* Glassmorphism effect */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 1000;
+  padding: 8px 16px;
+  padding-bottom: calc(8px + env(safe-area-inset-bottom));
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
 }
 
-.mobile-nav-item {
+.bottom-nav-item {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
+  gap: 4px;
   color: var(--color-text-variant);
   text-decoration: none;
-  font-size: var(--font-size-body-md);
+  font-size: 10px;
   font-weight: 600;
+  transition: color 0.2s;
+  padding: 4px 8px;
   border-radius: var(--radius-sm);
-  transition: all 0.2s;
 }
 
-.mobile-nav-item i {
-  width: 20px;
-  text-align: center;
+.bottom-nav-item i {
+  font-size: 20px;
+  margin-bottom: 2px;
 }
 
-.mobile-nav-item:hover {
-  background-color: var(--elevation-2-bg);
-  color: var(--brand-surface-text);
+.bottom-nav-item.active {
+  color: var(--brand-primary);
 }
 
-.mobile-nav-item.active {
-  background-color: var(--brand-primary);
-  color: var(--color-white);
-}
-
-.mobile-divider {
-  height: 1px;
-  background-color: var(--color-outline);
-  margin: 4px 0;
-  opacity: 0.3;
+.bottom-nav-item:active {
+  background-color: rgba(255,255,255,0.1);
 }
 
 .sidebar-toggle {
@@ -259,13 +249,15 @@
 
   .main-content {
     margin-left: 0;
+    padding-bottom: calc(70px + env(safe-area-inset-bottom)); /* Make space for bottom nav */
   }
 
-  .sidebar-toggle-checkbox:checked ~ .main-content .mobile-dropdown {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
+  .sidebar-toggle {
+    display: none !important; /* Hide hamburger toggle on mobile since we have bottom nav */
+  }
+
+  .bottom-nav {
+    display: flex; /* Show bottom nav only on mobile */
   }
 }
 
