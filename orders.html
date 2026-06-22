@@ -100,12 +100,21 @@
         </label>
       </div>
 
+      <!-- Carousel State -->
+      <input type="radio" name="kanban-view" id="view-pending" class="kanban-view-radio" checked hidden>
+      <input type="radio" name="kanban-view" id="view-inprogress" class="kanban-view-radio" hidden>
+      <input type="radio" name="kanban-view" id="view-ready" class="kanban-view-radio" hidden>
+
       <div class="kanban-board">
         <!-- Pending Column -->
         <div class="kanban-column pending">
           <div class="kanban-header">
-            <h2>Pending</h2>
-            <span class="kanban-badge">4</span>
+            <label for="view-ready" class="carousel-nav prev"><i class="fa-solid fa-chevron-left"></i></label>
+            <div class="header-title">
+              <h2>Pending</h2>
+              <span class="kanban-badge">4</span>
+            </div>
+            <label for="view-inprogress" class="carousel-nav next"><i class="fa-solid fa-chevron-right"></i></label>
           </div>
           <div class="kanban-cards">
             <!-- Order #1234 -->
@@ -151,8 +160,12 @@
         <!-- In Progress Column -->
         <div class="kanban-column in-progress">
           <div class="kanban-header">
-            <h2>In Progress</h2>
-            <span class="kanban-badge">5</span>
+            <label for="view-pending" class="carousel-nav prev"><i class="fa-solid fa-chevron-left"></i></label>
+            <div class="header-title">
+              <h2>In Progress</h2>
+              <span class="kanban-badge">5</span>
+            </div>
+            <label for="view-ready" class="carousel-nav next"><i class="fa-solid fa-chevron-right"></i></label>
           </div>
           <div class="kanban-cards">
             <!-- Order #1230 -->
@@ -173,8 +186,12 @@
         <!-- Ready Column -->
         <div class="kanban-column ready">
           <div class="kanban-header">
-            <h2>Ready</h2>
-            <span class="kanban-badge">3</span>
+            <label for="view-inprogress" class="carousel-nav prev"><i class="fa-solid fa-chevron-left"></i></label>
+            <div class="header-title">
+              <h2>Ready</h2>
+              <span class="kanban-badge">3</span>
+            </div>
+            <label for="view-pending" class="carousel-nav next"><i class="fa-solid fa-chevron-right"></i></label>
           </div>
           <div class="kanban-cards">
             <!-- Order #1225 -->
