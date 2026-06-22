@@ -225,6 +225,33 @@ img, picture, video, canvas, svg {
   border-color: var(--color-outline);
 }
 
+/* Custom Scrollbars for Modals and Forms */
+.modal-container::-webkit-scrollbar,
+.dish-select-grid::-webkit-scrollbar,
+.ticket-items::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-container::-webkit-scrollbar-track,
+.dish-select-grid::-webkit-scrollbar-track,
+.ticket-items::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+.modal-container::-webkit-scrollbar-thumb,
+.dish-select-grid::-webkit-scrollbar-thumb,
+.ticket-items::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.15); /* Sleek subtle color */
+  border-radius: 10px;
+}
+
+.modal-container::-webkit-scrollbar-thumb:hover,
+.dish-select-grid::-webkit-scrollbar-thumb:hover,
+.ticket-items::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
 /* Forms */
 .form-group {
   display: flex;
