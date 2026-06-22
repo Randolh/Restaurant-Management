@@ -283,13 +283,14 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh; /* Better for mobile browsers with address bars */
 }
 
 .history-layout .page-content {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  max-height: calc(100vh - 68px);
+  min-height: 0; /* Let flexbox automatically constrain height instead of rigid calc */
 }
 
 .history-layout .data-table-container {
