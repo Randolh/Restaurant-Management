@@ -313,4 +313,21 @@
   .history-table td:nth-child(4) {
     display: none;
   }
+
+  /* Inventory table mobile layout: Show Name, Stock Level (text only), and Actions */
+  .inventory-table {
+    min-width: 100%;
+  }
+
+  /* Hide Unit column (3) */
+  .inventory-table th:nth-child(3),
+  .inventory-table td:nth-child(3) {
+    display: none;
+  }
+
+  /* Hide progress bar and percent in Stock Level */
+  .inventory-table .progress-container,
+  .inventory-table .stock-percent {
+    display: none;
+  }
 }
