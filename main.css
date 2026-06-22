@@ -277,6 +277,10 @@ img, picture, video, canvas, svg {
   transition: border-color 0.2s;
 }
 
+input[type="number"] {
+  padding-right: 0px; /* Asegura que el texto nunca se cruce con las flechas nativas */
+}
+
 .form-control:focus, .form-select:focus {
   outline: none;
   border-color: var(--color-outline);
@@ -404,7 +408,7 @@ textarea.form-control {
 }
 
 .inline-qty {
-  width: 50px;
+  width: 60px;
   height: 28px;
   padding: 0 4px;
   text-align: center;
