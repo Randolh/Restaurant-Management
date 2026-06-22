@@ -267,5 +267,30 @@
 
   .sidebar-toggle-checkbox:checked ~ .main-content .top-bar .sidebar-toggle {
     display: flex;
+    position: fixed;
+    left: 0;
+    top: 16px; /* Matches the 16px padding of the sidebar to align with the header */
+    background-color: var(--brand-primary);
+    color: var(--color-white);
+    width: 22px;
+    height: 36px; /* Matches the 36px height of the logo/header */
+    border-radius: 0 18px 18px 0;
+    padding: 0 4px 0 0; /* Add right padding to visually center the icon inside the curved shape */
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+    transition: all 0.2s;
+  }
+  
+  .sidebar-toggle-checkbox:checked ~ .main-content .top-bar .sidebar-toggle i::before {
+    content: "\f054"; /* fa-chevron-right */
+    font-size: 14px;
+    position: relative;
+    top: -4px; /* Compensa el espacio de la fuente para centrado perfecto vertical */
+  }
+  
+  .sidebar-toggle-checkbox:checked ~ .main-content .top-bar .sidebar-toggle:hover {
+    width: 32px;
+    background-color: var(--brand-primary-hover);
   }
 }
