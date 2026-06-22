@@ -228,27 +228,32 @@ img, picture, video, canvas, svg {
 /* Custom Scrollbars for Modals and Forms */
 .modal-container::-webkit-scrollbar,
 .dish-select-grid::-webkit-scrollbar,
-.ticket-items::-webkit-scrollbar {
-  width: 6px;
+.ticket-items::-webkit-scrollbar,
+.table-responsive::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
 .modal-container::-webkit-scrollbar-track,
 .dish-select-grid::-webkit-scrollbar-track,
-.ticket-items::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 10px;
+.ticket-items::-webkit-scrollbar-track,
+.table-responsive::-webkit-scrollbar-track {
+  background: var(--elevation-1-bg);
+  border-radius: 4px;
 }
 
 .modal-container::-webkit-scrollbar-thumb,
 .dish-select-grid::-webkit-scrollbar-thumb,
-.ticket-items::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.15); /* Sleek subtle color */
+.ticket-items::-webkit-scrollbar-thumb,
+.table-responsive::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.15);
   border-radius: 10px;
 }
 
 .modal-container::-webkit-scrollbar-thumb:hover,
 .dish-select-grid::-webkit-scrollbar-thumb:hover,
-.ticket-items::-webkit-scrollbar-thumb:hover {
+.ticket-items::-webkit-scrollbar-thumb:hover,
+.table-responsive::-webkit-scrollbar-thumb:hover {
   background-color: rgba(255, 255, 255, 0.3);
 }
 
