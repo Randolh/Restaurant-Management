@@ -32,7 +32,7 @@
 
 
 .top-bar {
-  padding: var(--stack-md);
+  padding: var(--stack-xs);
   display: flex;
   align-items: center;
   position: relative;
