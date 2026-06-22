@@ -1,7 +1,7 @@
 /* dishes.css */
 
 .page-content {
-  padding: 0 var(--stack-md) var(--stack-lg);
+  padding: 0 var(--stack-sm) var(--stack-lg);
   display: flex;
   flex-direction: column;
   gap: var(--stack-lg);

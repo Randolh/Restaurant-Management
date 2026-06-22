@@ -4,7 +4,7 @@
   position: fixed;
   left: 0;
   top: 0;
-  width: 260px;
+  width: 220px;
   height: 100vh;
   background-color: var(--brand-surface);
   border-right: var(--elevation-border);
@@ -24,7 +24,7 @@
 
 /* Layout Principal */
 .main-content {
-  margin-left: 260px;
+  margin-left: 220px;
   min-height: 100vh;
   transition: margin-left 0.4s ease-in-out;
 }
