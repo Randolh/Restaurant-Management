@@ -278,7 +278,7 @@ img, picture, video, canvas, svg {
 }
 
 input[type="number"] {
-  padding-right: 0px; /* Asegura que el texto nunca se cruce con las flechas nativas */
+  padding-right: 0px; /* Ensures text never crosses with native arrows */
 }
 
 .form-control:focus, .form-select:focus {

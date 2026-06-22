@@ -61,7 +61,7 @@
   gap: var(--stack-sm);
   flex-grow: 1;
   overflow-x: auto;
-  padding-bottom: var(--stack-md); /* space for scrollbar */
+  padding-bottom: var(--stack-md); /* Space for scrollbar */
   align-items: flex-start;
   /* Smooth scrolling for mobile */
   scroll-snap-type: x mandatory;

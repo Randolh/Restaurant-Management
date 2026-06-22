@@ -17,12 +17,12 @@
   transition: transform 0.4s ease-in-out;
 }
 
-/* Checkbox oculto */
+/* Hidden checkbox */
 .sidebar-toggle-checkbox {
   display: none;
 }
 
-/* Layout Principal */
+/* Main Layout */
 .main-content {
   margin-left: 220px;
   min-height: 100vh;
@@ -117,7 +117,7 @@
 
 .sidebar-toggle i {
   position: relative;
-  top: 0; /* Centrado natural con flexbox */
+  top: 0; /* Natural centering with flexbox */
 }
 
 .sidebar-toggle:hover {
@@ -154,7 +154,7 @@
 
 .sidebar-close-btn i {
   position: relative;
-  top: -1px; /* Compensa el espacio de la fuente */
+  top: -1px; /* Compensates for font spacing */
 }
 
 .sidebar-close-btn:hover {
@@ -249,11 +249,11 @@
   gap: 8px;
 }
 
-/* Comportamiento Responsivo (Mobile) */
+/* Responsive Behavior (Mobile) */
 @media (max-width: 768px) {
   .sidebar {
-    /* En lugar de display: none, usamos transform para que al redimensionar la ventana
-       se aplique la animación de deslizamiento fluidamente. */
+    /* Instead of display: none, we use transform so that when resizing the window
+       the sliding animation applies fluidly. */
     transform: translateX(-100%);
   }
 
