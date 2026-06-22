@@ -45,9 +45,9 @@
   transform: translateY(-10px);
   transition: all 0.3s ease-in-out;
   pointer-events: none;
-  position: absolute;
-  top: 60px;
-  left: var(--stack-md);
+  position: fixed;
+  top: 56px; /* Just below the toggle button (16px top + 36px height + 4px gap) */
+  left: 16px;
   background-color: var(--elevation-1-bg);
   border: var(--elevation-border);
   border-radius: var(--radius-md);
