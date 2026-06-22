@@ -16,7 +16,7 @@
   <!-- Estilos Base -->
   <link rel="stylesheet" href="./main.css">
   <link rel="stylesheet" href="./sidebar.css">
-
+  <link rel="stylesheet" href="./dishes.css">
 </head>
 
 <body>
@@ -43,7 +43,7 @@
         <i class="fa-solid fa-box"></i>
         <span>Inventory</span>
       </a>
-      <a href="./dishes.html" class="nav-item">
+      <a href="./dishes.html" class="nav-item active">
         <i class="fa-solid fa-utensils"></i>
         <span>Dishes</span>
       </a>
@@ -76,7 +76,7 @@
       <!-- Menú Desplegable Móvil -->
       <nav class="mobile-dropdown">
         <a href="./inventory.html" class="mobile-nav-item"><i class="fa-solid fa-box"></i> Inventory</a>
-        <a href="./dishes.html" class="mobile-nav-item"><i class="fa-solid fa-utensils"></i> Dishes</a>
+        <a href="./dishes.html" class="mobile-nav-item active"><i class="fa-solid fa-utensils"></i> Dishes</a>
         <a href="#" class="mobile-nav-item"><i class="fa-solid fa-receipt"></i> Orders</a>
         <div class="mobile-divider"></div>
 
@@ -86,9 +86,77 @@
       </nav>
     </header>
 
-    <div class="page-content" style="padding: 2rem; color: var(--color-text-variant); text-align: center;">
-      <h2>Welcome to Restaurant Management</h2>
-      <p>Select a module from the sidebar to begin.</p>
+    <div class="page-content">
+      <div class="controls-bar">
+        <div class="controls-left">
+          <div class="search-input-wrapper">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" class="search-input" placeholder="Search dishes...">
+          </div>
+          <button class="btn-filter" title="Filters">
+            <i class="fa-solid fa-sliders"></i>
+          </button>
+        </div>
+        <a href="#" class="btn-primary">
+          <i class="fa-solid fa-plus"></i> Add New Dish
+        </a>
+      </div>
+
+      <div class="dishes-grid">
+        <!-- Dish Card 1 -->
+        <article class="dish-card">
+          <div class="dish-image-container">
+            <div class="dish-price">$14.50</div>
+            <img src="./images/dish_ramen.png" alt="Tonkotsu Ramen" class="dish-image">
+          </div>
+          <div class="dish-info">
+            <h3>Tonkotsu Ramen</h3>
+            <p>Rich pork broth, fresh noodles, chashu pork, soft boiled egg, nori, and green onions.</p>
+          </div>
+          <div class="dish-footer">
+            <a href="#" class="btn-details">
+              View Details
+            </a>
+          </div>
+        </article>
+
+        <!-- Dish Card 2 -->
+        <article class="dish-card">
+          <div class="dish-image-container">
+            <div class="dish-price">$12.00</div>
+            <img src="./images/dish_burger.png" alt="Classic Cheeseburger" class="dish-image">
+          </div>
+          <div class="dish-info">
+            <h3>Classic Cheeseburger</h3>
+            <p>Juicy beef patty, melted cheddar, lettuce, tomato, and special sauce on a toasted sesame bun.</p>
+          </div>
+          <div class="dish-footer">
+            <a href="#" class="btn-details">
+              View Details
+            </a>
+          </div>
+        </article>
+
+        <!-- Dish Card 3 -->
+        <article class="dish-card">
+          <div class="dish-image-container">
+            <div class="dish-price">$16.00</div>
+            <!-- Placeholder for third dish -->
+            <div style="width: 100%; height: 100%; background: #ab8985; display: flex; align-items: center; justify-content: center; position: absolute; top:0; left:0;">
+              <i class="fa-solid fa-bowl-rice fa-3x" style="color: #1e293b;"></i>
+            </div>
+          </div>
+          <div class="dish-info">
+            <h3>Teriyaki Chicken Bowl</h3>
+            <p>Grilled chicken breast glazed in sweet teriyaki sauce over steamed jasmine rice.</p>
+          </div>
+          <div class="dish-footer">
+            <a href="#" class="btn-details">
+              View Details
+            </a>
+          </div>
+        </article>
+      </div>
     </div>
   </main>
 
