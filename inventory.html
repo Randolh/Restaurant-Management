@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Management</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Estilos Base -->
+  <link rel="stylesheet" href="./main.css">
+  <link rel="stylesheet" href="./sidebar.css">
+  <link rel="stylesheet" href="./inventory.css">
+</head>
+
+<body>
+  <!-- Checkbox Oculto para Toggle Puro CSS -->
+  <input type="checkbox" id="sidebar-toggle-checkbox" class="sidebar-toggle-checkbox">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <img src="./favicon.svg" alt="Restaurant Logo">
+      </div>
+      <h2>
+        Restaurant
+        <span>Management</span>
+      </h2>
+      <label for="sidebar-toggle-checkbox" class="sidebar-close-btn">
+        <i class="fa-solid fa-chevron-left"></i>
+      </label>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active">
+        <i class="fa-solid fa-box"></i>
+        <span>Inventory</span>
+      </a>
+      <a href="#" class="nav-item">
+        <i class="fa-solid fa-utensils"></i>
+        <span>Dishes</span>
+      </a>
+      <a href="#" class="nav-item">
+        <i class="fa-solid fa-receipt"></i>
+        <span>Orders</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+
+      <a href="#" class="nav-item">
+        <i class="fa-solid fa-gear"></i>
+        <span>Settings</span>
+      </a>
+      <a href="./login.html" class="nav-item logout-item">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Contenido Principal -->
+  <main class="main-content" id="mainContent">
+    <header class="top-bar">
+      <label for="sidebar-toggle-checkbox" class="sidebar-toggle">
+        <i class="fa-solid fa-bars"></i>
+      </label>
+
+      <!-- Menú Desplegable Móvil -->
+      <nav class="mobile-dropdown">
+        <a href="#" class="mobile-nav-item active"><i class="fa-solid fa-box"></i> Inventory</a>
+        <a href="#" class="mobile-nav-item"><i class="fa-solid fa-utensils"></i> Dishes</a>
+        <a href="#" class="mobile-nav-item"><i class="fa-solid fa-receipt"></i> Orders</a>
+        <div class="mobile-divider"></div>
+
+        <a href="#" class="mobile-nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+        <div class="mobile-divider"></div>
+        <a href="./login.html" class="mobile-nav-item logout-item"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+      </nav>
+    </header>
+
+    <div class="page-content">
+      <div class="page-header">
+        <h1>Inventory</h1>
+        <a href="#" class="btn-primary">
+          <i class="fa-solid fa-plus"></i> Add Item
+        </a>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <h3>Total Items</h3>
+          <div class="kpi-value">123</div>
+        </div>
+        <div class="kpi-card">
+          <h3>Low Stock</h3>
+          <div class="kpi-value">12</div>
+        </div>
+        <div class="kpi-card">
+          <h3>Inventory Value</h3>
+          <div class="kpi-value">$1234</div>
+        </div>
+      </div>
+
+      <div class="data-table-container">
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Stock Level</th>
+                <th>Unit</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Tomato -->
+              <tr>
+                <td>
+                  <div class="item-name">
+                    <div class="item-icon"><i class="fa-solid fa-apple-whole"></i></div>
+                    <span>Tomato</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="stock-level">
+                    <span class="stock-text">800/1000</span>
+                    <div class="progress-container">
+                      <div class="progress-fill safe" style="width: 80%;"></div>
+                    </div>
+                    <span class="stock-percent">80%</span>
+                  </div>
+                </td>
+                <td>units</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon"><i class="fa-solid fa-pen"></i></button>
+                    <button class="btn-icon danger"><i class="fa-solid fa-trash"></i></button>
+                    <button class="btn-icon"><i class="fa-solid fa-plus"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Sauce -->
+              <tr>
+                <td>
+                  <div class="item-name">
+                    <div class="item-icon"><i class="fa-solid fa-bottle-droplet"></i></div>
+                    <span>Sauce</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="stock-level">
+                    <span class="stock-text">12/60</span>
+                    <div class="progress-container">
+                      <div class="progress-fill danger" style="width: 20%;"></div>
+                    </div>
+                    <span class="stock-percent">20%</span>
+                  </div>
+                </td>
+                <td>kg</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon"><i class="fa-solid fa-pen"></i></button>
+                    <button class="btn-icon danger"><i class="fa-solid fa-trash"></i></button>
+                    <button class="btn-icon"><i class="fa-solid fa-plus"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Cheese -->
+              <tr>
+                <td>
+                  <div class="item-name">
+                    <div class="item-icon"><i class="fa-solid fa-cheese"></i></div>
+                    <span>Cheese</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="stock-level">
+                    <span class="stock-text">150/300</span>
+                    <div class="progress-container">
+                      <div class="progress-fill warning" style="width: 50%;"></div>
+                    </div>
+                    <span class="stock-percent">50%</span>
+                  </div>
+                </td>
+                <td>Portions</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon"><i class="fa-solid fa-pen"></i></button>
+                    <button class="btn-icon danger"><i class="fa-solid fa-trash"></i></button>
+                    <button class="btn-icon"><i class="fa-solid fa-plus"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Noodles -->
+              <tr>
+                <td>
+                  <div class="item-name">
+                    <div class="item-icon"><i class="fa-solid fa-bowl-food"></i></div>
+                    <span>Noodles</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="stock-level">
+                    <span class="stock-text">5/8</span>
+                    <div class="progress-container">
+                      <div class="progress-fill warning" style="width: 62%;"></div>
+                    </div>
+                    <span class="stock-percent">62%</span>
+                  </div>
+                </td>
+                <td>Pack</td>
+                <td>
+                  <div class="table-actions">
+                    <button class="btn-icon"><i class="fa-solid fa-pen"></i></button>
+                    <button class="btn-icon danger"><i class="fa-solid fa-trash"></i></button>
+                    <button class="btn-icon"><i class="fa-solid fa-plus"></i></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footer">
+          <span class="table-info">Showing 4 of 123</span>
+          <div class="pagination-controls">
+            <button class="page-btn"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn"><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+</body>
+
+</html>
