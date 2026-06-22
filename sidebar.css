@@ -4,7 +4,7 @@
   position: fixed;
   left: 0;
   top: 0;
-  width: 260px;
+  width: 220px;
   height: 100vh;
   background-color: var(--brand-surface);
   border-right: var(--elevation-border);
@@ -17,14 +17,14 @@
   transition: transform 0.4s ease-in-out;
 }
 
-/* Checkbox oculto */
+/* Hidden checkbox */
 .sidebar-toggle-checkbox {
   display: none;
 }
 
-/* Layout Principal */
+/* Main Layout */
 .main-content {
-  margin-left: 260px;
+  margin-left: 220px;
   min-height: 100vh;
   transition: margin-left 0.4s ease-in-out;
 }
@@ -32,89 +32,87 @@
 
 
 .top-bar {
-  padding: var(--stack-md);
+  padding: var(--stack-xs);
   display: flex;
   align-items: center;
   position: relative;
 }
 
-/* Mobile Dropdown Menu */
-.mobile-dropdown {
-  visibility: hidden;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: all 0.3s ease-in-out;
-  pointer-events: none;
-  position: absolute;
-  top: 60px;
-  left: var(--stack-md);
-  background-color: var(--elevation-1-bg);
-  border: var(--elevation-border);
-  border-radius: var(--radius-md);
-  padding: 8px;
-  flex-direction: column;
-  gap: 4px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  z-index: 100;
-  min-width: 200px;
+/* Bottom Navigation Menu (Mobile Only) */
+.bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(30, 30, 35, 0.85); /* Glassmorphism effect */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 1000;
+  padding: 8px 16px;
+  padding-bottom: calc(8px + env(safe-area-inset-bottom));
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
 }
 
-.mobile-nav-item {
+.bottom-nav-item {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
+  gap: 4px;
   color: var(--color-text-variant);
   text-decoration: none;
-  font-size: var(--font-size-body-md);
+  font-size: 10px;
   font-weight: 600;
+  transition: color 0.2s;
+  padding: 4px 8px;
   border-radius: var(--radius-sm);
-  transition: all 0.2s;
 }
 
-.mobile-nav-item i {
-  width: 20px;
-  text-align: center;
+.bottom-nav-item i {
+  font-size: 20px;
+  margin-bottom: 2px;
 }
 
-.mobile-nav-item:hover {
-  background-color: var(--elevation-2-bg);
-  color: var(--brand-surface-text);
+.bottom-nav-item.active {
+  color: var(--brand-primary);
 }
 
-.mobile-nav-item.active {
-  background-color: var(--brand-primary);
-  color: var(--color-white);
-}
-
-.mobile-divider {
-  height: 1px;
-  background-color: var(--color-outline);
-  margin: 4px 0;
-  opacity: 0.3;
+.bottom-nav-item:active {
+  background-color: rgba(255,255,255,0.1);
 }
 
 .sidebar-toggle {
-  position: absolute;
-  left: var(--stack-md);
-  top: 2px;
-  background: transparent;
+  position: fixed;
+  left: 0;
+  top: 16px;
+  background-color: var(--brand-primary);
+  color: var(--color-white);
   border: none;
-  color: var(--color-text-variant);
-  font-size: 24px;
+  font-size: 14px;
   cursor: pointer;
-  padding: 8px;
-  border-radius: var(--radius-sm);
+  width: 22px;
+  height: 36px;
+  border-radius: 0 18px 18px 0;
+  padding: 0 4px 0 0; /* Add right padding to visually center the icon */
   transition: all 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 60;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+}
+
+.sidebar-toggle i {
+  position: relative;
+  top: 0; /* Natural centering with flexbox */
 }
 
 .sidebar-toggle:hover {
-  background-color: var(--elevation-1-bg);
-  color: var(--brand-surface-text);
+  width: 32px;
+  background-color: var(--brand-primary-hover);
 }
 
 .sidebar-header {
@@ -125,23 +123,33 @@
 }
 
 .sidebar-close-btn {
-  background: transparent;
+  position: absolute;
+  right: 0;
+  top: 16px;
+  background-color: var(--brand-primary);
+  color: var(--color-white);
   border: none;
-  color: var(--color-text-variant);
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
-  padding: 6px;
-  border-radius: var(--radius-sm);
+  width: 22px;
+  height: 36px;
+  border-radius: 18px 0 0 18px;
+  padding: 0 0 0 4px; /* Add left padding to visually center the icon */
   transition: all 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: auto;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.15);
+}
+
+.sidebar-close-btn i {
+  position: relative;
+  top: -1px; /* Compensates for font spacing */
 }
 
 .sidebar-close-btn:hover {
-  background-color: var(--elevation-2-bg);
-  color: var(--brand-surface-text);
+  width: 32px;
+  background-color: var(--brand-primary-hover);
 }
 
 .sidebar-logo {
@@ -231,23 +239,25 @@
   gap: 8px;
 }
 
-/* Comportamiento Responsivo (Mobile) */
+/* Responsive Behavior (Mobile) */
 @media (max-width: 768px) {
   .sidebar {
-    /* En lugar de display: none, usamos transform para que al redimensionar la ventana
-       se aplique la animación de deslizamiento fluidamente. */
+    /* Instead of display: none, we use transform so that when resizing the window
+       the sliding animation applies fluidly. */
     transform: translateX(-100%);
   }
 
   .main-content {
     margin-left: 0;
+    padding-bottom: calc(70px + env(safe-area-inset-bottom)); /* Make space for bottom nav */
   }
 
-  .sidebar-toggle-checkbox:checked ~ .main-content .mobile-dropdown {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
+  .sidebar-toggle {
+    display: none !important; /* Hide hamburger toggle on mobile since we have bottom nav */
+  }
+
+  .bottom-nav {
+    display: flex; /* Show bottom nav only on mobile */
   }
 }
 
@@ -267,5 +277,24 @@
 
   .sidebar-toggle-checkbox:checked ~ .main-content .top-bar .sidebar-toggle {
     display: flex;
+    position: fixed;
+    left: 0;
+    top: 16px; /* Matches the 16px padding of the sidebar to align with the header */
+    background-color: var(--brand-primary);
+    color: var(--color-white);
+    width: 22px;
+    height: 36px; /* Matches the 36px height of the logo/header */
+    border-radius: 0 18px 18px 0;
+    padding: 0 4px 0 0; /* Add right padding to visually center the icon inside the curved shape */
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+    transition: all 0.2s;
+  }
+  
+
+  .sidebar-toggle-checkbox:checked ~ .main-content .top-bar .sidebar-toggle:hover {
+    width: 32px;
+    background-color: var(--brand-primary-hover);
   }
 }

@@ -11,14 +11,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Estilos Base -->
+  <!-- Base Styles -->
   <link rel="stylesheet" href="./main.css">
   <link rel="stylesheet" href="./sidebar.css">
   <link rel="stylesheet" href="./inventory.css">
 </head>
 
-<body>
-  <!-- Checkbox Oculto para Toggle Puro CSS -->
+<body class="history-layout">
+  <!-- Hidden Checkbox for Pure CSS Toggle -->
   <input type="checkbox" id="sidebar-toggle-checkbox" class="sidebar-toggle-checkbox">
 
   <!-- Sidebar -->
@@ -67,34 +67,25 @@
     </div>
   </aside>
 
-  <!-- Overlay para móviles -->
+  <!-- Overlay for mobiles -->
   <label for="sidebar-toggle-checkbox" class="sidebar-overlay"></label>
 
   <!-- Main Content -->
   <main class="main-content" id="mainContent">
     <header class="top-bar">
       <label for="sidebar-toggle-checkbox" class="sidebar-toggle">
-        <i class="fa-solid fa-bars"></i>
+        <i class="fa-solid fa-chevron-right"></i>
       </label>
 
-      <!-- Menú Desplegable Móvil -->
-      <nav class="mobile-dropdown">
-        <a href="./inventory.html" class="mobile-nav-item"><i class="fa-solid fa-box"></i> Inventory</a>
-        <a href="./dishes.html" class="mobile-nav-item"><i class="fa-solid fa-utensils"></i> Dishes</a>
-        <a href="./orders.html" class="mobile-nav-item"><i class="fa-solid fa-receipt"></i> Orders</a>
-        <a href="./history.html" class="mobile-nav-item active"><i class="fa-solid fa-clock-rotate-left"></i> History</a>
-        <div class="mobile-divider"></div>
-        <a href="./settings.html" class="mobile-nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
-        <div class="mobile-divider"></div>
-        <a href="./login.html" class="mobile-nav-item logout-item"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
-      </nav>
     </header>
 
     <div class="page-content">
       <div class="page-header">
         <h1>Order History</h1>
         <div style="display: flex; gap: var(--stack-md);">
-          <input type="date" class="form-control" style="width: auto;">
+          <button class="btn-icon" style="width: 44px; height: 44px; background-color: var(--elevation-1-bg); border: 1px solid var(--color-outline); border-radius: var(--radius-md);" title="Filter by Date">
+            <i class="fa-regular fa-calendar"></i>
+          </button>
           <div style="position: relative;">
             <input type="text" class="form-control" placeholder="Search orders..." style="padding-left: 36px; width: 250px;">
             <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 14px; color: var(--color-text-variant);"></i>
@@ -104,7 +95,7 @@
 
       <div class="data-table-container">
         <div class="table-responsive">
-          <table class="data-table">
+          <table class="data-table history-table">
           <thead>
             <tr>
               <th>Order #</th>
@@ -176,6 +167,34 @@
                 <button class="btn-icon" title="View Details"><i class="fa-regular fa-eye"></i></button>
               </td>
             </tr>
+            <tr>
+              <td>#1230</td>
+              <td>2023-10-25 12:00</td>
+              <td>Walk-in</td>
+              <td style="font-weight: 600;">$ 8.00</td>
+              <td><span class="status-badge completed">Completed</span></td>
+              <td>
+                <button class="btn-icon" title="View Details"><i class="fa-regular fa-eye"></i></button>
+              </td>
+            </tr><tr>
+              <td>#1230</td>
+              <td>2023-10-25 12:00</td>
+              <td>Walk-in</td>
+              <td style="font-weight: 600;">$ 8.00</td>
+              <td><span class="status-badge completed">Completed</span></td>
+              <td>
+                <button class="btn-icon" title="View Details"><i class="fa-regular fa-eye"></i></button>
+              </td>
+            </tr><tr>
+              <td>#1230</td>
+              <td>2023-10-25 12:00</td>
+              <td>Walk-in</td>
+              <td style="font-weight: 600;">$ 8.00</td>
+              <td><span class="status-badge completed">Completed</span></td>
+              <td>
+                <button class="btn-icon" title="View Details"><i class="fa-regular fa-eye"></i></button>
+              </td>
+            </tr>
           </tbody>
         </table>
         </div>
@@ -192,6 +211,30 @@
 
     </div>
   </main>
+
+  <!-- Bottom Navigation (Mobile) -->
+  <nav class="bottom-nav">
+    <a href="./orders.html" class="bottom-nav-item">
+      <i class="fa-solid fa-receipt"></i>
+      <span>Orders</span>
+    </a>
+    <a href="./dishes.html" class="bottom-nav-item">
+      <i class="fa-solid fa-utensils"></i>
+      <span>Dishes</span>
+    </a>
+    <a href="./inventory.html" class="bottom-nav-item">
+      <i class="fa-solid fa-box"></i>
+      <span>Inventory</span>
+    </a>
+    <a href="./history.html" class="bottom-nav-item active">
+      <i class="fa-solid fa-clock-rotate-left"></i>
+      <span>History</span>
+    </a>
+    <a href="./settings.html" class="bottom-nav-item">
+      <i class="fa-solid fa-gear"></i>
+      <span>Settings</span>
+    </a>
+  </nav>
 </body>
 
 </html>

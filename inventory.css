@@ -1,11 +1,10 @@
-/* inventory.css */
-
 .page-content {
-  padding: 0 var(--stack-md) var(--stack-lg);
+  padding: 0 var(--stack-sm) var(--stack-lg);
   display: flex;
   flex-direction: column;
   gap: var(--stack-lg);
-  max-width: 1200px;
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -277,4 +276,91 @@
   background-color: var(--brand-primary);
   color: var(--color-white);
   border-color: var(--brand-primary);
+}
+
+/* Global layout for history page to keep pagination at bottom and scroll table internally */
+.history-layout .main-content {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh; /* Better for mobile browsers with address bars */
+}
+
+.history-layout .page-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* Let flexbox automatically constrain height instead of rigid calc */
+}
+
+.history-layout .data-table-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* Ensures the container shrinks and allows internal scrolling */
+}
+
+.history-layout .table-responsive {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.history-layout .pagination {
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  /* Layout para estirar la tabla y empujar la paginación al fondo */
+  .page-content {
+    min-height: 100vh; /* 100vh menos la altura aproximada de la cabecera */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .data-table-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .table-responsive {
+    flex-grow: 1;
+    overflow-y: auto; /* Permite scroll interno si hay muchas filas */
+  }
+
+  .pagination {
+    margin-top: auto;
+  }
+
+  /* History table mobile layout: Show only Order #, Status, and Action */
+  .history-table {
+    min-width: 100%; /* Remove the forced horizontal scroll */
+  }
+  
+  .history-table th:nth-child(2),
+  .history-table td:nth-child(2),
+  .history-table th:nth-child(3),
+  .history-table td:nth-child(3),
+  .history-table th:nth-child(4),
+  .history-table td:nth-child(4) {
+    display: none;
+  }
+
+  /* Inventory table mobile layout: Show Name, Stock Level (text only), and Actions */
+  .inventory-table {
+    min-width: 100%;
+  }
+
+  /* Hide Unit column (3) */
+  .inventory-table th:nth-child(3),
+  .inventory-table td:nth-child(3) {
+    display: none;
+  }
+
+  /* Hide progress bar and percent in Stock Level */
+  .inventory-table .progress-container,
+  .inventory-table .stock-percent {
+    display: none;
+  }
 }

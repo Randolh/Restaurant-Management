@@ -1,4 +1,4 @@
-/* Contenedor principal */
+/* Main container */
 .login-wrapper {
   position: relative;
   display: flex;
@@ -8,7 +8,7 @@
   overflow: hidden;
 }
 
-/* Textura de fondo con cuadrícula */
+/* Grid background texture */
 .bg-grid-pattern {
   position: absolute;
   inset: 0;
@@ -20,7 +20,7 @@
   pointer-events: none;
 }
 
-/* Tarjeta principal de login */
+/* Main login card */
 .login-card {
   position: relative;
   z-index: 10;
@@ -40,7 +40,7 @@
   border-color: var(--brand-primary);
 }
 
-/* Encabezado del login */
+/* Login header */
 .login-header {
   display: flex;
   flex-direction: column;
@@ -76,7 +76,7 @@
   justify-content: space-between;
 }
 
-/* Formularios y grupos de input */
+/* Forms and input groups */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -90,7 +90,7 @@
   text-transform: uppercase;
 }
 
-/* Contenedor del input */
+/* Input container */
 .input-wrapper {
   position: relative;
   display: flex;
@@ -125,7 +125,7 @@
   box-shadow: 0 0 0 1px var(--brand-primary);
 }
 
-/* Botón de ojo contraseña */
+/* Password eye button */
 .input-wrapper button {
   position: absolute;
   right: 16px;
@@ -139,7 +139,7 @@
   color: var(--brand-primary);
 }
 
-/* Micro-tarjeta de "Recordarme" */
+/* "Remember me" micro-card */
 .remember-me {
   display: flex;
   align-items: center;
@@ -161,7 +161,7 @@
   color: var(--color-text-variant);
 }
 
-/* Botón principal de acción */
+/* Main action button */
 .btn-primary {
   display: flex;
   align-items: center;

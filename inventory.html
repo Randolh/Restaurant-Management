@@ -13,14 +13,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Estilos Base -->
+  <!-- Base Styles -->
   <link rel="stylesheet" href="./main.css">
   <link rel="stylesheet" href="./sidebar.css">
   <link rel="stylesheet" href="./inventory.css">
 </head>
 
 <body>
-  <!-- Checkbox Oculto para Toggle Puro CSS -->
+  <!-- Hidden Checkbox for Pure CSS Toggle -->
   <input type="checkbox" id="sidebar-toggle-checkbox" class="sidebar-toggle-checkbox">
   <input type="checkbox" id="add-item-modal-toggle" class="modal-toggle" hidden>
 
@@ -71,25 +71,13 @@
     </div>
   </aside>
 
-  <!-- Contenido Principal -->
+  <!-- Main Content -->
   <main class="main-content" id="mainContent">
     <header class="top-bar">
       <label for="sidebar-toggle-checkbox" class="sidebar-toggle">
-        <i class="fa-solid fa-bars"></i>
+        <i class="fa-solid fa-chevron-right"></i>
       </label>
 
-      <!-- Menú Desplegable Móvil -->
-      <nav class="mobile-dropdown">
-        <a href="./inventory.html" class="mobile-nav-item active"><i class="fa-solid fa-box"></i> Inventory</a>
-        <a href="./dishes.html" class="mobile-nav-item"><i class="fa-solid fa-utensils"></i> Dishes</a>
-        <a href="./orders.html" class="mobile-nav-item"><i class="fa-solid fa-receipt"></i> Orders</a>
-        <a href="./history.html" class="mobile-nav-item"><i class="fa-solid fa-clock-rotate-left"></i> History</a>
-        <div class="mobile-divider"></div>
-
-        <a href="./settings.html" class="mobile-nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
-        <div class="mobile-divider"></div>
-        <a href="./login.html" class="mobile-nav-item logout-item"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
-      </nav>
     </header>
 
     <div class="page-content">
@@ -117,7 +105,7 @@
 
       <div class="data-table-container">
         <div class="table-responsive">
-          <table class="data-table">
+          <table class="data-table inventory-table">
             <thead>
               <tr>
                 <th>Name</th>
@@ -284,6 +272,10 @@
             <option>packs</option>
           </select>
         </div>
+        <div class="form-group">
+          <label class="form-label">Unit Cost ($)</label>
+          <input type="number" class="form-control" placeholder="0.00" step="0.01">
+        </div>
       </div>
       <div class="modal-footer">
         <label for="add-item-modal-toggle" class="btn-secondary">Cancel</label>
@@ -292,6 +284,30 @@
     </div>
   </div>
 
+
+  <!-- Bottom Navigation (Mobile) -->
+  <nav class="bottom-nav">
+    <a href="./orders.html" class="bottom-nav-item">
+      <i class="fa-solid fa-receipt"></i>
+      <span>Orders</span>
+    </a>
+    <a href="./dishes.html" class="bottom-nav-item">
+      <i class="fa-solid fa-utensils"></i>
+      <span>Dishes</span>
+    </a>
+    <a href="./inventory.html" class="bottom-nav-item active">
+      <i class="fa-solid fa-box"></i>
+      <span>Inventory</span>
+    </a>
+    <a href="./history.html" class="bottom-nav-item">
+      <i class="fa-solid fa-clock-rotate-left"></i>
+      <span>History</span>
+    </a>
+    <a href="./settings.html" class="bottom-nav-item">
+      <i class="fa-solid fa-gear"></i>
+      <span>Settings</span>
+    </a>
+  </nav>
 </body>
 
 </html>

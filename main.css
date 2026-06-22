@@ -47,6 +47,7 @@
   
   --touch-target-min: 44px;
   --screen-margin: 1rem;
+  --stack-xs: 0.25rem;
   --stack-sm: 0.5rem;
   --stack-md: 1rem;
   --stack-lg: 1.5rem;
@@ -224,6 +225,38 @@ img, picture, video, canvas, svg {
   border-color: var(--color-outline);
 }
 
+/* Custom Scrollbars for Modals and Forms */
+.modal-container::-webkit-scrollbar,
+.dish-select-grid::-webkit-scrollbar,
+.ticket-items::-webkit-scrollbar,
+.table-responsive::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.modal-container::-webkit-scrollbar-track,
+.dish-select-grid::-webkit-scrollbar-track,
+.ticket-items::-webkit-scrollbar-track,
+.table-responsive::-webkit-scrollbar-track {
+  background: var(--elevation-1-bg);
+  border-radius: 4px;
+}
+
+.modal-container::-webkit-scrollbar-thumb,
+.dish-select-grid::-webkit-scrollbar-thumb,
+.ticket-items::-webkit-scrollbar-thumb,
+.table-responsive::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+}
+
+.modal-container::-webkit-scrollbar-thumb:hover,
+.dish-select-grid::-webkit-scrollbar-thumb:hover,
+.ticket-items::-webkit-scrollbar-thumb:hover,
+.table-responsive::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
 /* Forms */
 .form-group {
   display: flex;
@@ -247,6 +280,10 @@ img, picture, video, canvas, svg {
   color: var(--brand-surface-text);
   font-size: var(--font-size-body-md);
   transition: border-color 0.2s;
+}
+
+input[type="number"] {
+  padding-right: 0px; /* Ensures text never crosses with native arrows */
 }
 
 .form-control:focus, .form-select:focus {
@@ -376,7 +413,7 @@ textarea.form-control {
 }
 
 .inline-qty {
-  width: 50px;
+  width: 60px;
   height: 28px;
   padding: 0 4px;
   text-align: center;
