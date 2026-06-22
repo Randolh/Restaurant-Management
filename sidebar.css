@@ -125,23 +125,33 @@
 }
 
 .sidebar-close-btn {
-  background: transparent;
+  position: absolute;
+  right: 0;
+  top: 16px;
+  background-color: var(--brand-primary);
+  color: var(--color-white);
   border: none;
-  color: var(--color-text-variant);
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
-  padding: 6px;
-  border-radius: var(--radius-sm);
+  width: 22px;
+  height: 36px;
+  border-radius: 18px 0 0 18px;
+  padding: 0 0 0 4px; /* Add left padding to visually center the icon */
   transition: all 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: auto;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.15);
+}
+
+.sidebar-close-btn i {
+  position: relative;
+  top: -1px; /* Compensa el espacio de la fuente */
 }
 
 .sidebar-close-btn:hover {
-  background-color: var(--elevation-2-bg);
-  color: var(--brand-surface-text);
+  width: 32px;
+  background-color: var(--brand-primary-hover);
 }
 
 .sidebar-logo {
