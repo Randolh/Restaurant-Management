@@ -13,6 +13,99 @@
   padding: var(--stack-md);
   z-index: 50;
   box-sizing: border-box;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Checkbox oculto */
+.sidebar-toggle-checkbox {
+  display: none;
+}
+
+/* Layout Principal */
+.main-content {
+  margin-left: 260px;
+  min-height: 100vh;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+
+.top-bar {
+  padding: var(--stack-md);
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Mobile Dropdown Menu */
+.mobile-dropdown {
+  display: none;
+  position: absolute;
+  top: 60px;
+  left: var(--stack-md);
+  background-color: var(--elevation-1-bg);
+  border: var(--elevation-border);
+  border-radius: var(--radius-md);
+  padding: 8px;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  z-index: 100;
+  min-width: 200px;
+}
+
+.mobile-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  color: var(--color-text-variant);
+  text-decoration: none;
+  font-size: var(--font-size-body-md);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s;
+}
+
+.mobile-nav-item i {
+  width: 20px;
+  text-align: center;
+}
+
+.mobile-nav-item:hover {
+  background-color: var(--elevation-2-bg);
+  color: var(--brand-surface-text);
+}
+
+.mobile-nav-item.active {
+  background-color: var(--brand-primary);
+  color: var(--color-white);
+}
+
+.mobile-divider {
+  height: 1px;
+  background-color: var(--color-outline);
+  margin: 4px 0;
+  opacity: 0.3;
+}
+
+.sidebar-toggle {
+  background: transparent;
+  border: none;
+  color: var(--color-text-variant);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-toggle:hover {
+  background-color: var(--elevation-1-bg);
+  color: var(--brand-surface-text);
 }
 
 .sidebar-header {
@@ -107,4 +200,26 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+/* Comportamiento Responsivo (Mobile) */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none; /* Se oculta completamente la sidebar original en móviles */
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+
+  .sidebar-toggle-checkbox:checked ~ .main-content .mobile-dropdown {
+    display: flex;
+  }
+}
+
+/* Desktop */
+@media (min-width: 769px) {
+  .sidebar-toggle {
+    display: none;
+  }
 }

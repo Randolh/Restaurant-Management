@@ -19,8 +19,11 @@
 </head>
 
 <body>
+  <!-- Checkbox Oculto para Toggle Puro CSS -->
+  <input type="checkbox" id="sidebar-toggle-checkbox" class="sidebar-toggle-checkbox">
+
   <!-- Sidebar -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-logo">
         <img src="./favicon.svg" alt="Restaurant Logo">
@@ -57,6 +60,26 @@
       </a>
     </div>
   </aside>
+
+  <!-- Contenido Principal -->
+  <main class="main-content" id="mainContent">
+    <header class="top-bar">
+      <label for="sidebar-toggle-checkbox" class="sidebar-toggle">
+        <i class="fa-solid fa-bars"></i>
+      </label>
+
+      <!-- Menú Desplegable Móvil -->
+      <nav class="mobile-dropdown">
+        <a href="#" class="mobile-nav-item active"><i class="fa-solid fa-box"></i> Inventory</a>
+        <a href="#" class="mobile-nav-item"><i class="fa-solid fa-utensils"></i> Dishes</a>
+        <a href="#" class="mobile-nav-item"><i class="fa-solid fa-receipt"></i> Orders</a>
+        <div class="mobile-divider"></div>
+        <a href="#" class="mobile-nav-item"><i class="fa-solid fa-user"></i> Profile</a>
+        <a href="#" class="mobile-nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+      </nav>
+    </header>
+  </main>
+
 </body>
 
 </html>
