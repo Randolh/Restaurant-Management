@@ -1,9 +1,17 @@
 :root {
   /* BRAND COLORS */
   --brand-primary: #dc143c;
+  --brand-primary-hover: #bb171c;
   --brand-secondary: #1e293b;
+  --brand-secondary-hover: #334155;
   --brand-neutral: #0f172a;
   --brand-surface-text: #f8fafc;
+
+  /* UTILITY COLORS */
+  --color-outline: #ab8985;
+  --color-text-variant: #e4beb9;
+  --color-white: #ffffff;
+  --brand-secondary-alpha-50: rgba(30, 41, 59, 0.5);
 
   /* ELEVATION & DEPTH */
   --elevation-0-bg: #0f172a;
