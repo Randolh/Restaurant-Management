@@ -605,3 +605,57 @@ textarea.form-control {
   font-weight: bold;
   color: var(--brand-surface-text);
 }
+
+/* Pagination */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--stack-sm);
+}
+
+.page-btn {
+  background-color: var(--elevation-1-bg);
+  border: 1px solid var(--elevation-border);
+  color: var(--color-text-variant);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-body-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.page-btn:hover {
+  background-color: var(--elevation-2-bg);
+  color: var(--brand-surface-text);
+}
+
+.page-btn.active {
+  background-color: var(--brand-primary);
+  border-color: var(--brand-primary);
+  color: #fff;
+}
+
+/* Badges for Status */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-badge.completed {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: var(--color-success);
+}
+
+.status-badge.cancelled {
+  background-color: rgba(220, 20, 60, 0.15);
+  color: var(--brand-primary);
+}
