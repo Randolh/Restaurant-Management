@@ -95,26 +95,34 @@
 }
 
 .sidebar-toggle {
-  position: absolute;
-  left: var(--stack-md);
-  top: 2px;
-  background: transparent;
+  position: fixed;
+  left: 0;
+  top: 16px;
+  background-color: var(--brand-primary);
+  color: var(--color-white);
   border: none;
-  color: var(--color-text-variant);
-  font-size: 24px;
+  font-size: 14px;
   cursor: pointer;
-  padding: 8px;
-  border-radius: var(--radius-sm);
+  width: 22px;
+  height: 36px;
+  border-radius: 0 18px 18px 0;
+  padding: 0 4px 0 0; /* Add right padding to visually center the icon */
   transition: all 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 60;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+}
+
+.sidebar-toggle i {
+  position: relative;
+  top: -1px; /* Compensa el espacio de la fuente */
 }
 
 .sidebar-toggle:hover {
-  background-color: var(--elevation-1-bg);
-  color: var(--brand-surface-text);
+  width: 32px;
+  background-color: var(--brand-primary-hover);
 }
 
 .sidebar-header {
