@@ -22,6 +22,7 @@
 <body>
   <!-- Checkbox Oculto para Toggle Puro CSS -->
   <input type="checkbox" id="sidebar-toggle-checkbox" class="sidebar-toggle-checkbox">
+  <input type="checkbox" id="add-order-modal-toggle" class="modal-toggle" hidden>
 
   <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
@@ -89,9 +90,9 @@
     <div class="page-content">
       <div class="page-header">
         <h1>Active Orders</h1>
-        <a href="#" class="btn-primary">
+        <label for="add-order-modal-toggle" class="btn-primary">
           <i class="fa-solid fa-plus"></i> New Order
-        </a>
+        </label>
       </div>
 
       <div class="kanban-board">
@@ -188,6 +189,142 @@
       </div>
     </div>
   </main>
+
+  <!-- Create Order Modal (POS) -->
+  <div class="modal">
+    <label for="add-order-modal-toggle" class="modal-overlay"></label>
+    <div class="modal-container" style="max-width: 1000px; padding: 0;">
+      <div class="modal-header" style="border-bottom: none;">
+        <h2>New Order</h2>
+      </div>
+      <div class="modal-body" style="padding: 0; padding-top: 0;">
+        <div class="pos-layout">
+          <!-- Left Panel: Selection -->
+          <div style="padding: var(--stack-lg); padding-top: 0;">
+            <!-- Customer Info -->
+            <div class="form-row" style="margin-bottom: var(--stack-lg);">
+              <div class="form-col">
+                <label class="form-label">Customer Name</label>
+                <input type="text" class="form-control" placeholder="Optional">
+              </div>
+              <div class="form-col">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" placeholder="Optional">
+              </div>
+            </div>
+
+            <!-- Dish Search -->
+            <div class="recipe-search">
+              <input type="text" class="form-control" placeholder="Search for dishes...">
+              <button class="btn-primary" style="padding: 0 16px;"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+
+            <!-- Dish Grid -->
+            <div class="dish-select-grid">
+              <!-- Dish Card -->
+              <div class="dish-select-card selected">
+                <img src="./images/dish_ramen.png" alt="Tonkotsu Ramen">
+                <div class="dish-select-info">
+                  <span class="dish-select-name">Tonkotsu Ramen</span>
+                  <div class="dish-select-bottom">
+                    <span class="dish-select-price">$14.50</span>
+                    <button class="btn-icon btn-small btn-circle" title="Add" style="background-color: var(--elevation-2-bg);"><i class="fa-solid fa-plus"></i></button>
+                  </div>
+                </div>
+              </div>
+              <!-- Dish Card -->
+              <div class="dish-select-card">
+                <img src="./images/dish_ramen.png" alt="Spicy Miso">
+                <div class="dish-select-info">
+                  <span class="dish-select-name">Spicy Miso</span>
+                  <div class="dish-select-bottom">
+                    <span class="dish-select-price">$15.00</span>
+                    <button class="btn-icon btn-small btn-circle" title="Add" style="background-color: var(--elevation-2-bg);"><i class="fa-solid fa-plus"></i></button>
+                  </div>
+                </div>
+              </div>
+              <!-- Dish Card -->
+              <div class="dish-select-card">
+                <img src="./images/dish_ramen.png" alt="Edamame">
+                <div class="dish-select-info">
+                  <span class="dish-select-name">Edamame</span>
+                  <div class="dish-select-bottom">
+                    <span class="dish-select-price">$5.00</span>
+                    <button class="btn-icon btn-small btn-circle" title="Add" style="background-color: var(--elevation-2-bg);"><i class="fa-solid fa-plus"></i></button>
+                  </div>
+                </div>
+              </div>
+              <!-- Dish Card -->
+              <div class="dish-select-card">
+                <img src="./images/dish_ramen.png" alt="Gyoza">
+                <div class="dish-select-info">
+                  <span class="dish-select-name">Gyoza</span>
+                  <div class="dish-select-bottom">
+                    <span class="dish-select-price">$7.00</span>
+                    <button class="btn-icon btn-small btn-circle" title="Add" style="background-color: var(--elevation-2-bg);"><i class="fa-solid fa-plus"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Panel: Ticket -->
+          <div style="padding: var(--stack-lg); padding-top: 0; padding-left: 0;">
+            <div class="ticket-panel">
+              <div class="ticket-header">
+                <h4>Order #1235</h4>
+                <span>Walk-in Customer</span>
+              </div>
+              
+              <div class="ticket-items">
+                <!-- Item -->
+                <div class="recipe-item" style="background-color: transparent; padding: 0;">
+                  <div class="recipe-item-name" style="flex-direction: column; align-items: flex-start; gap: 2px;">
+                    <span style="font-weight: 600;">Tonkotsu Ramen</span>
+                    <span class="stock-info" style="margin:0;">$14.50</span>
+                  </div>
+                  <div class="recipe-item-actions">
+                    <input type="number" class="form-control inline-qty" value="1" min="1">
+                    <button class="btn-icon btn-small danger" title="Remove"><i class="fa-solid fa-trash"></i></button>
+                  </div>
+                </div>
+                <!-- Item -->
+                <div class="recipe-item" style="background-color: transparent; padding: 0;">
+                  <div class="recipe-item-name" style="flex-direction: column; align-items: flex-start; gap: 2px;">
+                    <span style="font-weight: 600;">Gyoza</span>
+                    <span class="stock-info" style="margin:0;">$7.00</span>
+                  </div>
+                  <div class="recipe-item-actions">
+                    <input type="number" class="form-control inline-qty" value="2" min="1">
+                    <button class="btn-icon btn-small danger" title="Remove"><i class="fa-solid fa-trash"></i></button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ticket-summary">
+                <div class="ticket-summary-row">
+                  <span>Subtotal</span>
+                  <span>$28.50</span>
+                </div>
+                <div class="ticket-summary-row">
+                  <span>Tax (8%)</span>
+                  <span>$2.28</span>
+                </div>
+                <div class="ticket-summary-total">
+                  <span>Total</span>
+                  <span>$30.78</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <label for="add-order-modal-toggle" class="btn-secondary">Cancel</label>
+        <button class="btn-primary">Confirm Order</button>
+      </div>
+    </div>
+  </div>
 
 </body>
 
