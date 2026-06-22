@@ -276,3 +276,41 @@
   color: var(--color-white);
   border-color: var(--brand-primary);
 }
+
+@media (max-width: 768px) {
+  /* Layout para estirar la tabla y empujar la paginación al fondo */
+  .page-content {
+    min-height: 100vh; /* 100vh menos la altura aproximada de la cabecera */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .data-table-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .table-responsive {
+    flex-grow: 1;
+    overflow-y: auto; /* Permite scroll interno si hay muchas filas */
+  }
+
+  .pagination {
+    margin-top: auto;
+  }
+
+  /* History table mobile layout: Show only Order #, Status, and Action */
+  .history-table {
+    min-width: 100%; /* Remove the forced horizontal scroll */
+  }
+  
+  .history-table th:nth-child(2),
+  .history-table td:nth-child(2),
+  .history-table th:nth-child(3),
+  .history-table td:nth-child(3),
+  .history-table th:nth-child(4),
+  .history-table td:nth-child(4) {
+    display: none;
+  }
+}
