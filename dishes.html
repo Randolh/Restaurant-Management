@@ -22,6 +22,7 @@
 <body>
   <!-- Checkbox Oculto para Toggle Puro CSS -->
   <input type="checkbox" id="sidebar-toggle-checkbox" class="sidebar-toggle-checkbox">
+  <input type="checkbox" id="add-dish-modal-toggle" class="modal-toggle" hidden>
 
   <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
@@ -97,9 +98,9 @@
             <i class="fa-solid fa-sliders"></i>
           </button>
         </div>
-        <a href="#" class="btn-primary">
+        <label for="add-dish-modal-toggle" class="btn-primary">
           <i class="fa-solid fa-plus"></i> Add New Dish
-        </a>
+        </label>
       </div>
 
       <div class="dishes-grid">
@@ -159,6 +160,133 @@
       </div>
     </div>
   </main>
+
+  <!-- Add Dish Modal -->
+  <div class="modal">
+    <label for="add-dish-modal-toggle" class="modal-overlay"></label>
+    <div class="modal-container" style="max-width: 800px;">
+      <div class="modal-header">
+        <h2>Create Dish</h2>
+      </div>
+      <div class="modal-body">
+        <!-- A. Information & Image -->
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label class="form-label">Name</label>
+              <input type="text" class="form-control" placeholder="e.g. Tonkotsu Ramen">
+            </div>
+            <div class="form-group">
+              <label class="form-label">URL Image</label>
+              <input type="url" class="form-control" placeholder="https://www...">
+            </div>
+          </div>
+          <div class="image-preview-box">
+            <i class="fa-regular fa-image"></i>
+          </div>
+        </div>
+        <hr class="form-divider">
+        
+        <!-- B. Commercial Details -->
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select class="form-select">
+                <option>Ramen</option>
+                <option>Burgers</option>
+                <option>Bowls</option>
+                <option>Drinks</option>
+                <option>Desserts</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label class="form-label">Price</label>
+              <input type="text" class="form-control" placeholder="$ 10.00">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" placeholder="Describe the dish..."></textarea>
+        </div>
+
+        <hr class="form-divider">
+
+        <!-- C. Recipe Builder -->
+        <h3 style="margin-bottom: -10px; font-size: var(--font-size-body-lg); color: var(--brand-surface-text);">Ingredients</h3>
+        <div class="recipe-builder">
+          <div class="form-col">
+            <div class="recipe-search">
+              <input type="text" class="form-control" placeholder="Search ingredient..." value="Pork">
+              <button class="btn-primary" style="padding: 0 16px;"><i class="fa-solid fa-magnifying-glass"></i></button>
+              
+              <!-- Mock Search Results -->
+              <div class="search-results-dropdown">
+                <div class="search-result-item">
+                  <span>Pork Belly <span class="stock-info">(kg)</span></span>
+                  <div class="search-result-actions">
+                    <button class="btn-icon" title="Add"><i class="fa-solid fa-plus"></i></button>
+                  </div>
+                </div>
+                <div class="search-result-item">
+                  <span>Pork Broth <span class="stock-info">(L)</span></span>
+                  <div class="search-result-actions">
+                    <button class="btn-icon danger" title="Remove"><i class="fa-solid fa-trash"></i></button>
+                  </div>
+                </div>
+                <div class="search-result-item">
+                  <span>Pork Chashu <span class="stock-info">(kg)</span></span>
+                  <div class="search-result-actions">
+                    <button class="btn-icon" title="Add"><i class="fa-solid fa-plus"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="recipe-list-box">
+              <div class="recipe-item">
+                <div class="recipe-item-name">
+                  <span>Noodles <span class="stock-info">(portions)</span></span>
+                </div>
+                <div class="recipe-item-actions">
+                  <input type="number" class="form-control inline-qty" value="2" min="1">
+                  <button class="btn-icon btn-small danger" title="Remove"><i class="fa-solid fa-trash"></i></button>
+                </div>
+              </div>
+              <div class="recipe-item">
+                <div class="recipe-item-name">
+                  <span>Pork Broth <span class="stock-info">(L)</span></span>
+                </div>
+                <div class="recipe-item-actions">
+                  <input type="number" class="form-control inline-qty" value="1" min="1">
+                  <button class="btn-icon btn-small danger" title="Remove"><i class="fa-solid fa-trash"></i></button>
+                </div>
+              </div>
+              <div class="recipe-item">
+                <div class="recipe-item-name">
+                  <span>Egg <span class="stock-info">(units)</span></span>
+                </div>
+                <div class="recipe-item-actions">
+                  <input type="number" class="form-control inline-qty" value="1" min="1">
+                  <button class="btn-icon btn-small danger" title="Remove"><i class="fa-solid fa-trash"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <label for="add-dish-modal-toggle" class="btn-secondary">Cancel</label>
+        <button class="btn-primary">Save Dish</button>
+      </div>
+    </div>
+  </div>
 
 </body>
 
