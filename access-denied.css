@@ -9,17 +9,6 @@
 }
 
 /* Grid background texture */
-.bg-grid-pattern {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(to right, var(--brand-secondary-alpha-50) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--brand-secondary-alpha-50) 1px, transparent 1px);
-  background-size: 40px 40px;
-  opacity: 0.3;
-  pointer-events: none;
-}
-
 /* Main card */
 .error-card {
   position: relative;
