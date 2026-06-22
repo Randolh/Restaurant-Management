@@ -117,7 +117,7 @@
 
 .sidebar-toggle i {
   position: relative;
-  top: -1px; /* Compensa el espacio de la fuente */
+  top: 0; /* Centrado natural con flexbox */
 }
 
 .sidebar-toggle:hover {
@@ -300,13 +300,7 @@
     transition: all 0.2s;
   }
   
-  .sidebar-toggle-checkbox:checked ~ .main-content .top-bar .sidebar-toggle i::before {
-    content: "\f054"; /* fa-chevron-right */
-    font-size: 14px;
-    position: relative;
-    top: -4px; /* Compensa el espacio de la fuente para centrado perfecto vertical */
-  }
-  
+
   .sidebar-toggle-checkbox:checked ~ .main-content .top-bar .sidebar-toggle:hover {
     width: 32px;
     background-color: var(--brand-primary-hover);
