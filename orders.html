@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Management</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Estilos Base -->
+  <link rel="stylesheet" href="./main.css">
+  <link rel="stylesheet" href="./sidebar.css">
+  <link rel="stylesheet" href="./orders.css">
+</head>
+
+<body>
+  <!-- Checkbox Oculto para Toggle Puro CSS -->
+  <input type="checkbox" id="sidebar-toggle-checkbox" class="sidebar-toggle-checkbox">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <img src="./favicon.svg" alt="Restaurant Logo">
+      </div>
+      <h2>
+        Restaurant
+        <span>Management</span>
+      </h2>
+      <label for="sidebar-toggle-checkbox" class="sidebar-close-btn">
+        <i class="fa-solid fa-chevron-left"></i>
+      </label>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <a href="./inventory.html" class="nav-item">
+        <i class="fa-solid fa-box"></i>
+        <span>Inventory</span>
+      </a>
+      <a href="./dishes.html" class="nav-item">
+        <i class="fa-solid fa-utensils"></i>
+        <span>Dishes</span>
+      </a>
+      <a href="./orders.html" class="nav-item active">
+        <i class="fa-solid fa-receipt"></i>
+        <span>Orders</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+
+      <a href="#" class="nav-item">
+        <i class="fa-solid fa-gear"></i>
+        <span>Settings</span>
+      </a>
+      <a href="./login.html" class="nav-item logout-item">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Contenido Principal -->
+  <main class="main-content" id="mainContent">
+    <header class="top-bar">
+      <label for="sidebar-toggle-checkbox" class="sidebar-toggle">
+        <i class="fa-solid fa-bars"></i>
+      </label>
+
+      <!-- Menú Desplegable Móvil -->
+      <nav class="mobile-dropdown">
+        <a href="./inventory.html" class="mobile-nav-item"><i class="fa-solid fa-box"></i> Inventory</a>
+        <a href="./dishes.html" class="mobile-nav-item"><i class="fa-solid fa-utensils"></i> Dishes</a>
+        <a href="./orders.html" class="mobile-nav-item active"><i class="fa-solid fa-receipt"></i> Orders</a>
+        <div class="mobile-divider"></div>
+
+        <a href="#" class="mobile-nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+        <div class="mobile-divider"></div>
+        <a href="./login.html" class="mobile-nav-item logout-item"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+      </nav>
+    </header>
+
+    <div class="page-content">
+      <div class="page-header">
+        <h1>Active Orders</h1>
+        <a href="#" class="btn-primary">
+          <i class="fa-solid fa-plus"></i> New Order
+        </a>
+      </div>
+
+      <div class="kanban-board">
+        <!-- Pending Column -->
+        <div class="kanban-column pending">
+          <div class="kanban-header">
+            <h2>Pending</h2>
+            <span class="kanban-badge">4</span>
+          </div>
+          <div class="kanban-cards">
+            <!-- Order #1234 -->
+            <article class="order-card">
+              <div class="order-header">
+                <span class="order-id">#1234</span>
+                <span class="order-time">10 min ago</span>
+              </div>
+              <div class="order-items">
+                <span class="item-pill"><span class="item-qty">2x</span> Tonkotsu Ramen</span>
+                <span class="item-pill"><span class="item-qty">1x</span> Edamame</span>
+              </div>
+              <button class="btn-kanban">Start Preparing</button>
+            </article>
+
+            <!-- Order #1235 -->
+            <article class="order-card">
+              <div class="order-header">
+                <span class="order-id">#1235</span>
+                <span class="order-time">5 min ago</span>
+              </div>
+              <div class="order-items">
+                <span class="item-pill"><span class="item-qty">1x</span> Classic Cheeseburger</span>
+                <span class="item-pill"><span class="item-qty">1x</span> Fries</span>
+              </div>
+              <button class="btn-kanban">Start Preparing</button>
+            </article>
+            
+            <!-- Order #1236 -->
+            <article class="order-card">
+              <div class="order-header">
+                <span class="order-id">#1236</span>
+                <span class="order-time">2 min ago</span>
+              </div>
+              <div class="order-items">
+                <span class="item-pill"><span class="item-qty">3x</span> Chicken Bowl</span>
+              </div>
+              <button class="btn-kanban">Start Preparing</button>
+            </article>
+          </div>
+        </div>
+
+        <!-- In Progress Column -->
+        <div class="kanban-column in-progress">
+          <div class="kanban-header">
+            <h2>In Progress</h2>
+            <span class="kanban-badge">5</span>
+          </div>
+          <div class="kanban-cards">
+            <!-- Order #1230 -->
+            <article class="order-card">
+              <div class="order-header">
+                <span class="order-id">#1230</span>
+                <span class="order-time">15 min ago</span>
+              </div>
+              <div class="order-items">
+                <span class="item-pill"><span class="item-qty">1x</span> Spicy Ramen</span>
+                <span class="item-pill"><span class="item-qty">2x</span> Gyoza</span>
+              </div>
+              <button class="btn-kanban">Mark as Ready</button>
+            </article>
+          </div>
+        </div>
+
+        <!-- Ready Column -->
+        <div class="kanban-column ready">
+          <div class="kanban-header">
+            <h2>Ready</h2>
+            <span class="kanban-badge">3</span>
+          </div>
+          <div class="kanban-cards">
+            <!-- Order #1225 -->
+            <article class="order-card">
+              <div class="order-header">
+                <span class="order-id">#1225</span>
+                <span class="order-time">25 min ago</span>
+              </div>
+              <div class="order-items">
+                <span class="item-pill"><span class="item-qty">1x</span> Cola</span>
+                <span class="item-pill"><span class="item-qty">1x</span> Burger Combo</span>
+              </div>
+              <button class="btn-kanban">Complete Order</button>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+</body>
+
+</html>
