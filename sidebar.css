@@ -95,6 +95,9 @@
 }
 
 .sidebar-toggle {
+  position: absolute;
+  left: var(--stack-md);
+  top: 2px;
   background: transparent;
   border: none;
   color: var(--color-text-variant);
@@ -106,6 +109,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 60;
 }
 
 .sidebar-toggle:hover {
