@@ -1,110 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Restaurant Management</title>
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Management</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
 
   <!-- Google Fonts: Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Base Styles -->
-  <link rel="stylesheet" href="./main.css">
-  <link rel="stylesheet" href="./sidebar.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
 
+    <!-- Styles -->
+    <link rel="stylesheet" href="src/styles/main.css">
 </head>
 
 <body>
-  <!-- Hidden Checkbox for Pure CSS Toggle -->
-  <input type="checkbox" id="sidebar-toggle-checkbox" class="sidebar-toggle-checkbox">
-
-  <!-- Sidebar -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <div class="sidebar-logo">
-        <img src="./favicon.svg" alt="Restaurant Logo">
-      </div>
-      <h2>
-        Restaurant
-        <span>Management</span>
-      </h2>
-      <label for="sidebar-toggle-checkbox" class="sidebar-close-btn">
-        <i class="fa-solid fa-chevron-left"></i>
-      </label>
-    </div>
-    
-    <nav class="sidebar-nav">
-      <a href="./inventory.html" class="nav-item">
-        <i class="fa-solid fa-box"></i>
-        <span>Inventory</span>
-      </a>
-      <a href="./dishes.html" class="nav-item">
-        <i class="fa-solid fa-utensils"></i>
-        <span>Dishes</span>
-      </a>
-      <a href="./orders.html" class="nav-item">
-        <i class="fa-solid fa-receipt"></i>
-        <span>Orders</span>
-      </a>
-    </nav>
-
-    <div class="sidebar-footer">
-
-      <a href="#" class="nav-item">
-        <i class="fa-solid fa-gear"></i>
-        <span>Settings</span>
-      </a>
-      <a href="./login.html" class="nav-item logout-item">
-        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-        <span>Logout</span>
-      </a>
-    </div>
-  </aside>
-
-  <!-- Main Content -->
-  <main class="main-content" id="mainContent">
-    <header class="top-bar">
-      <label for="sidebar-toggle-checkbox" class="sidebar-toggle">
-        <i class="fa-solid fa-chevron-right"></i>
-      </label>
-
-    </header>
-
-    <div class="page-content" style="padding: 2rem; color: var(--color-text-variant); text-align: center;">
-      <h2>Welcome to Restaurant Management</h2>
-      <p>Select a module from the sidebar to begin.</p>
-    </div>
-  </main>
-
-
-  <!-- Bottom Navigation (Mobile) -->
-  <nav class="bottom-nav">
-    <a href="./orders.html" class="bottom-nav-item active">
-      <i class="fa-solid fa-receipt"></i>
-      <span>Orders</span>
-    </a>
-    <a href="./dishes.html" class="bottom-nav-item">
-      <i class="fa-solid fa-utensils"></i>
-      <span>Dishes</span>
-    </a>
-    <a href="./inventory.html" class="bottom-nav-item">
-      <i class="fa-solid fa-box"></i>
-      <span>Inventory</span>
-    </a>
-    <a href="./history.html" class="bottom-nav-item">
-      <i class="fa-solid fa-clock-rotate-left"></i>
-      <span>History</span>
-    </a>
-    <a href="./settings.html" class="bottom-nav-item">
-      <i class="fa-solid fa-gear"></i>
-      <span>Settings</span>
-    </a>
-  </nav>
+    <main id="app" class="app"></main>
+    <script type="module" src="src/app.js"></script>
 </body>
-
 </html>
