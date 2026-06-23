@@ -1,0 +1,103 @@
+/* Main container */
+.access-denied-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Grid background texture */
+/* Main card */
+.error-card {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 500px;
+  background-color: var(--elevation-1-bg);
+  border: var(--elevation-border);
+  border-radius: var(--radius-lg);
+  padding: var(--stack-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--stack-md);
+  transition: border-color 0.3s ease, transform 0.1s ease-out;
+}
+
+.error-card:hover {
+  border-color: var(--brand-primary);
+}
+
+.error-icon-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 1px solid var(--color-outline);
+  background-color: var(--elevation-0-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--stack-sm);
+}
+
+.error-icon-container i {
+  font-size: 36px;
+  color: var(--brand-primary);
+  filter: drop-shadow(0 0 10px rgba(220, 20, 60, 0.6));
+}
+
+.error-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.error-title h1 {
+  color: var(--brand-primary);
+  font-size: 32px;
+  margin: 0;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.error-description {
+  color: var(--color-text-variant);
+  font-size: var(--font-size-body-lg);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+
+.action-buttons {
+  display: flex;
+  gap: var(--stack-md);
+  width: 100%;
+  justify-content: center;
+}
+
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 56px;
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-body-md);
+  font-weight: 600;
+  transition: all 0.2s;
+  padding: 0 24px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--brand-primary);
+  color: var(--color-white);
+}
+
+.btn-primary:hover {
+  background-color: var(--brand-primary-hover);
+}

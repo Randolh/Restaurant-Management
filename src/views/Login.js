@@ -1,0 +1,203 @@
+import { emitEvent, onEvent, offEvent } from '../utils/events.js';
+
+export default {
+    render(params) {
+        // Create wrapper
+        const wrapper = document.createElement('div');
+        wrapper.className = 'login-wrapper';
+
+        // Background pattern
+        const bgPattern = document.createElement('div');
+        bgPattern.className = 'bg-grid-pattern';
+        wrapper.appendChild(bgPattern);
+
+        // Main Card
+        const mainCard = document.createElement('main');
+        mainCard.className = 'login-card';
+        mainCard.id = 'loginCard';
+        wrapper.appendChild(mainCard);
+
+        // Header
+        const header = document.createElement('header');
+        header.className = 'login-header';
+        
+        const logoDiv = document.createElement('div');
+        logoDiv.className = 'login-logo';
+        const logoImg = document.createElement('img');
+        logoImg.src = './favicon.svg';
+        logoImg.alt = 'Restaurant Logo';
+        logoDiv.appendChild(logoImg);
+        
+        const title = document.createElement('h1');
+        title.textContent = 'Restaurant Management';
+        
+        header.appendChild(logoDiv);
+        header.appendChild(title);
+        mainCard.appendChild(header);
+
+        // Error Message Container
+        const errorMessage = document.createElement('div');
+        errorMessage.id = 'loginError';
+        errorMessage.style.color = 'var(--color-warning)';
+        errorMessage.style.fontSize = 'var(--font-size-body-sm)';
+        errorMessage.style.visibility = 'hidden';
+        errorMessage.style.minHeight = '20px';
+        errorMessage.style.marginTop = 'var(--stack-sm)';
+        errorMessage.style.textAlign = 'center';
+        errorMessage.style.fontWeight = '600';
+        mainCard.appendChild(errorMessage);
+
+        // Form
+        const form = document.createElement('form');
+        form.className = 'login-form';
+        form.id = 'loginForm';
+        mainCard.appendChild(form);
+
+        // Email Group
+        const emailGroup = document.createElement('div');
+        emailGroup.className = 'form-group';
+        
+        const emailLabel = document.createElement('label');
+        emailLabel.htmlFor = 'email';
+        emailLabel.textContent = 'Email';
+        
+        const emailWrapper = document.createElement('div');
+        emailWrapper.className = 'input-wrapper';
+        
+        const emailIcon = document.createElement('i');
+        emailIcon.className = 'fa-solid fa-envelope';
+        
+        const emailInput = document.createElement('input');
+        emailInput.type = 'email';
+        emailInput.id = 'email';
+        emailInput.placeholder = 'name@restaurant.com';
+        emailInput.required = true;
+        
+        emailWrapper.appendChild(emailIcon);
+        emailWrapper.appendChild(emailInput);
+        emailGroup.appendChild(emailLabel);
+        emailGroup.appendChild(emailWrapper);
+        form.appendChild(emailGroup);
+
+        // Password Group
+        const passwordGroup = document.createElement('div');
+        passwordGroup.className = 'form-group';
+        
+        const passwordHeader = document.createElement('div');
+        passwordHeader.className = 'password-header';
+        const passwordLabel = document.createElement('label');
+        passwordLabel.htmlFor = 'password';
+        passwordLabel.textContent = 'Password';
+        passwordHeader.appendChild(passwordLabel);
+        
+        const passwordWrapper = document.createElement('div');
+        passwordWrapper.className = 'input-wrapper';
+        
+        const passwordIcon = document.createElement('i');
+        passwordIcon.className = 'fa-solid fa-lock';
+        
+        const passwordInput = document.createElement('input');
+        passwordInput.type = 'password';
+        passwordInput.id = 'password';
+        passwordInput.placeholder = '••••••••';
+        passwordInput.required = true;
+        
+        const toggleBtn = document.createElement('button');
+        toggleBtn.type = 'button';
+        toggleBtn.id = 'togglePassword';
+        toggleBtn.ariaLabel = 'Show password';
+        const toggleIcon = document.createElement('i');
+        toggleIcon.className = 'fa-solid fa-eye';
+        toggleBtn.appendChild(toggleIcon);
+        
+        passwordWrapper.appendChild(passwordIcon);
+        passwordWrapper.appendChild(passwordInput);
+        passwordWrapper.appendChild(toggleBtn);
+        passwordGroup.appendChild(passwordHeader);
+        passwordGroup.appendChild(passwordWrapper);
+        form.appendChild(passwordGroup);
+
+        // Remember Me
+        const rememberDiv = document.createElement('div');
+        rememberDiv.className = 'remember-me';
+        
+        const rememberInput = document.createElement('input');
+        rememberInput.type = 'checkbox';
+        rememberInput.id = 'remember';
+        
+        const rememberLabel = document.createElement('label');
+        rememberLabel.htmlFor = 'remember';
+        rememberLabel.textContent = 'Stay signed in';
+        
+        rememberDiv.appendChild(rememberInput);
+        rememberDiv.appendChild(rememberLabel);
+        form.appendChild(rememberDiv);
+
+        // Submit Button
+        const submitBtn = document.createElement('button');
+        submitBtn.type = 'submit';
+        submitBtn.className = 'btn-primary';
+        
+        const submitText = document.createElement('span');
+        submitText.textContent = 'Login';
+        const submitIcon = document.createElement('i');
+        submitIcon.className = 'fa-solid fa-arrow-right';
+        
+        submitBtn.appendChild(submitText);
+        submitBtn.appendChild(submitIcon);
+        form.appendChild(submitBtn);
+
+        // Store params on wrapper so mount can read them
+        wrapper.dataset.nextUrl = params.next || '/';
+
+        return wrapper;
+    },
+
+    async mount(container) {
+        const form = container.querySelector('#loginForm');
+        const togglePassword = container.querySelector('#togglePassword');
+        const passwordInput = container.querySelector('#password');
+        const wrapper = container.querySelector('.login-wrapper');
+        const nextUrl = wrapper.dataset.nextUrl;
+
+        // Toggle password visibility
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            const icon = togglePassword.querySelector('i');
+            icon.className = type === 'password' ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash';
+        });
+
+        const loginError = container.querySelector('#loginError');
+
+        const handleLoginError = (e) => {
+            loginError.textContent = e.detail.message;
+            loginError.style.visibility = 'visible';
+        };
+        onEvent('auth:login-error', handleLoginError);
+        container._loginErrorHandler = handleLoginError;
+
+        // Form submission
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // clear previous error
+            loginError.style.visibility = 'hidden';
+            loginError.textContent = '';
+            
+            const email = form.querySelector('#email').value;
+            const password = passwordInput.value;
+            const remember = form.querySelector('#remember').checked;
+
+            emitEvent('auth:login', { email, password, remember, nextUrl });
+        });
+    },
+
+    unmount() {
+        const container = document.getElementById('main-content');
+        if (container && container._loginErrorHandler) {
+            offEvent('auth:login-error', container._loginErrorHandler);
+            delete container._loginErrorHandler;
+        }
+    }
+};
