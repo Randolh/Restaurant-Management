@@ -54,19 +54,38 @@ const AddOrderModal = () => {
     const customerInput = document.createElement('input');
     const phoneInput = document.createElement('input');
 
+    const getMaxPortions = (dish, inventoryItems) => {
+        if (!dish.recipe || dish.recipe.length === 0) return 999;
+        let minPortions = Infinity;
+        for (const ing of dish.recipe) {
+            const invItem = inventoryItems.find(i => i.id === ing.id);
+            const invQty = invItem && !invItem.deleted ? parseFloat(invItem.quantity) : 0;
+            const requiredQty = parseFloat(ing.qty);
+            if (requiredQty <= 0) continue;
+            const portions = Math.floor(invQty / requiredQty);
+            if (portions < minPortions) minPortions = portions;
+        }
+        return minPortions === Infinity ? 0 : minPortions;
+    };
+
     const renderDishGrid = () => {
         dishGrid.replaceChildren();
         if (!searchQuery.trim()) return; // Solo mostrar si hay busqueda
         
         const allDishes = getLocal('dishesItems', true) || [];
+        const inventoryItems = getLocal('inventoryItems', true) || [];
         const filtered = allDishes.filter(d => d.isAvailable && d.name.toLowerCase().includes(searchQuery.toLowerCase()));
         
         filtered.forEach(dish => {
+            const maxPortions = getMaxPortions(dish, inventoryItems);
+            const inCartItem = cart.find(item => item.dishId === dish.id);
+            const currentCartQty = inCartItem ? inCartItem.qty : 0;
+            const availableToAdd = maxPortions - currentCartQty;
+
             const card = document.createElement('div');
             card.className = 'order-dish-item is-search-result';
             
-            const inCart = cart.some(item => item.dishId === dish.id);
-            if (inCart) card.classList.add('selected');
+            if (inCartItem) card.classList.add('selected');
 
             const infoDiv = document.createElement('div');
             infoDiv.className = 'order-dish-info';
@@ -82,20 +101,35 @@ const AddOrderModal = () => {
             infoDiv.appendChild(nameText);
             infoDiv.appendChild(priceText);
 
+            if (maxPortions <= 0) {
+                const outOfStockText = document.createElement('span');
+                outOfStockText.className = 'text-warning';
+                outOfStockText.style.fontSize = 'var(--font-size-label-md)';
+                outOfStockText.textContent = t('orders.modal.outOfStock') || 'Out of Stock';
+                outOfStockText.style.display = 'block';
+                outOfStockText.style.marginTop = '4px';
+                infoDiv.appendChild(outOfStockText);
+            }
+
             const actionsCol = document.createElement('div');
             actionsCol.className = 'order-dish-actions';
 
             const addBtn = document.createElement('button');
             addBtn.className = 'btn-icon btn-small btn-circle';
             addBtn.title = 'Add';
-            addBtn.style.backgroundColor = 'var(--brand-primary)';
+            addBtn.style.backgroundColor = availableToAdd > 0 ? 'var(--brand-primary)' : 'var(--elevation-2-bg)';
             addBtn.style.color = '#fff';
+            if (availableToAdd <= 0) {
+                addBtn.disabled = true;
+                addBtn.style.cursor = 'not-allowed';
+            }
             
             const icon = document.createElement('i');
             icon.className = 'fa-solid fa-plus';
             addBtn.appendChild(icon);
             
             addBtn.addEventListener('click', () => {
+                if (availableToAdd <= 0) return;
                 const existing = cart.find(item => item.dishId === dish.id);
                 if (existing) {
                     existing.qty += 1;
@@ -160,19 +194,27 @@ const AddOrderModal = () => {
             const actionsCol = document.createElement('div');
             actionsCol.className = 'order-dish-actions';
 
+            const allDishes = getLocal('dishesItems', true) || [];
+            const inventoryItems = getLocal('inventoryItems', true) || [];
+            const dish = allDishes.find(d => d.id === item.dishId);
+            const maxPortions = dish ? getMaxPortions(dish, inventoryItems) : 999;
+
             const qtyInput = document.createElement('input');
             qtyInput.type = 'number';
             qtyInput.className = 'form-control inline-qty';
             qtyInput.value = item.qty;
             qtyInput.min = 1;
+            qtyInput.max = maxPortions;
             qtyInput.addEventListener('change', (e) => {
-                const val = parseInt(e.target.value, 10);
+                let val = parseInt(e.target.value, 10);
+                if (val > maxPortions) val = maxPortions;
                 if (val > 0) {
                     item.qty = val;
                 } else {
                     item.qty = 1;
                 }
                 renderTicket();
+                renderDishGrid();
             });
 
             const removeBtn = document.createElement('button');
