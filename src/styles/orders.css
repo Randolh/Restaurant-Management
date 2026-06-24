@@ -273,3 +273,196 @@
 .kanban-column.ready .btn-kanban:hover {
   filter: brightness(1.1);
 }
+
+/* POS Layout (Modal) */
+.pos-layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.pos-left-panel {
+  padding: var(--stack-lg);
+  padding-top: 0;
+  flex: 3;
+}
+
+.pos-right-panel {
+  padding: var(--stack-lg);
+  flex: 2;
+  background-color: var(--brand-neutral); /* optional distinct background */
+}
+
+@media (min-width: 900px) {
+  .pos-layout {
+    flex-direction: row;
+    align-items: stretch;
+  }
+  
+  .pos-right-panel {
+    padding-top: 0;
+    padding-left: 0;
+    border-left: 1px solid var(--color-outline);
+    background-color: transparent;
+  }
+}
+
+/* Ticket Panel Enhancements */
+.ticket-panel {
+  background-color: var(--elevation-1-bg);
+  border-radius: var(--radius-lg);
+  padding: var(--stack-lg);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px dashed var(--color-outline);
+  padding-bottom: var(--stack-md);
+  margin-bottom: var(--stack-md);
+}
+
+.ticket-header h4 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ticket-summary {
+  margin-top: auto;
+  border-top: 2px dashed var(--color-outline);
+  padding-top: var(--stack-md);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ticket-summary-row {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.ticket-summary-total {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-primary);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 2px solid var(--color-outline);
+}
+
+/* AddOrderModal Lists */
+.order-dish-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--color-outline);
+}
+
+.order-dish-item.is-search-result {
+  background-color: var(--elevation-1-bg);
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  border-bottom: none;
+  margin-bottom: 8px; /* space between search results */
+}
+
+.order-dish-item.is-search-result.selected {
+  opacity: 0.5;
+}
+
+.order-dish-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  min-width: 0; /* needed for flex child truncation */
+  gap: 12px;
+  margin-right: 12px;
+}
+
+.order-dish-name {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.order-dish-price {
+  color: var(--text-secondary);
+  font-size: 14px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.order-dish-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* POS Modal Overrides */
+.pos-modal-container {
+  max-width: 1000px;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.pos-modal-body {
+  padding: 0;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+}
+
+/* POS Layout Updates */
+.pos-layout {
+  height: 100%;
+  width: 100%;
+}
+
+.pos-left-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.pos-right-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Grids and Containers */
+.pos-dish-grid {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.ticket-items {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.ticket-empty-msg {
+  padding: 16px;
+  color: var(--text-secondary);
+}

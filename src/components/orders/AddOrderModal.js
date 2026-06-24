@@ -3,25 +3,25 @@ import { getLocal, setLocal } from '../../utils/storage.js';
 import { emitEvent, onEvent } from '../../utils/events.js';
 
 const AddOrderModal = () => {
-    const container = document.createElement('div');
-    container.className = 'modal';
+    const wrapper = document.createElement('div');
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.id = 'add-order-modal-toggle';
     checkbox.className = 'modal-toggle';
     checkbox.hidden = true;
-    container.appendChild(checkbox);
+    wrapper.appendChild(checkbox);
+
+    const modal = document.createElement('div');
+    modal.className = 'modal';
 
     const overlay = document.createElement('label');
     overlay.htmlFor = 'add-order-modal-toggle';
     overlay.className = 'modal-overlay';
-    container.appendChild(overlay);
+    modal.appendChild(overlay);
 
     const modalContainer = document.createElement('div');
-    modalContainer.className = 'modal-container';
-    modalContainer.style.maxWidth = '1000px';
-    modalContainer.style.padding = '0';
+    modalContainer.className = 'modal-container pos-modal-container';
 
     const header = document.createElement('div');
     header.className = 'modal-header';
@@ -32,9 +32,7 @@ const AddOrderModal = () => {
     modalContainer.appendChild(header);
 
     const body = document.createElement('div');
-    body.className = 'modal-body';
-    body.style.padding = '0';
-    body.style.paddingTop = '0';
+    body.className = 'modal-body pos-modal-body';
 
     const posLayout = document.createElement('div');
     posLayout.className = 'pos-layout';
@@ -42,11 +40,10 @@ const AddOrderModal = () => {
     // State
     let cart = [];
     let searchQuery = '';
-    const allDishes = getLocal('dishesItems', true) || [];
     
     // UI Elements that need re-rendering
     const dishGrid = document.createElement('div');
-    dishGrid.className = 'dish-select-grid';
+    dishGrid.className = 'pos-dish-grid';
     const ticketItemsContainer = document.createElement('div');
     ticketItemsContainer.className = 'ticket-items';
     const subtotalEl = document.createElement('span');
@@ -58,37 +55,40 @@ const AddOrderModal = () => {
 
     const renderDishGrid = () => {
         dishGrid.replaceChildren();
-        const filtered = allDishes.filter(d => d.name.toLowerCase().includes(searchQuery.toLowerCase()));
+        if (!searchQuery.trim()) return; // Solo mostrar si hay busqueda
+        
+        const allDishes = getLocal('dishesItems', true) || [];
+        const filtered = allDishes.filter(d => d.isAvailable && d.name.toLowerCase().includes(searchQuery.toLowerCase()));
         
         filtered.forEach(dish => {
             const card = document.createElement('div');
-            card.className = 'dish-select-card';
+            card.className = 'order-dish-item is-search-result';
             
             const inCart = cart.some(item => item.dishId === dish.id);
             if (inCart) card.classList.add('selected');
 
-            const img = document.createElement('img');
-            img.src = dish.image || './images/dish_ramen.png';
-            img.alt = dish.name;
-            
-            const info = document.createElement('div');
-            info.className = 'dish-select-info';
-            
-            const nameSpan = document.createElement('span');
-            nameSpan.className = 'dish-select-name';
-            nameSpan.textContent = dish.name;
-            
-            const bottomDiv = document.createElement('div');
-            bottomDiv.className = 'dish-select-bottom';
-            
-            const priceSpan = document.createElement('span');
-            priceSpan.className = 'dish-select-price';
-            priceSpan.textContent = `$${parseFloat(dish.price).toFixed(2)}`;
-            
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'order-dish-info';
+
+            const nameText = document.createElement('span');
+            nameText.className = 'order-dish-name';
+            nameText.textContent = dish.name;
+
+            const priceText = document.createElement('span');
+            priceText.className = 'order-dish-price';
+            priceText.textContent = `$${parseFloat(dish.price).toFixed(2)}`;
+
+            infoDiv.appendChild(nameText);
+            infoDiv.appendChild(priceText);
+
+            const actionsCol = document.createElement('div');
+            actionsCol.className = 'order-dish-actions';
+
             const addBtn = document.createElement('button');
             addBtn.className = 'btn-icon btn-small btn-circle';
             addBtn.title = 'Add';
-            addBtn.style.backgroundColor = 'var(--elevation-2-bg)';
+            addBtn.style.backgroundColor = 'var(--brand-primary)';
+            addBtn.style.color = '#fff';
             
             const icon = document.createElement('i');
             icon.className = 'fa-solid fa-plus';
@@ -110,12 +110,10 @@ const AddOrderModal = () => {
                 renderDishGrid(); // To update selection state
             });
 
-            bottomDiv.appendChild(priceSpan);
-            bottomDiv.appendChild(addBtn);
-            info.appendChild(nameSpan);
-            info.appendChild(bottomDiv);
-            card.appendChild(img);
-            card.appendChild(info);
+            actionsCol.appendChild(addBtn);
+
+            card.appendChild(infoDiv);
+            card.appendChild(actionsCol);
             
             dishGrid.appendChild(card);
         });
@@ -126,16 +124,19 @@ const AddOrderModal = () => {
         
         if (cart.length === 0) {
             const emptyMsg = document.createElement('div');
-            emptyMsg.style.padding = '16px';
-            emptyMsg.style.color = 'var(--text-secondary)';
+            emptyMsg.className = 'ticket-empty-msg';
             emptyMsg.textContent = t('orders.modal.emptyTicket');
             ticketItemsContainer.appendChild(emptyMsg);
             
             subtotalEl.textContent = '$0.00';
             taxEl.textContent = '$0.00';
             totalEl.textContent = '$0.00';
+            
+            if (window.confirmOrderBtn) window.confirmOrderBtn.disabled = true;
             return;
         }
+
+        if (window.confirmOrderBtn) window.confirmOrderBtn.disabled = false;
 
         let subtotal = 0;
 
@@ -144,30 +145,19 @@ const AddOrderModal = () => {
             subtotal += itemTotal;
 
             const row = document.createElement('div');
-            row.className = 'recipe-item';
-            row.style.backgroundColor = 'transparent';
-            row.style.padding = '0';
+            row.className = 'order-dish-item';
 
-            const nameCol = document.createElement('div');
-            nameCol.className = 'recipe-item-name';
-            nameCol.style.flexDirection = 'column';
-            nameCol.style.alignItems = 'flex-start';
-            nameCol.style.gap = '2px';
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'order-dish-info';
 
             const nameText = document.createElement('span');
-            nameText.style.fontWeight = '600';
+            nameText.className = 'order-dish-name';
             nameText.textContent = item.name;
 
-            const priceText = document.createElement('span');
-            priceText.className = 'stock-info';
-            priceText.style.margin = '0';
-            priceText.textContent = `$${item.price.toFixed(2)}`;
-
-            nameCol.appendChild(nameText);
-            nameCol.appendChild(priceText);
+            infoDiv.appendChild(nameText);
 
             const actionsCol = document.createElement('div');
-            actionsCol.className = 'recipe-item-actions';
+            actionsCol.className = 'order-dish-actions';
 
             const qtyInput = document.createElement('input');
             qtyInput.type = 'number';
@@ -197,10 +187,16 @@ const AddOrderModal = () => {
                 renderDishGrid(); // Update selection state
             });
 
+            const priceText = document.createElement('span');
+            priceText.className = 'order-dish-price';
+            priceText.textContent = `$${item.price.toFixed(2)} x`;
+            priceText.style.marginRight = '4px';
+
+            actionsCol.appendChild(priceText);
             actionsCol.appendChild(qtyInput);
             actionsCol.appendChild(removeBtn);
 
-            row.appendChild(nameCol);
+            row.appendChild(infoDiv);
             row.appendChild(actionsCol);
             ticketItemsContainer.appendChild(row);
         });
@@ -216,8 +212,7 @@ const AddOrderModal = () => {
 
     // --- Left Panel ---
     const leftPanel = document.createElement('div');
-    leftPanel.style.padding = 'var(--stack-lg)';
-    leftPanel.style.paddingTop = '0';
+    leftPanel.className = 'pos-left-panel';
 
     const formRow = document.createElement('div');
     formRow.className = 'form-row';
@@ -254,19 +249,17 @@ const AddOrderModal = () => {
     searchInput.type = 'text';
     searchInput.className = 'form-control';
     searchInput.placeholder = t('orders.modal.search');
+    
+    let searchTimeout;
     searchInput.addEventListener('input', (e) => {
-        searchQuery = e.target.value;
-        renderDishGrid();
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            searchQuery = e.target.value;
+            renderDishGrid();
+        }, 300); // 300ms debounce
     });
     
-    const searchBtn = document.createElement('button');
-    searchBtn.className = 'btn-primary';
-    searchBtn.style.padding = '0 16px';
-    const searchIcon = document.createElement('i');
-    searchIcon.className = 'fa-solid fa-magnifying-glass';
-    searchBtn.appendChild(searchIcon);
     searchWrap.appendChild(searchInput);
-    searchWrap.appendChild(searchBtn);
 
     leftPanel.appendChild(formRow);
     leftPanel.appendChild(searchWrap);
@@ -274,9 +267,7 @@ const AddOrderModal = () => {
 
     // --- Right Panel ---
     const rightPanel = document.createElement('div');
-    rightPanel.style.padding = 'var(--stack-lg)';
-    rightPanel.style.paddingTop = '0';
-    rightPanel.style.paddingLeft = '0';
+    rightPanel.className = 'pos-right-panel';
 
     const ticketPanel = document.createElement('div');
     ticketPanel.className = 'ticket-panel';
@@ -340,12 +331,10 @@ const AddOrderModal = () => {
     const confirmBtn = document.createElement('button');
     confirmBtn.className = 'btn-primary';
     confirmBtn.textContent = t('orders.modal.confirm');
+    window.confirmOrderBtn = confirmBtn; // Expose globally just to update state in renderTicket
     
     confirmBtn.addEventListener('click', () => {
-        if (cart.length === 0) {
-            emitEvent('showToast', { message: 'Cannot create empty order', type: 'warning' });
-            return;
-        }
+        if (cart.length === 0) return;
 
         const newOrder = {
             id: Math.floor(1000 + Math.random() * 9000).toString(),
@@ -364,14 +353,14 @@ const AddOrderModal = () => {
         setLocal('ordersItems', currentOrders, true);
         
         emitEvent('ordersUpdated');
-        emitEvent('showToast', { message: 'Order created successfully', type: 'success' });
         checkbox.checked = false; // close modal
     });
 
     footer.appendChild(cancelBtn);
     footer.appendChild(confirmBtn);
     modalContainer.appendChild(footer);
-    container.appendChild(modalContainer);
+    modal.appendChild(modalContainer);
+    wrapper.appendChild(modal);
 
     onEvent('openAddOrderModal', () => {
         cart = [];
@@ -388,7 +377,7 @@ const AddOrderModal = () => {
     renderDishGrid();
     renderTicket();
 
-    return container;
+    return wrapper;
 };
 
 export default AddOrderModal;
