@@ -159,7 +159,7 @@ export default {
                 else if (stockVal < min * 2.5) progressClass = 'warning';
                 
                 const maxTheoretical = min > 0 ? min * 5 : 100;
-                const progressWidth = `${Math.min((stockVal / maxTheoretical) * 100, 100)}%`;
+                const progressWidth = `${Math.round(Math.min((stockVal / maxTheoretical) * 100, 100))}%`;
                 const stockPercent = progressWidth;
 
                 return {
