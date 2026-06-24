@@ -196,6 +196,15 @@ export default {
             
             const costInput = document.getElementById('item-cost');
             if (costInput) costInput.value = '';
+            
+            const catSelect = document.getElementById('category-select');
+            if (catSelect) catSelect.value = 'Other';
+
+            const defaultCheck = document.getElementById('unit-default-checkbox');
+            if (defaultCheck) {
+                defaultCheck.checked = true;
+                defaultCheck.dispatchEvent(new Event('change'));
+            }
 
             const toggle = document.getElementById('add-item-modal-toggle');
             if (toggle) toggle.checked = true;
