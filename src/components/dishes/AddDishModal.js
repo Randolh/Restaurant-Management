@@ -5,6 +5,8 @@ import { t } from '../../utils/i18n.js';
 import showToast from '../ui/Toast.js';
 import RecipeBuilder from './RecipeBuilder.js';
 import ImagePreview from './ImagePreview.js';
+import FormError from '../ui/FormError.js';
+import { validateDishForm, isValidImageUrl } from '../../utils/validators.js';
 
 export default function AddDishModal() {
     const wrapper = document.createElement('div');
@@ -50,6 +52,11 @@ export default function AddDishModal() {
     const form = document.createElement('form');
     form.id = 'add-dish-form';
     form.className = 'modal-body';
+    form.noValidate = true;
+
+    // Form Error
+    const formError = FormError();
+    form.appendChild(formError.element);
 
     // Row 1
     const formRow1 = document.createElement('div');
@@ -219,8 +226,9 @@ export default function AddDishModal() {
     wrapper.appendChild(modal);
 
     // --- Form Submission ---
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        formError.hide();
         
         const name = inputName.value.trim();
         const category = selectCat.value;
@@ -228,6 +236,20 @@ export default function AddDishModal() {
         const image = inputImage.value.trim();
         const description = inputDesc.value.trim();
         const isAvailable = inputAvail.checked;
+
+        const validation = validateDishForm({ name, price });
+        if (!validation.isValid) {
+            formError.show(validation.errors);
+            return;
+        }
+
+        if (image) {
+            const isValidImage = await isValidImageUrl(image);
+            if (!isValidImage) {
+                formError.show([t('dishModal.err.image') || 'Invalid image URL or image failed to load.']);
+                return;
+            }
+        }
         
         const dishes = getLocal('dishesItems', true) || [];
         const editId = saveBtn.dataset.editId;
@@ -263,6 +285,7 @@ export default function AddDishModal() {
         
         toggle.checked = false;
         form.reset();
+        formError.hide();
         imagePreview.reset();
     });
 
@@ -273,6 +296,7 @@ export default function AddDishModal() {
         saveBtn.dataset.editId = '';
         
         form.reset();
+        formError.hide();
         imagePreview.reset();
         recipeBuilder.setInventoryItems(getLocal('inventoryItems', true) || []);
         recipeBuilder.setRecipe([]);
@@ -291,6 +315,7 @@ export default function AddDishModal() {
         inputDesc.value = dish.description || '';
         inputAvail.checked = dish.isAvailable !== undefined ? dish.isAvailable : true;
 
+        formError.hide();
         imagePreview.setPreviewUrl(dish.image || '');
         
         recipeBuilder.setInventoryItems(getLocal('inventoryItems', true) || []);

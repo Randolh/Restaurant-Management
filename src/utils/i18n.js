@@ -60,6 +60,9 @@ const locales = {
         'dishModal.ingredients': 'Ingredients',
         'dishModal.ingredients.search': 'Search ingredient...',
         'dishModal.ingredients.empty': 'No ingredients added',
+        'dishModal.err.name': '• Dish name is required.',
+        'dishModal.err.price': '• Price must be a valid positive number.',
+        'dishModal.err.image': '• Invalid image URL or image failed to load.',
 
         'table.empty': 'No items found in inventory. Click "Add Item" to start.',
         'table.searchEmpty': 'No items matched your search.',
@@ -242,6 +245,9 @@ const locales = {
         'dishModal.ingredients': 'Ingredientes',
         'dishModal.ingredients.search': 'Buscar ingrediente...',
         'dishModal.ingredients.empty': 'Sin ingredientes añadidos',
+        'dishModal.err.name': '• El nombre del platillo es obligatorio.',
+        'dishModal.err.price': '• El precio debe ser un número positivo válido.',
+        'dishModal.err.image': '• URL de imagen inválida o no se pudo cargar.',
 
         'table.empty': 'No hay productos en el inventario. Haz clic en "Añadir" para comenzar.',
         'table.searchEmpty': 'No se han encontrado productos con esa búsqueda.',
