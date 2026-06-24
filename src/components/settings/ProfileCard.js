@@ -19,19 +19,35 @@ export const ProfileCard = () => {
     const avatarUpload = document.createElement('div');
     avatarUpload.className = 'settings-avatar-upload';
     
+    let isLogoValid = true;
     const avatarBox = document.createElement('div');
     avatarBox.className = 'settings-avatar';
+
     const renderAvatarPreview = (url) => {
         avatarBox.innerHTML = '';
         if (url) {
             const img = document.createElement('img');
-            img.src = url;
             img.style.width = '100%';
             img.style.height = '100%';
             img.style.objectFit = 'contain';
             img.style.borderRadius = '8px';
-            avatarBox.appendChild(img);
+            
+            img.onload = () => {
+                isLogoValid = true;
+                avatarBox.appendChild(img);
+            };
+            
+            img.onerror = () => {
+                isLogoValid = false;
+                const errorIcon = document.createElement('i');
+                errorIcon.className = 'fa-solid fa-triangle-exclamation';
+                errorIcon.style.color = 'var(--color-warning)';
+                avatarBox.appendChild(errorIcon);
+            };
+            
+            img.src = url;
         } else {
+            isLogoValid = true;
             const avatarIcon = document.createElement('i');
             avatarIcon.className = 'fa-solid fa-shop';
             avatarBox.appendChild(avatarIcon);
@@ -115,6 +131,11 @@ export const ProfileCard = () => {
         const name = nameInput.value.trim();
         const subtitle = subtitleInput.value.trim();
         const logo = logoInput.value.trim();
+        
+        if (logo && !isLogoValid) {
+            showToast(t('settings.profile.logo.error'), 'error');
+            return;
+        }
         
         setLocal('restaurant_profile', { name, subtitle, logo }, true);
         showToast(t('settings.profile.success'), 'success');
