@@ -6,7 +6,10 @@ import { OrderDetailsModal } from '../components/orders/OrderDetailsModal.js';
 export default {
     render() {
         const wrapper = document.createElement('div');
-        wrapper.className = 'page-content history-page';
+        wrapper.className = 'history-layout';
+        
+        const pageContent = document.createElement('div');
+        pageContent.className = 'page-content';
         
         // Header
         const header = document.createElement('div');
@@ -89,8 +92,8 @@ export default {
         tableResponsive.appendChild(table);
         dataContainer.appendChild(tableResponsive);
         
-        wrapper.appendChild(header);
-        wrapper.appendChild(dataContainer);
+        pageContent.appendChild(header);
+        pageContent.appendChild(dataContainer);
         
         // Append Modal
         const detailsModal = OrderDetailsModal();
@@ -98,34 +101,56 @@ export default {
         
         let allOrders = [];
         let currentPage = 1;
-        const itemsPerPage = 8;
+        const itemsPerPage = 12;
         let currentQuery = '';
         let currentDate = '';
         
-        const paginationContainer = document.createElement('div');
-        paginationContainer.className = 'pagination';
-        wrapper.appendChild(paginationContainer);
+        const tableFooter = document.createElement('div');
+        tableFooter.className = 'table-footer pagination';
+        pageContent.appendChild(tableFooter);
+        
+        wrapper.appendChild(pageContent);
 
         const renderPagination = (totalItems) => {
-            paginationContainer.replaceChildren();
+            tableFooter.replaceChildren();
+
+            const tableInfo = document.createElement('span');
+            tableInfo.className = 'table-info';
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const startDisplay = totalItems === 0 ? 0 : startIndex + 1;
+            const endDisplay = Math.min(endIndex, totalItems);
+            tableInfo.textContent = t('table.showing', { start: startDisplay, end: endDisplay, total: totalItems }) || `Showing ${startDisplay}-${endDisplay} of ${totalItems}`;
+            tableFooter.appendChild(tableInfo);
+
+            const paginationControls = document.createElement('div');
+            paginationControls.className = 'pagination-controls';
+
             const totalPages = Math.ceil(totalItems / itemsPerPage);
-            if (totalPages <= 1) return;
 
             const prevBtn = document.createElement('button');
             prevBtn.className = 'page-btn';
             const prevIcon = document.createElement('i');
             prevIcon.className = 'fa-solid fa-chevron-left';
             prevBtn.appendChild(prevIcon);
-            prevBtn.disabled = currentPage === 1;
-            prevBtn.addEventListener('click', () => {
-                if (currentPage > 1) {
+            if (currentPage <= 1) {
+                prevBtn.style.opacity = '0.5';
+                prevBtn.style.cursor = 'not-allowed';
+            } else {
+                prevBtn.addEventListener('click', () => {
                     currentPage--;
                     renderTable();
-                }
-            });
-            paginationContainer.appendChild(prevBtn);
+                });
+            }
+            paginationControls.appendChild(prevBtn);
 
-            for (let i = 1; i <= totalPages; i++) {
+            let startPage = Math.max(1, currentPage - 1);
+            let endPage = Math.min(Math.max(totalPages, 1), startPage + 2);
+            if (endPage - startPage < 2 && Math.max(totalPages, 1) >= 3) {
+                startPage = Math.max(1, endPage - 2);
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
                 const pageBtn = document.createElement('button');
                 pageBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
                 pageBtn.textContent = i;
@@ -133,7 +158,7 @@ export default {
                     currentPage = i;
                     renderTable();
                 });
-                paginationContainer.appendChild(pageBtn);
+                paginationControls.appendChild(pageBtn);
             }
 
             const nextBtn = document.createElement('button');
@@ -141,14 +166,18 @@ export default {
             const nextIcon = document.createElement('i');
             nextIcon.className = 'fa-solid fa-chevron-right';
             nextBtn.appendChild(nextIcon);
-            nextBtn.disabled = currentPage === totalPages;
-            nextBtn.addEventListener('click', () => {
-                if (currentPage < totalPages) {
+            if (currentPage >= totalPages || totalPages === 0) {
+                nextBtn.style.opacity = '0.5';
+                nextBtn.style.cursor = 'not-allowed';
+            } else {
+                nextBtn.addEventListener('click', () => {
                     currentPage++;
                     renderTable();
-                }
-            });
-            paginationContainer.appendChild(nextBtn);
+                });
+            }
+            paginationControls.appendChild(nextBtn);
+
+            tableFooter.appendChild(paginationControls);
         };
         
         const renderTable = () => {

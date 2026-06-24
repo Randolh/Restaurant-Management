@@ -294,6 +294,8 @@
   align-items: center;
   justify-content: space-between;
   border-top: var(--elevation-border);
+  border-bottom-left-radius: var(--radius-lg);
+  border-bottom-right-radius: var(--radius-lg);
 }
 
 .table-info {
@@ -334,12 +336,12 @@
   border-color: var(--brand-primary);
 }
 
-/* Global layout for history/inventory pages to keep pagination at bottom and scroll table internally */
-.history-layout .main-content {
+/* Global layout for history pages to keep pagination at bottom and scroll table internally */
+.history-layout {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  height: 100dvh; /* Better for mobile browsers with address bars */
+  flex: 1;
+  min-height: 0;
 }
 .history-layout .page-content {
   flex-grow: 1;
