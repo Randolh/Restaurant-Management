@@ -135,6 +135,11 @@ const setupEventListeners = () => {
         const profile = getLocal('restaurant_profile', true) || {};
         document.title = profile.name || 'Restaurant Management';
         
+        const link = document.querySelector("link[rel~='icon']");
+        if (link) {
+            link.href = profile.logo || './favicon.svg';
+        }
+        
         const isProtected = !!getSession('session_token');
         renderLayout(isProtected);
         const currentPath = window.location.hash.replace('#', '') || '/';
@@ -146,10 +151,14 @@ const initApp = () => {
     initializeSession()
     setupEventListeners()
     
-    // Set initial title if exists
+    // Set initial title and favicon if exists
     const profile = getLocal('restaurant_profile', true) || {};
     if (profile.name) {
         document.title = profile.name;
+    }
+    const link = document.querySelector("link[rel~='icon']");
+    if (link && profile.logo) {
+        link.href = profile.logo;
     }
     
     // Initial render assumes unprotected layout (no header),  

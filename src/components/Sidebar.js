@@ -22,7 +22,7 @@ export default function Sidebar() {
     const profile = getLocal('restaurant_profile', true) || {};
     
     const logoImg = document.createElement('img');
-    logoImg.src = './favicon.svg';
+    logoImg.src = profile.logo || './favicon.svg';
     logoImg.alt = 'Restaurant Logo';
     // Small styling tweak if user uploads a logo to ensure it fits the box:
     logoImg.style.objectFit = 'contain';

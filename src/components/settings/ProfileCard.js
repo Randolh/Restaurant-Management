@@ -21,9 +21,22 @@ export const ProfileCard = () => {
     
     const avatarBox = document.createElement('div');
     avatarBox.className = 'settings-avatar';
-    const avatarIcon = document.createElement('i');
-    avatarIcon.className = 'fa-solid fa-shop';
-    avatarBox.appendChild(avatarIcon);
+    const renderAvatarPreview = (url) => {
+        avatarBox.innerHTML = '';
+        if (url) {
+            const img = document.createElement('img');
+            img.src = url;
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'contain';
+            img.style.borderRadius = '8px';
+            avatarBox.appendChild(img);
+        } else {
+            const avatarIcon = document.createElement('i');
+            avatarIcon.className = 'fa-solid fa-shop';
+            avatarBox.appendChild(avatarIcon);
+        }
+    };
     
     const avatarInputGroup = document.createElement('div');
     avatarInputGroup.style.flex = '1';
@@ -77,6 +90,12 @@ export const ProfileCard = () => {
     nameInput.value = profile.name || '';
     subtitleInput.value = profile.subtitle || '';
     logoInput.value = profile.logo || '';
+    
+    renderAvatarPreview(profile.logo || '');
+    
+    logoInput.addEventListener('input', (e) => {
+        renderAvatarPreview(e.target.value.trim());
+    });
     
     nameGroup.appendChild(nameLabel);
     nameGroup.appendChild(nameInput);
