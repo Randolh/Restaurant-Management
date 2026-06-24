@@ -16,6 +16,10 @@ export default {
         const pageContent = document.createElement('div');
         pageContent.className = 'page-content';
 
+        // Sticky Container for Header and Actions
+        const stickyHeader = document.createElement('div');
+        stickyHeader.className = 'sticky-header';
+
         // Page Header
         const pageHeader = document.createElement('div');
         pageHeader.className = 'page-header';
@@ -36,7 +40,7 @@ export default {
         });
         pageHeader.appendChild(addBtn);
         
-        pageContent.appendChild(pageHeader);
+        stickyHeader.appendChild(pageHeader);
 
         // Action Bar
         const actionBar = document.createElement('div');
@@ -111,7 +115,9 @@ export default {
         actionBar.appendChild(searchComponent);
         actionBar.appendChild(filterCatSelect);
         actionBar.appendChild(filterStatusSelect);
-        pageContent.appendChild(actionBar);
+        
+        stickyHeader.appendChild(actionBar);
+        pageContent.appendChild(stickyHeader);
 
         // Data Container
         const dataContainer = document.createElement('div');

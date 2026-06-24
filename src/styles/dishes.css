@@ -70,6 +70,24 @@
   border-color: var(--color-outline);
 }
 
+/* Sticky Header */
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--brand-neutral);
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack-md);
+  padding-top: var(--stack-lg);
+  padding-bottom: var(--stack-md);
+  margin-top: calc(-1 * var(--stack-lg));
+  margin-left: calc(-1 * var(--stack-sm));
+  margin-right: calc(-1 * var(--stack-sm));
+  padding-left: var(--stack-sm);
+  padding-right: var(--stack-sm);
+}
+
 /* Dishes View Specifics */
 .dishes-action-bar {
   display: flex;
