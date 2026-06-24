@@ -35,7 +35,7 @@ export const ProfileCard = () => {
     logoInput.placeholder = 'https://example.com/logo.png';
     
     const logoHint = document.createElement('p');
-    logoHint.textContent = 'Paste a valid image URL (JPG, PNG)';
+    logoHint.textContent = t('settings.profile.logo.hint');
     logoHint.style.fontSize = '12px';
     logoHint.style.color = 'var(--color-text-variant)';
     logoHint.style.margin = '4px 0 0 0';
@@ -55,7 +55,8 @@ export const ProfileCard = () => {
     const nameInput = document.createElement('input');
     nameInput.type = 'text';
     nameInput.className = 'form-control';
-    nameInput.value = 'My Awesome Restaurant';
+    nameInput.placeholder = t('settings.profile.name.placeholder');
+    nameInput.value = 'My Awesome Restaurant'; // Can keep a default value, or set value from storage later
     nameGroup.appendChild(nameLabel);
     nameGroup.appendChild(nameInput);
     

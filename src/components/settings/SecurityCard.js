@@ -35,7 +35,7 @@ export const SecurityCard = () => {
     const newPassInput = document.createElement('input');
     newPassInput.type = 'password';
     newPassInput.className = 'form-control';
-    newPassInput.placeholder = 'New Password';
+    newPassInput.placeholder = t('settings.security.new');
     newPassGroup.appendChild(newPassLabel);
     newPassGroup.appendChild(newPassInput);
     
@@ -47,7 +47,7 @@ export const SecurityCard = () => {
     const confPassInput = document.createElement('input');
     confPassInput.type = 'password';
     confPassInput.className = 'form-control';
-    confPassInput.placeholder = 'Confirm Password';
+    confPassInput.placeholder = t('settings.security.confirm');
     confPassGroup.appendChild(confPassLabel);
     confPassGroup.appendChild(confPassInput);
     
