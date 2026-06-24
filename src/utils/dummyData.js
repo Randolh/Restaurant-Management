@@ -1,7 +1,7 @@
 export const getDummyData = () => {
-    const now = new Date().toISOString();
-    const past1 = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(); // 2 hours ago
-    const past2 = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(); // 1 day ago
+    const now = Date.now();
+    const past1 = Date.now() - 2 * 60 * 60 * 1000; // 2 hours ago
+    const past2 = Date.now() - 24 * 60 * 60 * 1000; // 1 day ago
 
     const dummyInventory = [
         { id: 'inv_1', name: 'Tomate', category: 'Vegetables', stock: 120, minStock: 50, cost: 0.5, unit: 'Kilogram (kg)', icon: 'fa-carrot' },
