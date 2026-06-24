@@ -375,7 +375,12 @@
 .btn-icon {
   width: 32px;
   height: 32px;
-  border-radius: var(--radius-sm);
+  min-height: 32px;
+  min-width: 32px;
+  padding: 0;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  border-radius: 50%;
   background: transparent;
   color: var(--color-text-variant);
   border: 1px solid transparent;
