@@ -620,3 +620,22 @@
     width: 65px;
   }
 }
+/* History Order ID Clickable Link */
+.history-order-id-link {
+  color: var(--brand-primary);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.history-order-id-link:hover {
+  color: var(--brand-primary-dark);
+}
+
+/* Hide Actions Column on Mobile */
+@media (max-width: 768px) {
+  .history-action-col {
+    display: none;
+  }
+}

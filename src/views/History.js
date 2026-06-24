@@ -80,6 +80,7 @@ export default {
         trHead.appendChild(thStatus);
 
         const thAction = document.createElement('th');
+        thAction.className = 'history-action-col';
         thAction.textContent = t('history.col.action') || 'Action';
         trHead.appendChild(thAction);
 
@@ -238,6 +239,11 @@ export default {
                 
                 const tdId = document.createElement('td');
                 tdId.textContent = '#' + order.id;
+                tdId.className = 'history-order-id-link';
+                tdId.title = t('orders.card.btn.ready') || 'View Details'; // Optional tooltip
+                tdId.addEventListener('click', () => {
+                    emitEvent('openOrderDetails', { order });
+                });
                 tr.appendChild(tdId);
                 
                 const tdDate = document.createElement('td');
@@ -261,6 +267,7 @@ export default {
                 tr.appendChild(tdStatus);
                 
                 const actionTd = document.createElement('td');
+                actionTd.className = 'history-action-col';
                 const viewBtn = document.createElement('button');
                 viewBtn.className = 'btn-icon';
                 viewBtn.title = 'View Details';
