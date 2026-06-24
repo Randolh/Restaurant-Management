@@ -15,13 +15,21 @@ export default function FormError() {
             return;
         }
         const errorList = Array.isArray(errors) ? errors : [errors];
-        errorContainer.innerHTML = errorList.join('<br>');
+        errorContainer.textContent = '';
+        errorList.forEach((err, index) => {
+            const span = document.createElement('span');
+            span.textContent = err;
+            errorContainer.appendChild(span);
+            if (index < errorList.length - 1) {
+                errorContainer.appendChild(document.createElement('br'));
+            }
+        });
         errorContainer.style.display = 'block';
     };
 
     const hide = () => {
         errorContainer.style.display = 'none';
-        errorContainer.innerHTML = '';
+        errorContainer.textContent = '';
     };
 
     return {

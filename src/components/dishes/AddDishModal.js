@@ -155,7 +155,7 @@ export default function AddDishModal() {
     groupImagePreview.className = 'form-group';
     const emptyLabel = document.createElement('label');
     emptyLabel.className = 'form-label';
-    emptyLabel.innerHTML = '&nbsp;';
+    emptyLabel.textContent = '\u00A0';
     groupImagePreview.appendChild(emptyLabel);
     groupImagePreview.appendChild(imagePreview.element);
 
@@ -301,7 +301,10 @@ export default function AddDishModal() {
     const deleteBtn = document.createElement('button');
     deleteBtn.type = 'button';
     deleteBtn.className = 'btn-secondary';
-    deleteBtn.innerHTML = `<i class="fa-solid fa-trash-can"></i> ` + (t('btn.delete') || 'Delete');
+    const delIcon = document.createElement('i');
+    delIcon.className = 'fa-solid fa-trash-can';
+    deleteBtn.appendChild(delIcon);
+    deleteBtn.appendChild(document.createTextNode(' ' + (t('btn.delete') || 'Delete')));
     deleteBtn.style.color = 'var(--brand-primary)'; // Use red color
     deleteBtn.style.marginRight = 'auto'; // Push other buttons to the right
     deleteBtn.style.display = 'none';

@@ -119,7 +119,7 @@ export default {
                 return acc + (Number(item.stock || 0) * Number(item.cost || 0));
             }, 0);
 
-            kpiContainer.innerHTML = '';
+            kpiContainer.textContent = '';
             const kpis = [
                 { title: t('inventory.kpi.total'), value: totalItems.toString() },
                 { 
@@ -174,7 +174,7 @@ export default {
                 };
             });
 
-            tableContainer.innerHTML = '';
+            tableContainer.textContent = '';
             
             if (formattedData.length === 0) {
                 const emptyMessage = document.createElement('div');

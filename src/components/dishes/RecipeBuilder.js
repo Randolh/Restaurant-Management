@@ -34,7 +34,7 @@ export default function RecipeBuilder(onChange) {
     wrapper.appendChild(colList);
 
     const renderRecipeList = () => {
-        recipeListBox.innerHTML = '';
+        recipeListBox.textContent = '';
         if (currentRecipe.length === 0) {
             const emptyDiv = document.createElement('div');
             emptyDiv.className = 'recipe-empty-state';
@@ -62,7 +62,10 @@ export default function RecipeBuilder(onChange) {
                 nameSpan.classList.add('text-warning');
                 const warnLbl = document.createElement('div');
                 warnLbl.className = 'recipe-item-warning';
-                warnLbl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${t('dishModal.ingredients.deleted') || 'Deleted from inventory'}`;
+                const warnIcon = document.createElement('i');
+                warnIcon.className = 'fa-solid fa-triangle-exclamation';
+                warnLbl.appendChild(warnIcon);
+                warnLbl.appendChild(document.createTextNode(' ' + (t('dishModal.ingredients.deleted') || 'Deleted from inventory')));
                 
                 const wrapperDiv = document.createElement('div');
                 wrapperDiv.className = 'ingredient-name-container';
@@ -122,7 +125,7 @@ export default function RecipeBuilder(onChange) {
     };
 
     const renderSearchDropdown = (query) => {
-        searchDropdown.innerHTML = '';
+        searchDropdown.textContent = '';
         if (!query) {
             searchDropdown.style.display = 'none';
             return;

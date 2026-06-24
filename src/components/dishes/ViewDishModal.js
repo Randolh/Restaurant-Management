@@ -182,7 +182,16 @@ export default function ViewDishModal() {
         
         if (hasDeletedIngredients) {
             warningBanner.style.display = 'flex';
-            warningBanner.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <span>${t('dishes.warning.deletedIngredient') || 'Warning: Recipe contains deleted ingredients'}</span>`;
+            warningBanner.textContent = '';
+            
+            const warnIcon = document.createElement('i');
+            warnIcon.className = 'fa-solid fa-triangle-exclamation';
+            
+            const warnText = document.createElement('span');
+            warnText.textContent = t('dishes.warning.deletedIngredient') || 'Warning: Recipe contains deleted ingredients';
+            
+            warningBanner.appendChild(warnIcon);
+            warningBanner.appendChild(warnText);
         } else {
             warningBanner.style.display = 'none';
         }

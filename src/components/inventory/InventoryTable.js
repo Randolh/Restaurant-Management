@@ -33,7 +33,7 @@ export default function InventoryTable(data) {
     const itemsPerPage = 12;
 
     const renderPage = () => {
-        tbody.innerHTML = '';
+        tbody.textContent = '';
         
         const totalItems = data.length;
         const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
@@ -155,7 +155,7 @@ export default function InventoryTable(data) {
         });
 
         // Pagination Footer Update
-        tableFooter.innerHTML = '';
+        tableFooter.textContent = '';
         
         const tableInfo = document.createElement('span');
         tableInfo.className = 'table-info';
@@ -169,7 +169,9 @@ export default function InventoryTable(data) {
         
         const prevBtn = document.createElement('button');
         prevBtn.className = 'page-btn';
-        prevBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
+        const prevIcon = document.createElement('i');
+        prevIcon.className = 'fa-solid fa-chevron-left';
+        prevBtn.appendChild(prevIcon);
         if (currentPage <= 1) {
             prevBtn.style.opacity = '0.5';
             prevBtn.style.cursor = 'not-allowed';
@@ -200,7 +202,9 @@ export default function InventoryTable(data) {
 
         const nextBtn = document.createElement('button');
         nextBtn.className = 'page-btn';
-        nextBtn.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
+        const nextIcon = document.createElement('i');
+        nextIcon.className = 'fa-solid fa-chevron-right';
+        nextBtn.appendChild(nextIcon);
         if (currentPage >= totalPages) {
             nextBtn.style.opacity = '0.5';
             nextBtn.style.cursor = 'not-allowed';

@@ -59,11 +59,15 @@ export default function KpiGrid(kpis) {
     // Setup Mobile Carousel
     const btnLeft = document.createElement('button');
     btnLeft.className = 'kpi-carousel-btn';
-    btnLeft.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
+    const iconLeft = document.createElement('i');
+    iconLeft.className = 'fa-solid fa-chevron-left';
+    btnLeft.appendChild(iconLeft);
     
     const btnRight = document.createElement('button');
     btnRight.className = 'kpi-carousel-btn';
-    btnRight.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
+    const iconRight = document.createElement('i');
+    iconRight.className = 'fa-solid fa-chevron-right';
+    btnRight.appendChild(iconRight);
     
     const carouselContent = document.createElement('div');
     carouselContent.className = 'kpi-carousel-content';
