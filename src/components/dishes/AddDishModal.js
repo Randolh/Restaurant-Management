@@ -140,8 +140,17 @@ export default function AddDishModal() {
         }
     });
 
+    // Wrap image preview in a form-group to align with input
+    const groupImagePreview = document.createElement('div');
+    groupImagePreview.className = 'form-group';
+    const emptyLabel = document.createElement('label');
+    emptyLabel.className = 'form-label';
+    emptyLabel.innerHTML = '&nbsp;';
+    groupImagePreview.appendChild(emptyLabel);
+    groupImagePreview.appendChild(imagePreviewBox);
+
     formRow1.appendChild(col1);
-    formRow1.appendChild(imagePreviewBox);
+    formRow1.appendChild(groupImagePreview);
     form.appendChild(formRow1);
 
     const divider1 = document.createElement('hr');
