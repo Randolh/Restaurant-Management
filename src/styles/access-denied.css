@@ -77,27 +77,3 @@
   width: 100%;
   justify-content: center;
 }
-
-.btn-primary {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  height: 56px;
-  border-radius: var(--radius-lg);
-  font-size: var(--font-size-body-md);
-  font-weight: 600;
-  transition: all 0.2s;
-  padding: 0 24px;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background-color: var(--brand-primary);
-  color: var(--color-white);
-}
-
-.btn-primary:hover {
-  background-color: var(--brand-primary-hover);
-}
