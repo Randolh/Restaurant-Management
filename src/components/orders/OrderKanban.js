@@ -40,6 +40,42 @@ const OrderKanban = () => {
         }
     };
 
+    const handleCancelOrder = (orderId) => {
+        const currentOrders = getLocal('ordersItems', true) || [];
+        const index = currentOrders.findIndex(o => o.id === orderId);
+        if (index !== -1) {
+            const orderToCancel = currentOrders[index];
+            orderToCancel.status = 'cancelled';
+            
+            // Return stock
+            const inventoryItems = getLocal('inventoryItems', true) || [];
+            const allDishes = getLocal('dishesItems', true) || [];
+            let inventoryChanged = false;
+
+            orderToCancel.items.forEach(item => {
+                const dish = allDishes.find(d => d.id === item.dishId);
+                if (dish && dish.recipe && dish.recipe.length > 0) {
+                    dish.recipe.forEach(ing => {
+                        const invItem = inventoryItems.find(i => i.id === ing.id);
+                        if (invItem && !invItem.deleted) {
+                            const returnedStock = parseFloat(invItem.stock) + (parseFloat(ing.qty) * item.qty);
+                            invItem.stock = returnedStock.toString();
+                            inventoryChanged = true;
+                        }
+                    });
+                }
+            });
+
+            if (inventoryChanged) {
+                setLocal('inventoryItems', inventoryItems, true);
+                emitEvent('inventoryUpdated');
+            }
+
+            setLocal('ordersItems', currentOrders, true);
+            emitEvent('ordersUpdated');
+        }
+    };
+
     const renderColumn = (status, titleKey, prevId, nextId, nextStatus, btnKey) => {
         const colOrders = orders.filter(o => o.status === status);
         
@@ -87,7 +123,8 @@ const OrderKanban = () => {
             const card = OrderCard({
                 order: order,
                 btnKey: btnKey,
-                onAction: () => handleStatusChange(order.id, nextStatus)
+                onAction: () => handleStatusChange(order.id, nextStatus),
+                onCancel: status === 'pending' ? () => handleCancelOrder(order.id) : null
             });
             cardsContainer.appendChild(card);
         });
