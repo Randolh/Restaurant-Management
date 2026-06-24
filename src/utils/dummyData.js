@@ -69,6 +69,8 @@ export const getDummyData = () => {
                 { id: 'dish_1', name: 'Hamburguesa Clásica', price: 8.99, qty: 2 },
                 { id: 'dish_3', name: 'Papas Fritas', price: 3.99, qty: 1 }
             ],
+            subtotal: 21.97,
+            tax: 0.00,
             total: 21.97,
             notes: 'Sin cebolla'
         },
@@ -80,6 +82,8 @@ export const getDummyData = () => {
             items: [
                 { id: 'dish_2', name: 'Cheeseburger Doble', price: 12.99, qty: 1 }
             ],
+            subtotal: 12.99,
+            tax: 0.00,
             total: 12.99,
             notes: ''
         },
@@ -92,6 +96,8 @@ export const getDummyData = () => {
                 { id: 'dish_1', name: 'Hamburguesa Clásica', price: 8.99, qty: 1 },
                 { id: 'dish_3', name: 'Papas Fritas', price: 3.99, qty: 2 }
             ],
+            subtotal: 16.97,
+            tax: 0.00,
             total: 16.97,
             notes: 'Para llevar'
         },
@@ -105,6 +111,8 @@ export const getDummyData = () => {
             items: [
                 { id: 'dish_2', name: 'Cheeseburger Doble', price: 12.99, qty: 2 }
             ],
+            subtotal: 25.98,
+            tax: 0.00,
             total: 25.98,
             notes: ''
         },
@@ -118,6 +126,8 @@ export const getDummyData = () => {
                 { id: 'dish_1', name: 'Hamburguesa Clásica', price: 8.99, qty: 1 },
                 { id: 'dish_3', name: 'Papas Fritas', price: 3.99, qty: 1 }
             ],
+            subtotal: 12.98,
+            tax: 0.00,
             total: 12.98,
             notes: ''
         },
@@ -130,6 +140,8 @@ export const getDummyData = () => {
             items: [
                 { id: 'dish_3', name: 'Papas Fritas', price: 3.99, qty: 3 }
             ],
+            subtotal: 11.97,
+            tax: 0.00,
             total: 11.97,
             notes: 'Cliente canceló'
         }
