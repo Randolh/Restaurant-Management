@@ -12,8 +12,9 @@ export default function AddDishModal() {
     let allInventoryItems = [];
     
     wrapper.innerHTML = `
-        <input type="checkbox" id="add-dish-modal-toggle" class="modal-toggle">
+        <input type="checkbox" id="add-dish-modal-toggle" class="modal-toggle" hidden>
         <div class="modal">
+            <label for="add-dish-modal-toggle" class="modal-overlay"></label>
             <div class="modal-container" style="max-width: 800px;">
                 <div class="modal-header">
                     <h2 id="add-dish-modal-title"></h2>
@@ -271,6 +272,12 @@ export default function AddDishModal() {
 
         // Expose open events logic to reset modal state
         onEvent('openAddDishModal', () => {
+            document.getElementById('add-dish-modal-title').textContent = t('dishModal.title.add') || 'Add New Dish';
+            saveBtn.textContent = t('dishes.btn.save') || 'Save Dish';
+            saveBtn.dataset.editId = '';
+            
+            form.reset();
+            imagePreviewBox.innerHTML = '<i class="fa-regular fa-image" style="font-size: 32px; color: var(--color-text-variant);"></i>';
             currentRecipe = [];
             allInventoryItems = getLocal('inventoryItems', true) || [];
             renderRecipeList();
@@ -278,6 +285,17 @@ export default function AddDishModal() {
 
         onEvent('openEditDishModal', (e) => {
             const dish = e.detail.dish;
+            document.getElementById('add-dish-modal-title').textContent = t('dishModal.title.edit') || 'Edit Dish';
+            saveBtn.textContent = t('btn.saveChanges') || 'Save Changes';
+            saveBtn.dataset.editId = dish.id;
+
+            document.getElementById('dish-name').value = dish.name || '';
+            document.getElementById('dish-category').value = dish.category || 'Ramen';
+            document.getElementById('dish-price').value = dish.price || '';
+            document.getElementById('dish-image').value = dish.image || '';
+            document.getElementById('dish-desc').value = dish.description || '';
+            document.getElementById('dish-available').checked = dish.isAvailable !== undefined ? dish.isAvailable : true;
+
             currentRecipe = dish.recipe ? [...dish.recipe] : [];
             allInventoryItems = getLocal('inventoryItems', true) || [];
             

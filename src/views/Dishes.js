@@ -28,7 +28,7 @@ export default {
         const icon = document.createElement('i');
         icon.className = 'fa-solid fa-plus';
         addBtn.appendChild(icon);
-        addBtn.appendChild(document.createTextNode(' ' + t('btn.add')));
+        addBtn.appendChild(document.createTextNode(' ' + t('dishes.btn.add')));
         addBtn.addEventListener('click', () => {
             emitEvent('openAddDishModal');
         });
