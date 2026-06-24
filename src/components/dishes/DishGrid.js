@@ -82,19 +82,35 @@ export default function DishGrid(dishes) {
         content.appendChild(title);
         content.appendChild(desc);
 
-        // Footer (Actions)
         const footer = document.createElement('div');
         footer.className = 'dish-footer';
+        footer.style.display = 'flex';
+        footer.style.gap = '8px';
 
-        const viewDetailsBtn = document.createElement('a');
-        viewDetailsBtn.className = 'btn-details';
-        viewDetailsBtn.innerHTML = t('dishes.btn.details') || 'View Details';
-        viewDetailsBtn.addEventListener('click', (e) => {
+        const viewBtn = document.createElement('button');
+        viewBtn.className = 'btn-secondary';
+        viewBtn.textContent = t('dishes.btn.view') || 'View';
+        viewBtn.style.flex = '1';
+        viewBtn.style.padding = '8px';
+        viewBtn.style.fontSize = 'var(--font-size-body-sm)';
+        viewBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            emitEvent('openViewDishModal', { dish });
+        });
+
+        const editDetailsBtn = document.createElement('button');
+        editDetailsBtn.className = 'btn-primary';
+        editDetailsBtn.textContent = t('dishes.btn.details') || 'Edit Details';
+        editDetailsBtn.style.flex = '1';
+        editDetailsBtn.style.padding = '8px';
+        editDetailsBtn.style.fontSize = 'var(--font-size-body-sm)';
+        editDetailsBtn.addEventListener('click', (e) => {
             e.preventDefault();
             emitEvent('openEditDishModal', { dish });
         });
         
-        footer.appendChild(viewDetailsBtn);
+        footer.appendChild(viewBtn);
+        footer.appendChild(editDetailsBtn);
 
         // content.appendChild(category) was removed
         card.appendChild(imgContainer);

@@ -1,5 +1,6 @@
 import DishGrid from '../components/dishes/DishGrid.js';
 import AddDishModal from '../components/dishes/AddDishModal.js';
+import ViewDishModal from '../components/dishes/ViewDishModal.js';
 import { getLocal, setLocal } from '../utils/storage.js';
 import { onEvent, emitEvent } from '../utils/events.js';
 import { DISH_CATEGORIES } from '../utils/constants.js';
@@ -174,6 +175,7 @@ export default {
 
         wrapper.appendChild(pageContent);
         wrapper.appendChild(AddDishModal());
+        wrapper.appendChild(ViewDishModal());
 
         return wrapper;
     }
