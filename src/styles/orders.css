@@ -534,6 +534,12 @@
   min-width: 0;
 }
 
+.order-details-modal .data-table th,
+.order-details-modal .data-table td {
+  font-size: 0.9rem;
+  padding: 10px 8px;
+}
+
 .order-details-modal td.col-item {
   white-space: nowrap;
   overflow: hidden;
