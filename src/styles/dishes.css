@@ -466,3 +466,35 @@
   color: var(--color-text-variant);
   padding: 20px 0;
 }
+
+/* --- Carousel Modal Styles --- */
+.carousel-viewport {
+  overflow: hidden;
+  width: 100%;
+  padding-bottom: 4px;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+  width: 200%;
+}
+
+.carousel-slide {
+  width: 50%;
+  flex-shrink: 0;
+  padding-right: var(--stack-md);
+  box-sizing: border-box;
+}
+
+.carousel-slide:last-child {
+  padding-right: 0;
+  padding-left: var(--stack-md);
+}
+
+.step-indicator {
+  font-size: var(--font-size-label-md);
+  color: var(--color-text-variant);
+  font-weight: 500;
+  margin-top: 4px;
+}

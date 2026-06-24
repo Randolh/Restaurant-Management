@@ -15,6 +15,9 @@ export default function AddDishModal() {
     const recipeBuilder = RecipeBuilder();
     const imagePreview = ImagePreview();
     
+    // Carousel State
+    let currentSlide = 0;
+    
     const toggle = document.createElement('input');
     toggle.type = 'checkbox';
     toggle.id = 'add-dish-modal-toggle';
@@ -36,16 +39,35 @@ export default function AddDishModal() {
     // Header
     const modalHeader = document.createElement('div');
     modalHeader.className = 'modal-header';
+    modalHeader.style.flexDirection = 'column';
+    modalHeader.style.alignItems = 'flex-start';
+    
+    const titleRow = document.createElement('div');
+    titleRow.style.display = 'flex';
+    titleRow.style.width = '100%';
+    titleRow.style.justifyContent = 'space-between';
+    titleRow.style.alignItems = 'center';
+    
     const titleEl = document.createElement('h2');
     titleEl.id = 'add-dish-modal-title';
+    titleEl.style.margin = '0';
+    
     const closeLbl = document.createElement('label');
     closeLbl.htmlFor = 'add-dish-modal-toggle';
     closeLbl.className = 'modal-close';
     const closeIcon = document.createElement('i');
     closeIcon.className = 'fa-solid fa-xmark';
     closeLbl.appendChild(closeIcon);
-    modalHeader.appendChild(titleEl);
-    modalHeader.appendChild(closeLbl);
+    
+    titleRow.appendChild(titleEl);
+    titleRow.appendChild(closeLbl);
+    
+    const stepIndicator = document.createElement('div');
+    stepIndicator.className = 'step-indicator';
+    stepIndicator.textContent = 'Step 1 of 2: Details';
+    
+    modalHeader.appendChild(titleRow);
+    modalHeader.appendChild(stepIndicator);
     modalContainer.appendChild(modalHeader);
 
     // Form
@@ -57,6 +79,17 @@ export default function AddDishModal() {
     // Form Error
     const formError = FormError();
     form.appendChild(formError.element);
+
+    // Carousel Viewport
+    const carouselViewport = document.createElement('div');
+    carouselViewport.className = 'carousel-viewport';
+    
+    const carouselTrack = document.createElement('div');
+    carouselTrack.className = 'carousel-track';
+    
+    // SLIDE 1: Details
+    const slide1 = document.createElement('div');
+    slide1.className = 'carousel-slide';
 
     // Row 1
     const formRow1 = document.createElement('div');
@@ -112,11 +145,11 @@ export default function AddDishModal() {
 
     formRow1.appendChild(col1);
     formRow1.appendChild(groupImagePreview);
-    form.appendChild(formRow1);
+    slide1.appendChild(formRow1);
 
     const divider1 = document.createElement('hr');
     divider1.className = 'form-divider';
-    form.appendChild(divider1);
+    slide1.appendChild(divider1);
 
     // Row 2
     const formRow2 = document.createElement('div');
@@ -164,7 +197,7 @@ export default function AddDishModal() {
 
     formRow2.appendChild(colCat);
     formRow2.appendChild(colPrice);
-    form.appendChild(formRow2);
+    slide1.appendChild(formRow2);
 
     const groupDesc = document.createElement('div');
     groupDesc.className = 'form-group';
@@ -178,7 +211,7 @@ export default function AddDishModal() {
     inputDesc.placeholder = t('dishModal.placeholder.desc') || 'Describe the dish...';
     groupDesc.appendChild(labelDesc);
     groupDesc.appendChild(inputDesc);
-    form.appendChild(groupDesc);
+    slide1.appendChild(groupDesc);
 
     const groupAvail = document.createElement('div');
     groupAvail.className = 'form-group checkbox-group';
@@ -191,51 +224,84 @@ export default function AddDishModal() {
     labelAvail.textContent = t('dishModal.available');
     groupAvail.appendChild(inputAvail);
     groupAvail.appendChild(labelAvail);
-    form.appendChild(groupAvail);
+    slide1.appendChild(groupAvail);
 
-    const divider2 = document.createElement('hr');
-    divider2.className = 'form-divider';
-    form.appendChild(divider2);
-
+    // SLIDE 2: Ingredients
+    const slide2 = document.createElement('div');
+    slide2.className = 'carousel-slide';
+    
     const recipeHeader = document.createElement('h3');
     recipeHeader.className = 'recipe-header';
     recipeHeader.textContent = t('dishModal.ingredients');
-    form.appendChild(recipeHeader);
+    slide2.appendChild(recipeHeader);
 
     // Append RecipeBuilder component
-    form.appendChild(recipeBuilder.element);
+    slide2.appendChild(recipeBuilder.element);
     
+    carouselTrack.appendChild(slide1);
+    carouselTrack.appendChild(slide2);
+    carouselViewport.appendChild(carouselTrack);
+    form.appendChild(carouselViewport);
     modalContainer.appendChild(form);
 
     const modalFooter = document.createElement('div');
     modalFooter.className = 'modal-footer';
+    
     const cancelLbl = document.createElement('label');
     cancelLbl.htmlFor = 'add-dish-modal-toggle';
     cancelLbl.className = 'btn-secondary';
     cancelLbl.textContent = t('btn.cancel');
+    
+    const backBtn = document.createElement('button');
+    backBtn.type = 'button';
+    backBtn.className = 'btn-secondary';
+    backBtn.textContent = 'Back';
+    backBtn.style.display = 'none';
+    
+    const nextBtn = document.createElement('button');
+    nextBtn.type = 'button';
+    nextBtn.className = 'btn-primary';
+    nextBtn.textContent = 'Next';
+    
     const saveBtn = document.createElement('button');
     saveBtn.type = 'submit';
     saveBtn.setAttribute('form', 'add-dish-form');
     saveBtn.className = 'btn-primary';
     saveBtn.id = 'add-dish-modal-save-btn';
+    saveBtn.style.display = 'none';
+    
     modalFooter.appendChild(cancelLbl);
+    modalFooter.appendChild(backBtn);
+    modalFooter.appendChild(nextBtn);
     modalFooter.appendChild(saveBtn);
     modalContainer.appendChild(modalFooter);
 
     modal.appendChild(modalContainer);
     wrapper.appendChild(modal);
 
-    // --- Form Submission ---
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
+    // --- Carousel Navigation Logic ---
+    const updateCarousel = () => {
+        carouselTrack.style.transform = `translateX(-${currentSlide * 50}%)`;
+        if (currentSlide === 0) {
+            stepIndicator.textContent = 'Step 1 of 2: Details';
+            backBtn.style.display = 'none';
+            cancelLbl.style.display = 'inline-block';
+            nextBtn.style.display = 'inline-block';
+            saveBtn.style.display = 'none';
+        } else {
+            stepIndicator.textContent = 'Step 2 of 2: Ingredients';
+            backBtn.style.display = 'inline-block';
+            cancelLbl.style.display = 'none';
+            nextBtn.style.display = 'none';
+            saveBtn.style.display = 'inline-block';
+        }
+    };
+
+    nextBtn.addEventListener('click', async () => {
         formError.hide();
-        
         const name = inputName.value.trim();
-        const category = selectCat.value;
         const price = parseFloat(inputPrice.value);
         const image = inputImage.value.trim();
-        const description = inputDesc.value.trim();
-        const isAvailable = inputAvail.checked;
 
         const validation = validateDishForm({ name, price });
         if (!validation.isValid) {
@@ -247,6 +313,47 @@ export default function AddDishModal() {
             const isValidImage = await isValidImageUrl(image);
             if (!isValidImage) {
                 formError.show([t('dishModal.err.image') || 'Invalid image URL or image failed to load.']);
+                return;
+            }
+        }
+        
+        currentSlide = 1;
+        updateCarousel();
+    });
+
+    backBtn.addEventListener('click', () => {
+        formError.hide();
+        currentSlide = 0;
+        updateCarousel();
+    });
+
+    // --- Form Submission ---
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        formError.hide();
+        
+        // Validation is already done on 'Next' step, but to be absolutely safe:
+        const name = inputName.value.trim();
+        const category = selectCat.value;
+        const price = parseFloat(inputPrice.value);
+        const image = inputImage.value.trim();
+        const description = inputDesc.value.trim();
+        const isAvailable = inputAvail.checked;
+
+        const validation = validateDishForm({ name, price });
+        if (!validation.isValid) {
+            formError.show(validation.errors);
+            currentSlide = 0;
+            updateCarousel();
+            return;
+        }
+
+        if (image) {
+            const isValidImage = await isValidImageUrl(image);
+            if (!isValidImage) {
+                formError.show([t('dishModal.err.image') || 'Invalid image URL or image failed to load.']);
+                currentSlide = 0;
+                updateCarousel();
                 return;
             }
         }
@@ -287,6 +394,8 @@ export default function AddDishModal() {
         form.reset();
         formError.hide();
         imagePreview.reset();
+        currentSlide = 0;
+        updateCarousel();
     });
 
     // --- Event Listeners for opening modal ---
@@ -300,6 +409,9 @@ export default function AddDishModal() {
         imagePreview.reset();
         recipeBuilder.setInventoryItems(getLocal('inventoryItems', true) || []);
         recipeBuilder.setRecipe([]);
+        
+        currentSlide = 0;
+        updateCarousel();
     });
 
     onEvent('openEditDishModal', (e) => {
@@ -320,6 +432,9 @@ export default function AddDishModal() {
         
         recipeBuilder.setInventoryItems(getLocal('inventoryItems', true) || []);
         recipeBuilder.setRecipe(dish.recipe || []);
+        
+        currentSlide = 0;
+        updateCarousel();
     });
 
     return wrapper;
