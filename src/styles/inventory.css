@@ -206,7 +206,7 @@
   border-color: var(--brand-primary);
 }
 
-/* Global layout for history page to keep pagination at bottom and scroll table internally */
+/* Global layout for history/inventory pages to keep pagination at bottom and scroll table internally */
 .history-layout .main-content {
   display: flex;
   flex-direction: column;
@@ -224,7 +224,7 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  min-height: 0; /* Ensures the container shrinks and allows internal scrolling */
+  min-height: 0;
 }
 
 .history-layout .table-responsive {
@@ -237,18 +237,51 @@
   flex-shrink: 0;
 }
 
+/* Layout for inventory view to keep pagination at bottom and scroll table internally */
+.inventory-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.inventory-wrapper .page-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.inventory-wrapper .data-table-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.inventory-wrapper .table-responsive {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.inventory-wrapper .table-footer {
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
 @media (max-width: 768px) {
-  /* Layout para estirar la tabla y empujar la paginación al fondo */
+  /* Remove forced 100vh min-height to rely on the global layout which accounts for bottom nav */
   .page-content {
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    min-height: 0;
   }
   
   .data-table-container {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    min-height: 0;
   }
 
   .table-responsive {

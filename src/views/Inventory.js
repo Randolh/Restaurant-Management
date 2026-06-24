@@ -5,6 +5,7 @@ import AddItemModal from '../components/inventory/AddItemModal.js';
 export default {
     render() {
         const wrapper = document.createElement('div');
+        wrapper.className = 'inventory-wrapper';
         
         // --- 1. Hidden checkbox for Modal ---
         const modalToggle = document.createElement('input');
