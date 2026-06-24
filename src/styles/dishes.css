@@ -70,6 +70,30 @@
   border-color: var(--color-outline);
 }
 
+/* Dishes View Specifics */
+.dishes-action-bar {
+  display: flex;
+  gap: var(--stack-md);
+  margin-bottom: var(--stack-md);
+}
+
+.filter-select {
+  width: auto;
+  min-width: 150px;
+}
+
+.dishes-data-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.empty-message {
+  padding: 20px;
+  text-align: center;
+  color: var(--color-text-variant);
+}
+
 /* Dishes Grid */
 .dishes-grid {
   display: grid;

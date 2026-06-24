@@ -38,11 +38,10 @@ export default {
 
         // Action Bar
         const actionBar = document.createElement('div');
-        actionBar.className = 'action-bar';
-        actionBar.style.display = 'flex';
-        actionBar.style.marginBottom = 'var(--stack-md)';
+        actionBar.className = 'action-bar dishes-action-bar';
 
         let searchQuery = '';
+        let filterStatus = 'all';
         
         const searchComponent = SearchBar({
             placeholder: t('dishes.search.placeholder'),
@@ -51,33 +50,75 @@ export default {
                 updateView();
             }
         });
+        searchComponent.style.flex = '1';
+        
+        const filterSelect = document.createElement('select');
+        filterSelect.className = 'form-control filter-select';
+        
+        const updateFilterOptions = () => {
+            filterSelect.textContent = '';
+            
+            const optionsData = [
+                { value: 'all', text: t('filter.all') || 'All Dishes' },
+                { value: 'available', text: t('dishes.kpi.available') || 'Available' },
+                { value: 'unavailable', text: t('dishes.kpi.unavailable') || 'Out of Stock' },
+                { value: 'alert', text: t('filter.alert') || 'With Warnings' }
+            ];
+            
+            optionsData.forEach(opt => {
+                const optionEl = document.createElement('option');
+                optionEl.value = opt.value;
+                optionEl.textContent = opt.text;
+                filterSelect.appendChild(optionEl);
+            });
+            
+            filterSelect.value = filterStatus;
+        };
+        updateFilterOptions();
+        
+        onEvent('langChanged', updateFilterOptions);
+        
+        filterSelect.addEventListener('change', (e) => {
+            filterStatus = e.target.value;
+            updateView();
+        });
         
         actionBar.appendChild(searchComponent);
+        actionBar.appendChild(filterSelect);
         pageContent.appendChild(actionBar);
 
         // Data Container
         const dataContainer = document.createElement('div');
-        dataContainer.style.display = 'flex';
-        dataContainer.style.flexDirection = 'column';
-        dataContainer.style.flex = '1';
+        dataContainer.className = 'dishes-data-container';
 
         const updateView = () => {
             const dishes = getLocal('dishesItems', true) || [];
+            const inventoryItems = getLocal('inventoryItems', true) || [];
             
             const activeDishes = dishes.filter(d => !d.deleted);
             
             const filteredDishes = activeDishes.filter(dish => {
                 if (searchQuery && !dish.name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+                
+                if (filterStatus === 'available' && !dish.isAvailable) return false;
+                if (filterStatus === 'unavailable' && dish.isAvailable) return false;
+                
+                if (filterStatus === 'alert') {
+                    const hasWarning = (dish.recipe || []).some(recipeItem => {
+                        const invItem = inventoryItems.find(i => i.id === recipeItem.id);
+                        return !invItem || invItem.deleted;
+                    });
+                    if (!hasWarning) return false;
+                }
+                
                 return true;
             });
             
-            dataContainer.innerHTML = '';
+            dataContainer.textContent = '';
             
             if (filteredDishes.length === 0) {
                 const emptyMessage = document.createElement('div');
-                emptyMessage.style.padding = '20px';
-                emptyMessage.style.textAlign = 'center';
-                emptyMessage.style.color = 'var(--color-text-variant)';
+                emptyMessage.className = 'empty-message';
                 emptyMessage.textContent = searchQuery ? t('table.searchEmpty') : t('table.empty');
                 dataContainer.appendChild(emptyMessage);
             } else {
