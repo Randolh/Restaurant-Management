@@ -2,7 +2,6 @@ import { router } from './router.js'
 import Sidebar from './components/Sidebar.js'
 import BottomNav from './components/BottomNav.js'
 import TopBar from './components/TopBar.js'
-import Home from './views/Home.js'
 import Inventory from './views/Inventory.js'
 import Login from './views/Login.js'
 import AccessDenied from './views/AccessDenied.js'
@@ -12,7 +11,7 @@ import { t } from './utils/i18n.js'
 
 // Define routes with requiresAuth flag
 const routes = {
-    '/': { component: Home, requiresAuth: true },
+    '/': { component: Inventory, requiresAuth: true },
     '/inventory': { component: Inventory, requiresAuth: true },
     '/login': { component: Login, requiresAuth: false },
     '/access-denied': { component: AccessDenied, requiresAuth: false },

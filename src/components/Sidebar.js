@@ -45,7 +45,6 @@ export default function Sidebar() {
     nav.className = 'sidebar-nav';
 
     const links = [
-        { path: '/', icon: 'fa-house', text: t('nav.home') },
         { path: '/inventory', icon: 'fa-box', text: t('nav.inventory') },
         { path: '/dishes', icon: 'fa-utensils', text: t('nav.dishes') },
         { path: '/orders', icon: 'fa-receipt', text: t('nav.orders') }

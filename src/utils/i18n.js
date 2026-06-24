@@ -154,8 +154,8 @@ const locales = {
         'nav.orders': 'Pedidos',
         'nav.settings': 'Configuración',
         'nav.logout': 'Cerrar Sesión',
-        'app.title': 'Gestión de',
-        'app.subtitle': ' Restaurante',
+        'app.title': 'Restaurant',
+        'app.subtitle': ' Management',
 
         'login.title': 'Restaurant Management',
         'login.email': 'Correo Electrónico',

@@ -5,7 +5,6 @@ export default function BottomNav() {
     nav.className = 'bottom-nav';
 
     const links = [
-        { path: '/', icon: 'fa-house', text: t('nav.home') },
         { path: '/orders', icon: 'fa-receipt', text: t('nav.orders') },
         { path: '/dishes', icon: 'fa-utensils', text: t('nav.dishes') },
         { path: '/inventory', icon: 'fa-box', text: t('nav.inventory') },
