@@ -5,6 +5,18 @@ export default function KpiGrid(kpis) {
     kpis.forEach(kpi => {
         const card = document.createElement('div');
         card.className = 'kpi-card';
+        
+        if (kpi.clickable) {
+            card.classList.add('clickable');
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', () => {
+                if (kpi.onClick) kpi.onClick();
+            });
+        }
+        
+        if (kpi.active) {
+            card.classList.add('kpi-active');
+        }
 
         const h3 = document.createElement('h3');
         h3.textContent = kpi.title;

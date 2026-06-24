@@ -52,6 +52,8 @@ export default {
         actionBar.style.marginBottom = 'var(--stack-md)';
 
         let searchQuery = '';
+        let filterLowStock = false;
+        
         const searchComponent = SearchBar({
             placeholder: t('inventory.search.placeholder'),
             onChange: (value) => {
@@ -90,13 +92,28 @@ export default {
             kpiContainer.innerHTML = '';
             const kpis = [
                 { title: t('inventory.kpi.total'), value: totalItems.toString() },
-                { title: t('inventory.kpi.lowStock'), value: lowStockItems.toString() },
+                { 
+                    title: t('inventory.kpi.lowStock'), 
+                    value: lowStockItems.toString(),
+                    clickable: true,
+                    active: filterLowStock,
+                    onClick: () => {
+                        filterLowStock = !filterLowStock;
+                        updateTable();
+                    }
+                },
                 { title: t('inventory.kpi.value'), value: `$${inventoryValue.toFixed(2)}` }
             ];
             kpiContainer.appendChild(KpiGrid(kpis));
             
             const filteredItems = activeItems.filter(item => {
                 if (searchQuery && !item.name.toLowerCase().includes(searchQuery)) return false;
+                
+                if (filterLowStock) {
+                    const min = item.minStock !== undefined ? Number(item.minStock) : 50;
+                    if (Number(item.stock || 0) >= min) return false;
+                }
+                
                 return true;
             });
             

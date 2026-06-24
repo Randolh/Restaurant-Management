@@ -11,9 +11,20 @@
   border: var(--elevation-border);
   border-radius: var(--radius-md);
   padding: var(--stack-md);
-  display: flex;
   flex-direction: column;
   gap: 4px;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kpi-card.clickable:hover {
+  border-color: var(--brand-primary);
+  background-color: var(--elevation-2-bg);
+}
+
+.kpi-card.kpi-active {
+  border-color: var(--brand-primary);
+  background-color: rgba(var(--brand-primary-rgb), 0.1);
+  box-shadow: 0 0 0 1px var(--brand-primary);
 }
 
 .kpi-card h3 {
