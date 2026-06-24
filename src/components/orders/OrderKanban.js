@@ -34,12 +34,7 @@ const OrderKanban = () => {
         const currentOrders = getLocal('ordersItems', true) || [];
         const index = currentOrders.findIndex(o => o.id === orderId);
         if (index !== -1) {
-            if (newStatus === 'completed') {
-                // Remove from active orders (ideally move to history)
-                currentOrders.splice(index, 1);
-            } else {
-                currentOrders[index].status = newStatus;
-            }
+            currentOrders[index].status = newStatus;
             setLocal('ordersItems', currentOrders, true);
             emitEvent('ordersUpdated');
         }
