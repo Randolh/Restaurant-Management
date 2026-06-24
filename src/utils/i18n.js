@@ -1,0 +1,238 @@
+import { getLocal, setLocal } from './storage.js';
+
+const locales = {
+    en: {
+        'btn.add': 'Add Item',
+        'btn.cancel': 'Cancel',
+        'btn.accept': 'Accept',
+        'btn.confirm': 'Confirm',
+        'btn.delete': 'Delete',
+        'btn.saveChanges': 'Save Changes',
+        'modal.confirmTitle': 'Confirm Action',
+
+        'inventory.title': 'Inventory',
+        'inventory.search.placeholder': 'Search items...',
+        'inventory.kpi.total': 'Total Items',
+        'inventory.kpi.lowStock': 'Low Stock',
+        'inventory.kpi.value': 'Inventory Value',
+
+        'table.empty': 'No items found in inventory. Click "Add Item" to start.',
+        'table.searchEmpty': 'No items matched your search.',
+        'table.showing': 'Showing {start}-{end} of {total}',
+        'table.deleteConfirm': 'Are you sure you want to delete {name}?',
+        'table.col.name': 'Name',
+        'table.col.stock': 'Stock Level',
+        'table.col.unit': 'Unit',
+        'table.col.actions': 'Actions',
+
+        'itemModal.title.add': 'Add Ingredient',
+        'itemModal.title.edit': 'Edit Ingredient',
+        'itemModal.label.name': 'Name',
+        'itemModal.placeholder.name': 'e.g. Tomato',
+        'itemModal.label.category': 'Category',
+        'itemModal.label.unit': 'Unit measure',
+        'itemModal.label.autoUnit': 'Auto-select default unit',
+        'itemModal.label.stock': 'Initial stock',
+        'itemModal.label.minStock': 'Min Stock',
+        'itemModal.label.cost': 'Unit Cost ($)',
+        'itemModal.err.name': '• Item name is required.',
+        'itemModal.err.stock': '• Initial stock must be a valid number strictly greater than 0.',
+        'itemModal.err.minStock': '• Min stock must be a valid number greater than or equal to 0.',
+        'itemModal.err.cost': '• Unit Cost must be a valid number strictly greater than 0.',
+
+        'stockModal.title': 'Add Stock: {name}',
+        'stockModal.label.qty': 'Quantity to Add',
+        'stockModal.placeholder.qty': 'e.g. 50',
+        'stockModal.err.qty': '• Quantity must be a valid number strictly greater than 0.',
+        'stockModal.err.notFound': '• Item not found.',
+
+        'nav.home': 'Home',
+        'nav.inventory': 'Inventory',
+        'nav.dishes': 'Dishes',
+        'nav.orders': 'Orders',
+        'nav.settings': 'Settings',
+        'nav.logout': 'Logout',
+        'app.title': 'Restaurant',
+        'app.subtitle': ' Management',
+
+        'login.title': 'Restaurant Management',
+        'login.email': 'Email',
+        'login.password': 'Password',
+        'login.remember': 'Stay signed in',
+        'login.btn': 'Login',
+        'login.error.invalid': 'Invalid email or password.',
+
+        'access.title': 'ACCESS DENIED',
+        'access.desc': 'You do not have permission to view this page. Please sign in to continue.',
+        'access.btn': 'Back to Login',
+
+        'cat.Meat and Protein': 'Meat and Protein',
+        'cat.Fish and Seafood': 'Fish and Seafood',
+        'cat.Eggs and Dairy': 'Eggs and Dairy',
+        'cat.Vegetables': 'Vegetables',
+        'cat.Fruits': 'Fruits',
+        'cat.Grains and Cereals': 'Grains and Cereals',
+        'cat.Legumes': 'Legumes',
+        'cat.Bakery and Dough': 'Bakery and Dough',
+        'cat.Herbs and Spices': 'Herbs and Spices',
+        'cat.Oils and Fats': 'Oils and Fats',
+        'cat.Sweeteners': 'Sweeteners',
+        'cat.Sauces and Dressings': 'Sauces and Dressings',
+        'cat.Canned and Preserved Foods': 'Canned and Preserved Foods',
+        'cat.Beverages': 'Beverages',
+        'cat.Nuts and Seeds': 'Nuts and Seeds',
+        'cat.Frozen Foods': 'Frozen Foods',
+        'cat.Snacks and Sweets': 'Snacks and Sweets',
+        'cat.Other': 'Other',
+
+        'unit.Gram (g)': 'Gram (g)',
+        'unit.Kilogram (kg)': 'Kilogram (kg)',
+        'unit.Milliliter (ml)': 'Milliliter (ml)',
+        'unit.Liter (l)': 'Liter (l)',
+        'unit.Unit (unit)': 'Unit (unit)',
+        'unit.Piece (pc)': 'Piece (pc)',
+        'unit.Cup': 'Cup',
+        'unit.Tablespoon (tbsp)': 'Tablespoon (tbsp)',
+        'unit.Teaspoon (tsp)': 'Teaspoon (tsp)',
+        'unit.Pound (lb)': 'Pound (lb)',
+        'unit.Ounce (oz)': 'Ounce (oz)',
+        'unit.Can': 'Can',
+        'unit.Bottle': 'Bottle',
+        'unit.Package': 'Package',
+        'unit.Box': 'Box',
+        'unit.Bag': 'Bag',
+        'unit.Dozen': 'Dozen',
+        'unit.Serving': 'Serving',
+        'unit.Slice': 'Slice',
+        'unit.Bunch': 'Bunch',
+        'unit.Clove (garlic)': 'Clove (garlic)'
+    },
+    es: {
+        'btn.add': 'Añadir',
+        'btn.cancel': 'Cancelar',
+        'btn.accept': 'Aceptar',
+        'btn.confirm': 'Confirmar',
+        'btn.delete': 'Eliminar',
+        'btn.saveChanges': 'Guardar Cambios',
+        'modal.confirmTitle': 'Confirmar Acción',
+
+        'inventory.title': 'Inventario',
+        'inventory.search.placeholder': 'Buscar productos...',
+        'inventory.kpi.total': 'Total de Productos',
+        'inventory.kpi.lowStock': 'Stock Bajo',
+        'inventory.kpi.value': 'Valor del Inventario',
+
+        'table.empty': 'No hay productos en el inventario. Haz clic en "Añadir" para comenzar.',
+        'table.searchEmpty': 'No se han encontrado productos con esa búsqueda.',
+        'table.showing': 'Mostrando {start}-{end} de {total}',
+        'table.deleteConfirm': '¿Estás seguro de que deseas eliminar {name}?',
+        'table.col.name': 'Nombre',
+        'table.col.stock': 'Nivel de Stock',
+        'table.col.unit': 'Unidad',
+        'table.col.actions': 'Acciones',
+
+        'itemModal.title.add': 'Añadir Ingrediente',
+        'itemModal.title.edit': 'Editar Ingrediente',
+        'itemModal.label.name': 'Nombre',
+        'itemModal.placeholder.name': 'ej. Tomate',
+        'itemModal.label.category': 'Categoría',
+        'itemModal.label.unit': 'Unidad de medida',
+        'itemModal.label.autoUnit': 'Auto-seleccionar unidad por defecto',
+        'itemModal.label.stock': 'Stock inicial',
+        'itemModal.label.minStock': 'Stock Mínimo',
+        'itemModal.label.cost': 'Costo Unitario ($)',
+        'itemModal.err.name': '• El nombre es obligatorio.',
+        'itemModal.err.stock': '• El stock debe ser mayor a 0.',
+        'itemModal.err.minStock': '• El stock mínimo no puede ser negativo.',
+        'itemModal.err.cost': '• El costo debe ser mayor a 0.',
+
+        'stockModal.title': 'Añadir Stock: {name}',
+        'stockModal.label.qty': 'Cantidad a Añadir',
+        'stockModal.placeholder.qty': 'ej. 50',
+        'stockModal.err.qty': '• La cantidad debe ser mayor a 0.',
+        'stockModal.err.notFound': '• Producto no encontrado.',
+
+        'nav.home': 'Inicio',
+        'nav.inventory': 'Inventario',
+        'nav.dishes': 'Platillos',
+        'nav.orders': 'Pedidos',
+        'nav.settings': 'Configuración',
+        'nav.logout': 'Cerrar Sesión',
+        'app.title': 'Restaurant',
+        'app.subtitle': ' Management',
+
+        'login.title': 'Restaurant Management',
+        'login.email': 'Correo Electrónico',
+        'login.password': 'Contraseña',
+        'login.remember': 'Mantener sesión iniciada',
+        'login.btn': 'Ingresar',
+        'login.error.invalid': 'Correo o contraseña inválidos.',
+
+        'access.title': 'ACCESO DENEGADO',
+        'access.desc': 'No tienes permiso para ver esta página. Por favor, inicia sesión para continuar.',
+        'access.btn': 'Volver al Inicio',
+
+        'cat.Meat and Protein': 'Carnes y Proteínas',
+        'cat.Fish and Seafood': 'Pescados y Mariscos',
+        'cat.Eggs and Dairy': 'Lácteos y Huevos',
+        'cat.Vegetables': 'Vegetales',
+        'cat.Fruits': 'Frutas',
+        'cat.Grains and Cereals': 'Granos y Cereales',
+        'cat.Legumes': 'Legumbres',
+        'cat.Bakery and Dough': 'Panadería y Masas',
+        'cat.Herbs and Spices': 'Hierbas y Especias',
+        'cat.Oils and Fats': 'Aceites y Grasas',
+        'cat.Sweeteners': 'Edulcorantes',
+        'cat.Sauces and Dressings': 'Salsas y Aderezos',
+        'cat.Canned and Preserved Foods': 'Conservas y Enlatados',
+        'cat.Beverages': 'Bebidas',
+        'cat.Nuts and Seeds': 'Nueces y Semillas',
+        'cat.Frozen Foods': 'Congelados',
+        'cat.Snacks and Sweets': 'Snacks y Dulces',
+        'cat.Other': 'Otros',
+
+        'unit.Gram (g)': 'Gramo (g)',
+        'unit.Kilogram (kg)': 'Kilogramo (kg)',
+        'unit.Milliliter (ml)': 'Mililitro (ml)',
+        'unit.Liter (l)': 'Litro (l)',
+        'unit.Unit (unit)': 'Unidad (ud)',
+        'unit.Piece (pc)': 'Pieza (pz)',
+        'unit.Cup': 'Taza',
+        'unit.Tablespoon (tbsp)': 'Cucharada (cda)',
+        'unit.Teaspoon (tsp)': 'Cucharadita (cdita)',
+        'unit.Pound (lb)': 'Libra (lb)',
+        'unit.Ounce (oz)': 'Onza (oz)',
+        'unit.Can': 'Lata',
+        'unit.Bottle': 'Botella',
+        'unit.Package': 'Paquete',
+        'unit.Box': 'Caja',
+        'unit.Bag': 'Bolsa',
+        'unit.Dozen': 'Docena',
+        'unit.Serving': 'Porción',
+        'unit.Slice': 'Rebanada',
+        'unit.Bunch': 'Manojo',
+        'unit.Clove (garlic)': 'Diente (ajo)'
+    }
+};
+
+let currentLang = getLocal('appLang', false) || 'es';
+
+export const setLang = (lang) => {
+    if (locales[lang]) {
+        currentLang = lang;
+        setLocal('appLang', lang, false);
+        window.dispatchEvent(new CustomEvent('langChanged'));
+    }
+};
+
+export const getLang = () => currentLang;
+
+export const t = (key, params = {}) => {
+    let text = locales[currentLang]?.[key] || locales['en']?.[key] || key;
+    
+    Object.keys(params).forEach(param => {
+        text = text.replace(new RegExp(`{${param}}`, 'g'), params[param]);
+    });
+    
+    return text;
+};
