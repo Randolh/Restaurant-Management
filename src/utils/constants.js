@@ -52,9 +52,25 @@ export const CURRENCIES = [
 ];
 
 export const DISH_CATEGORIES = {
-    'Ramen': { icon: 'fa-bowl-food' },
-    'Burgers': { icon: 'fa-burger' },
-    'Bowls': { icon: 'fa-bowl-rice' },
-    'Drinks': { icon: 'fa-martini-glass' },
-    'Desserts': { icon: 'fa-ice-cream' }
+    'ramen': { icon: 'fa-bowl-food', labelKey: 'category.ramen' },
+    'burgers': { icon: 'fa-burger', labelKey: 'category.burgers' },
+    'bowls': { icon: 'fa-bowl-rice', labelKey: 'category.bowls' },
+    'drinks': { icon: 'fa-martini-glass', labelKey: 'category.drinks' },
+    'desserts': { icon: 'fa-ice-cream', labelKey: 'category.desserts' },
+    'appetizers': { icon: 'fa-cheese', labelKey: 'category.appetizers' },
+    'salads': { icon: 'fa-leaf', labelKey: 'category.salads' },
+    'soups': { icon: 'fa-mug-hot', labelKey: 'category.soups' },
+    'pasta': { icon: 'fa-wheat-awn', labelKey: 'category.pasta' },
+    'pizza': { icon: 'fa-pizza-slice', labelKey: 'category.pizza' },
+    'sandwiches': { icon: 'fa-bread-slice', labelKey: 'category.sandwiches' },
+    'seafood': { icon: 'fa-fish', labelKey: 'category.seafood' },
+    'chicken': { icon: 'fa-drumstick-bite', labelKey: 'category.chicken' },
+    'steak': { icon: 'fa-bacon', labelKey: 'category.steak' },
+    'breakfast': { icon: 'fa-egg', labelKey: 'category.breakfast' },
+    'vegetarian': { icon: 'fa-seedling', labelKey: 'category.vegetarian' },
+    'vegan': { icon: 'fa-carrot', labelKey: 'category.vegan' },
+    'kids': { icon: 'fa-child', labelKey: 'category.kids' },
+    'combos': { icon: 'fa-utensils', labelKey: 'category.combos' },
+    'sides': { icon: 'fa-french-fries', labelKey: 'category.sides' },
+    'specials': { icon: 'fa-star', labelKey: 'category.specials' }
 };

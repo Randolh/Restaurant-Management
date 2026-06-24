@@ -26,14 +26,16 @@ export default function DishGrid(dishes) {
             img.className = 'dish-image';
             img.onerror = () => {
                 const fallbackIcon = document.createElement('i');
-                fallbackIcon.className = `fa-solid ${DISH_CATEGORIES[dish.category]?.icon || 'fa-utensils'} fallback-icon`;
+                const catKey = dish.category ? dish.category.toLowerCase() : '';
+                fallbackIcon.className = `fa-solid ${DISH_CATEGORIES[catKey]?.icon || 'fa-utensils'} fallback-icon`;
                 imgContainer.appendChild(fallbackIcon);
                 img.remove();
             };
             imgContainer.appendChild(img);
         } else {
             const fallbackIcon = document.createElement('i');
-            fallbackIcon.className = `fa-solid ${DISH_CATEGORIES[dish.category]?.icon || 'fa-utensils'} fallback-icon`;
+            const catKey = dish.category ? dish.category.toLowerCase() : '';
+            fallbackIcon.className = `fa-solid ${DISH_CATEGORIES[catKey]?.icon || 'fa-utensils'} fallback-icon`;
             imgContainer.appendChild(fallbackIcon);
         }
 

@@ -46,7 +46,7 @@ export default function AddDishModal() {
                             <div class="form-group">
                                 <label class="form-label">${t('dishModal.category')}</label>
                                 <select id="dish-category" class="form-control" required>
-                                    ${Object.keys(DISH_CATEGORIES).map(cat => `<option value="${cat}">${cat}</option>`).join('')}
+                                    ${Object.entries(DISH_CATEGORIES).map(([cat, obj]) => `<option value="${cat}">${t(obj.labelKey) || cat}</option>`).join('')}
                                 </select>
                             </div>
                         </div>
@@ -290,7 +290,7 @@ export default function AddDishModal() {
             saveBtn.dataset.editId = dish.id;
 
             document.getElementById('dish-name').value = dish.name || '';
-            document.getElementById('dish-category').value = dish.category || 'Ramen';
+            document.getElementById('dish-category').value = dish.category ? dish.category.toLowerCase() : 'ramen';
             document.getElementById('dish-price').value = dish.price || '';
             document.getElementById('dish-image').value = dish.image || '';
             document.getElementById('dish-desc').value = dish.description || '';
