@@ -1,4 +1,5 @@
 import { getLocal, setLocal } from './storage.js';
+import { emitEvent } from './events.js';
 
 const locales = {
     en: {
@@ -61,6 +62,29 @@ const locales = {
         'login.remember': 'Stay signed in',
         'login.btn': 'Login',
         'login.error.invalid': 'Invalid email or password.',
+
+        'settings.title': 'Settings',
+        'settings.account': 'Account Actions',
+        'settings.preferences': 'Preferences',
+        'settings.preferences.desc': 'Customize your regional settings.',
+        'settings.language': 'Language',
+        'settings.currency': 'Currency Symbol',
+        'settings.profile.title': 'General Profile',
+        'settings.profile.desc': "Update your restaurant's core information.",
+        'settings.profile.logo': 'Logo Image URL',
+        'settings.profile.name': 'Restaurant Name',
+        'settings.security.title': 'Security',
+        'settings.security.desc': 'Ensure your account stays secure.',
+        'settings.security.current': 'Current Password',
+        'settings.security.new': 'New Password',
+        'settings.security.confirm': 'Confirm New Password',
+        'settings.data.title': 'Data Management',
+        'settings.data.desc': 'Development tools and destructive actions.',
+        'settings.data.loadDefault': 'Load Default Categories',
+        'settings.data.loadDummy': 'Load Dummy Data (Test Data)',
+        'settings.data.warning': 'This action is irreversible and will delete all your inventory, dishes, and orders.',
+        'settings.data.wipe': 'Wipe Data & Start from Scratch',
+        'btn.save': 'Save',
 
         'access.title': 'ACCESS DENIED',
         'access.desc': 'You do not have permission to view this page. Please sign in to continue.',
@@ -168,6 +192,29 @@ const locales = {
         'login.btn': 'Ingresar',
         'login.error.invalid': 'Correo o contraseña inválidos.',
 
+        'settings.title': 'Configuración',
+        'settings.account': 'Acciones de Cuenta',
+        'settings.preferences': 'Preferencias',
+        'settings.preferences.desc': 'Personaliza tu configuración regional.',
+        'settings.language': 'Idioma',
+        'settings.currency': 'Símbolo de Moneda',
+        'settings.profile.title': 'Perfil General',
+        'settings.profile.desc': 'Actualiza la información principal de tu restaurante.',
+        'settings.profile.logo': 'URL del Logo',
+        'settings.profile.name': 'Nombre del Restaurante',
+        'settings.security.title': 'Seguridad',
+        'settings.security.desc': 'Asegura que tu cuenta se mantenga protegida.',
+        'settings.security.current': 'Contraseña Actual',
+        'settings.security.new': 'Nueva Contraseña',
+        'settings.security.confirm': 'Confirmar Nueva Contraseña',
+        'settings.data.title': 'Gestión de Datos',
+        'settings.data.desc': 'Herramientas de desarrollo y acciones destructivas.',
+        'settings.data.loadDefault': 'Cargar Categorías por Defecto',
+        'settings.data.loadDummy': 'Cargar Datos de Prueba',
+        'settings.data.warning': 'Esta acción es irreversible y borrará todo el inventario, platillos y pedidos.',
+        'settings.data.wipe': 'Borrar Datos y Empezar de Cero',
+        'btn.save': 'Guardar',
+
         'access.title': 'ACCESO DENEGADO',
         'access.desc': 'No tienes permiso para ver esta página. Por favor, inicia sesión para continuar.',
         'access.btn': 'Volver al Inicio',
@@ -221,7 +268,7 @@ export const setLang = (lang) => {
     if (locales[lang]) {
         currentLang = lang;
         setLocal('appLang', lang, false);
-        window.dispatchEvent(new CustomEvent('langChanged'));
+        emitEvent('langChanged');
     }
 };
 
