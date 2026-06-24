@@ -1,5 +1,6 @@
 import { INVENTORY_CATEGORIES, MEASUREMENT_UNITS } from '../../utils/constants.js';
 import { getLocal, setLocal } from '../../utils/storage.js';
+import { emitEvent } from '../../utils/events.js';
 
 export default function AddItemModal() {
     const wrapper = document.createElement('div');
@@ -260,12 +261,10 @@ export default function AddItemModal() {
         setLocal('inventoryItems', existingItems);
         
         resetForm();
-        
         const toggle = document.getElementById('add-item-modal-toggle');
         if (toggle) toggle.checked = false;
         
-        // Notify the app that data changed
-        window.dispatchEvent(new CustomEvent('inventoryUpdated'));
+        emitEvent('inventoryUpdated');
     });
     mFooter.appendChild(addBtn);
     

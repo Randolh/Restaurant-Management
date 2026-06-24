@@ -4,6 +4,7 @@ import AddItemModal from '../components/inventory/AddItemModal.js';
 import AddStockModal from '../components/inventory/AddStockModal.js';
 import { INVENTORY_CATEGORIES } from '../utils/constants.js';
 import { getLocal, setLocal } from '../utils/storage.js';
+import { onEvent, emitEvent } from '../utils/events.js';
 
 export default {
     render() {
@@ -32,8 +33,7 @@ export default {
         addBtn.appendChild(icon);
         addBtn.appendChild(document.createTextNode(' Add Item'));
         addBtn.addEventListener('click', () => {
-            const toggle = document.getElementById('add-item-modal-toggle');
-            if (toggle) toggle.checked = true;
+            emitEvent('openAddItemModal');
         });
         pageHeader.appendChild(addBtn);
         
@@ -118,10 +118,10 @@ export default {
         pageContent.appendChild(tableContainer);
 
         // Listen for updates from AddItemModal
-        window.addEventListener('inventoryUpdated', updateTable);
+        onEvent('inventoryUpdated', updateTable);
 
         // --- Global Action Listeners ---
-        window.addEventListener('openAddStockModal', (e) => {
+        onEvent('openAddStockModal', (e) => {
             const item = e.detail.item;
             const title = document.getElementById('add-stock-modal-title');
             if (title) title.textContent = `Add Stock: ${item.name}`;
@@ -133,7 +133,33 @@ export default {
             if (toggle) toggle.checked = true;
         });
 
-        window.addEventListener('openEditItemModal', (e) => {
+        onEvent('openAddItemModal', () => {
+            const title = document.getElementById('add-item-modal-title');
+            if (title) title.textContent = 'Add Ingredient';
+            
+            const saveBtn = document.getElementById('add-item-modal-save-btn');
+            if (saveBtn) {
+                saveBtn.dataset.editId = '';
+                saveBtn.textContent = 'Add Item';
+            }
+            
+            const nameInput = document.getElementById('item-name');
+            if (nameInput) nameInput.value = '';
+            
+            const stockInput = document.getElementById('item-stock');
+            if (stockInput) stockInput.value = '';
+            
+            const minStockInput = document.getElementById('item-min-stock');
+            if (minStockInput) minStockInput.value = '50';
+            
+            const costInput = document.getElementById('item-cost');
+            if (costInput) costInput.value = '';
+
+            const toggle = document.getElementById('add-item-modal-toggle');
+            if (toggle) toggle.checked = true;
+        });
+
+        onEvent('openEditItemModal', (e) => {
             const item = e.detail.item;
             
             const title = document.getElementById('add-item-modal-title');
@@ -168,7 +194,7 @@ export default {
             if (toggle) toggle.checked = true;
         });
 
-        window.addEventListener('deleteItem', (e) => {
+        onEvent('deleteItem', (e) => {
             const id = e.detail.id;
             const items = getLocal('inventoryItems', true) || [];
             const index = items.findIndex(i => i.id == id);

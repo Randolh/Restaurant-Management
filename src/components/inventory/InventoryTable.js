@@ -1,4 +1,5 @@
 import showConfirm from '../ui/ConfirmModal.js';
+import { emitEvent } from '../../utils/events.js';
 
 export default function InventoryTable(data) {
     const tableContainer = document.createElement('div');
@@ -109,7 +110,7 @@ export default function InventoryTable(data) {
             iAdd.className = 'fa-solid fa-plus';
             btnAdd.appendChild(iAdd);
             btnAdd.addEventListener('click', () => {
-                window.dispatchEvent(new CustomEvent('openAddStockModal', { detail: { item: item.original } }));
+                emitEvent('openAddStockModal', { item: item.original });
             });
             tableActions.appendChild(btnAdd);
 
@@ -119,7 +120,7 @@ export default function InventoryTable(data) {
             iEdit.className = 'fa-solid fa-pen';
             btnEdit.appendChild(iEdit);
             btnEdit.addEventListener('click', () => {
-                window.dispatchEvent(new CustomEvent('openEditItemModal', { detail: { item: item.original } }));
+                emitEvent('openEditItemModal', { item: item.original });
             });
             tableActions.appendChild(btnEdit);
             
@@ -130,7 +131,7 @@ export default function InventoryTable(data) {
             btnDelete.appendChild(iDelete);
             btnDelete.addEventListener('click', () => {
                 showConfirm(`Are you sure you want to delete ${item.name}?`, () => {
-                    window.dispatchEvent(new CustomEvent('deleteItem', { detail: { id: item.original.id } }));
+                    emitEvent('deleteItem', { id: item.original.id });
                 });
             });
             tableActions.appendChild(btnDelete);

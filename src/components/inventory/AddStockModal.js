@@ -1,4 +1,5 @@
 import { getLocal, setLocal } from '../../utils/storage.js';
+import { emitEvent } from '../../utils/events.js';
 
 export default function AddStockModal() {
     const wrapper = document.createElement('div');
@@ -111,7 +112,7 @@ export default function AddStockModal() {
             const toggle = document.getElementById('add-stock-modal-toggle');
             if (toggle) toggle.checked = false;
             
-            window.dispatchEvent(new CustomEvent('inventoryUpdated'));
+            emitEvent('inventoryUpdated');
         } else {
             errorContainer.innerHTML = '• Item not found.';
             errorContainer.style.display = 'block';
