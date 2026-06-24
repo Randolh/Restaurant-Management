@@ -64,10 +64,10 @@ const AddOrderModal = () => {
         let minPortions = Infinity;
         for (const ing of dish.recipe) {
             const invItem = inventoryItems.find(i => i.id === ing.id);
-            const invQty = invItem && !invItem.deleted ? parseFloat(invItem.quantity) : 0;
+            const invQty = invItem && !invItem.deleted ? parseFloat(invItem.stock) : 0;
             const requiredQty = parseFloat(ing.qty);
             if (requiredQty <= 0) continue;
-            const portions = Math.floor(invQty / requiredQty);
+            const portions = Math.floor((invQty / requiredQty) + 0.000001);
             if (portions < minPortions) minPortions = portions;
         }
         return minPortions === Infinity ? 0 : minPortions;
@@ -114,6 +114,14 @@ const AddOrderModal = () => {
                 outOfStockText.style.display = 'block';
                 outOfStockText.style.marginTop = '4px';
                 infoDiv.appendChild(outOfStockText);
+            } else if (availableToAdd <= 0) {
+                const limitText = document.createElement('span');
+                limitText.className = 'text-warning';
+                limitText.style.fontSize = 'var(--font-size-label-md)';
+                limitText.textContent = t('orders.modal.notEnoughStock') || 'Not enough stock';
+                limitText.style.display = 'block';
+                limitText.style.marginTop = '4px';
+                infoDiv.appendChild(limitText);
             }
 
             const actionsCol = document.createElement('div');
