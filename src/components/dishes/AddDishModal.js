@@ -38,19 +38,14 @@ export default function AddDishModal() {
 
     // Header
     const modalHeader = document.createElement('div');
-    modalHeader.className = 'modal-header';
-    modalHeader.style.flexDirection = 'column';
-    modalHeader.style.alignItems = 'flex-start';
+    modalHeader.className = 'modal-header modal-header-carousel';
     
     const titleRow = document.createElement('div');
-    titleRow.style.display = 'flex';
-    titleRow.style.width = '100%';
-    titleRow.style.justifyContent = 'space-between';
-    titleRow.style.alignItems = 'center';
+    titleRow.className = 'modal-title-row';
     
     const titleEl = document.createElement('h2');
     titleEl.id = 'add-dish-modal-title';
-    titleEl.style.margin = '0';
+    titleEl.className = 'modal-title';
     
     const closeLbl = document.createElement('label');
     closeLbl.htmlFor = 'add-dish-modal-toggle';
@@ -285,15 +280,15 @@ export default function AddDishModal() {
         if (currentSlide === 0) {
             stepIndicator.textContent = 'Step 1 of 2: Details';
             backBtn.style.display = 'none';
-            cancelLbl.style.display = 'inline-block';
-            nextBtn.style.display = 'inline-block';
+            cancelLbl.style.display = '';
+            nextBtn.style.display = '';
             saveBtn.style.display = 'none';
         } else {
             stepIndicator.textContent = 'Step 2 of 2: Ingredients';
-            backBtn.style.display = 'inline-block';
+            backBtn.style.display = '';
             cancelLbl.style.display = 'none';
             nextBtn.style.display = 'none';
-            saveBtn.style.display = 'inline-block';
+            saveBtn.style.display = '';
         }
     };
 
