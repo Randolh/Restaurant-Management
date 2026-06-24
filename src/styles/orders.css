@@ -27,7 +27,7 @@
   flex-grow: 1;
   overflow-x: auto;
   padding-bottom: var(--stack-md); /* Space for scrollbar */
-  align-items: flex-start;
+  align-items: stretch;
   /* Smooth scrolling for mobile */
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
@@ -466,3 +466,25 @@
   padding: 16px;
   color: var(--text-secondary);
 }
+
+.orders-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 20px); /* Account for top bar / bottom nav */
+}
+
+.orders-wrapper .page-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-bottom: 0;
+}
+
+.kanban-wrapper, .kanban-board-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+

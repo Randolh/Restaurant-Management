@@ -37,6 +37,7 @@ export default {
 
         // Container for Kanban that can be re-rendered
         const kanbanWrapper = document.createElement('div');
+        kanbanWrapper.className = 'kanban-wrapper';
         
         const updateView = () => {
             kanbanWrapper.replaceChildren(OrderKanban());
