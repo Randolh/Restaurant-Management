@@ -155,7 +155,56 @@
 .table-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
+}
+
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: var(--color-text-variant);
+  font-size: 16px;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.btn-icon:hover {
+  background-color: var(--elevation-2-bg);
+  color: var(--brand-surface-text);
+}
+
+.btn-icon.success {
+  color: var(--color-success); /* #10b981 */
+}
+
+.btn-icon.success:hover {
+  background-color: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-icon.warning {
+  color: var(--color-warning); /* #f59e0b */
+}
+
+.btn-icon.warning:hover {
+  background-color: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-icon.danger {
+  color: var(--brand-primary); /* #dc143c */
+}
+
+.btn-icon.danger:hover {
+  background-color: rgba(220, 20, 60, 0.1);
+  border-color: rgba(220, 20, 60, 0.3);
+  transform: translateY(-1px);
 }
 
 /* Pagination Footer */

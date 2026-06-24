@@ -79,8 +79,15 @@ export default function InventoryTable(data) {
         const tableActions = document.createElement('div');
         tableActions.className = 'table-actions';
         
+        const btnAdd = document.createElement('button');
+        btnAdd.className = 'btn-icon success';
+        const iAdd = document.createElement('i');
+        iAdd.className = 'fa-solid fa-plus';
+        btnAdd.appendChild(iAdd);
+        tableActions.appendChild(btnAdd);
+
         const btnEdit = document.createElement('button');
-        btnEdit.className = 'btn-icon';
+        btnEdit.className = 'btn-icon warning';
         const iEdit = document.createElement('i');
         iEdit.className = 'fa-solid fa-pen';
         btnEdit.appendChild(iEdit);
@@ -92,13 +99,6 @@ export default function InventoryTable(data) {
         iDelete.className = 'fa-solid fa-trash';
         btnDelete.appendChild(iDelete);
         tableActions.appendChild(btnDelete);
-        
-        const btnAdd = document.createElement('button');
-        btnAdd.className = 'btn-icon';
-        const iAdd = document.createElement('i');
-        iAdd.className = 'fa-solid fa-plus';
-        btnAdd.appendChild(iAdd);
-        tableActions.appendChild(btnAdd);
         
         tdActions.appendChild(tableActions);
         tr.appendChild(tdActions);
