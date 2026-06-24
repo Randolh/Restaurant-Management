@@ -170,7 +170,7 @@ export default function AddItemModal() {
         
         const catSelect = document.getElementById('category-select');
         if (catSelect) {
-            catSelect.selectedIndex = 0;
+            catSelect.value = 'Other';
         }
         
         const defaultCheck = document.getElementById('unit-default-checkbox');

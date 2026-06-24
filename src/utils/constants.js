@@ -72,7 +72,8 @@ export const DISH_CATEGORIES = {
     'kids': { icon: 'fa-child', labelKey: 'category.kids' },
     'combos': { icon: 'fa-utensils', labelKey: 'category.combos' },
     'sides': { icon: 'fa-french-fries', labelKey: 'category.sides' },
-    'specials': { icon: 'fa-star', labelKey: 'category.specials' }
+    'specials': { icon: 'fa-star', labelKey: 'category.specials' },
+    'other': { icon: 'fa-utensils', labelKey: 'category.other' }
 };
 
 export const PROFIT_MARGIN = 0.30;

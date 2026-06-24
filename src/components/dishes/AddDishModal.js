@@ -481,6 +481,7 @@ export default function AddDishModal() {
         saveBtn.dataset.editId = '';
         
         form.reset();
+        selectCat.value = 'other';
         inputAvail.checked = true;
         formError.hide();
         imagePreview.reset();
