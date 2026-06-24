@@ -69,7 +69,7 @@ export default function AddStockModal() {
     const resetForm = () => {
         input.value = '';
         errorContainer.style.display = 'none';
-        errorContainer.innerHTML = '';
+        errorContainer.textContent = '';
         addBtn.dataset.itemId = '';
     };
 
@@ -97,7 +97,15 @@ export default function AddStockModal() {
         }
         
         if (errors.length > 0) {
-            errorContainer.innerHTML = errors.join('<br>');
+            errorContainer.textContent = '';
+            errors.forEach((err, idx) => {
+                const span = document.createElement('span');
+                span.textContent = err;
+                errorContainer.appendChild(span);
+                if (idx < errors.length - 1) {
+                    errorContainer.appendChild(document.createElement('br'));
+                }
+            });
             errorContainer.style.display = 'block';
             return;
         }
@@ -115,7 +123,7 @@ export default function AddStockModal() {
             
             emitEvent('inventoryUpdated');
         } else {
-            errorContainer.innerHTML = t('stockModal.err.notFound');
+            errorContainer.textContent = t('stockModal.err.notFound');
             errorContainer.style.display = 'block';
         }
     });

@@ -34,7 +34,7 @@ export default function RecipeBuilder(onChange) {
     wrapper.appendChild(colList);
 
     const renderRecipeList = () => {
-        recipeListBox.innerHTML = '';
+        recipeListBox.textContent = '';
         if (currentRecipe.length === 0) {
             const emptyDiv = document.createElement('div');
             emptyDiv.className = 'recipe-empty-state';
@@ -48,13 +48,13 @@ export default function RecipeBuilder(onChange) {
             row.className = 'recipe-item';
             
             const nameDiv = document.createElement('div');
-            nameDiv.className = 'recipe-item-name';
+            nameDiv.className = 'recipe-item-name ingredient-name-container';
             const nameSpan = document.createElement('span');
-            nameSpan.textContent = item.name + ' ';
+            nameSpan.className = 'ingredient-name-text';
+            nameSpan.textContent = item.name;
             const stockSpan = document.createElement('span');
             stockSpan.className = 'stock-info';
-            stockSpan.textContent = `(${item.unit})`;
-            nameSpan.appendChild(stockSpan);
+            stockSpan.textContent = `(${t('unit.' + item.unit) || item.unit})`;
             
             // Check if ingredient is missing or deleted in inventory
             const invItem = allInventoryItems.find(i => i.id === item.id);
@@ -62,14 +62,29 @@ export default function RecipeBuilder(onChange) {
                 nameSpan.classList.add('text-warning');
                 const warnLbl = document.createElement('div');
                 warnLbl.className = 'recipe-item-warning';
-                warnLbl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${t('dishModal.ingredients.deleted') || 'Deleted from inventory'}`;
+                const warnIcon = document.createElement('i');
+                warnIcon.className = 'fa-solid fa-triangle-exclamation';
+                warnLbl.appendChild(warnIcon);
+                warnLbl.appendChild(document.createTextNode(' ' + (t('dishModal.ingredients.deleted') || 'Deleted from inventory')));
                 
                 const wrapperDiv = document.createElement('div');
-                wrapperDiv.appendChild(nameSpan);
+                wrapperDiv.className = 'ingredient-name-container';
+                wrapperDiv.style.flexDirection = 'column';
+                wrapperDiv.style.alignItems = 'flex-start';
+                
+                const topRow = document.createElement('div');
+                topRow.style.display = 'flex';
+                topRow.style.gap = '4px';
+                topRow.style.width = '100%';
+                topRow.appendChild(nameSpan);
+                topRow.appendChild(stockSpan);
+                
+                wrapperDiv.appendChild(topRow);
                 wrapperDiv.appendChild(warnLbl);
                 nameDiv.appendChild(wrapperDiv);
             } else {
                 nameDiv.appendChild(nameSpan);
+                nameDiv.appendChild(stockSpan);
             }
 
             const actionsDiv = document.createElement('div');
@@ -110,7 +125,7 @@ export default function RecipeBuilder(onChange) {
     };
 
     const renderSearchDropdown = (query) => {
-        searchDropdown.innerHTML = '';
+        searchDropdown.textContent = '';
         if (!query) {
             searchDropdown.style.display = 'none';
             return;
@@ -132,12 +147,16 @@ export default function RecipeBuilder(onChange) {
             const el = document.createElement('div');
             el.className = 'search-result-item';
             
+            const nameContainer = document.createElement('div');
+            nameContainer.className = 'ingredient-name-container';
             const spanName = document.createElement('span');
-            spanName.textContent = item.name + ' ';
+            spanName.className = 'ingredient-name-text';
+            spanName.textContent = item.name;
             const spanUnit = document.createElement('span');
             spanUnit.className = 'stock-info';
-            spanUnit.textContent = `(${item.unit || 'unit'})`;
-            spanName.appendChild(spanUnit);
+            spanUnit.textContent = `(${t('unit.' + item.unit) || item.unit || 'unit'})`;
+            nameContainer.appendChild(spanName);
+            nameContainer.appendChild(spanUnit);
             
             const actionsDiv = document.createElement('div');
             actionsDiv.className = 'search-result-actions';
@@ -163,7 +182,7 @@ export default function RecipeBuilder(onChange) {
             });
             
             actionsDiv.appendChild(btnAdd);
-            el.appendChild(spanName);
+            el.appendChild(nameContainer);
             el.appendChild(actionsDiv);
             
             searchDropdown.appendChild(el);

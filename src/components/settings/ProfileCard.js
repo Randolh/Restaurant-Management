@@ -24,7 +24,7 @@ export const ProfileCard = () => {
     avatarBox.className = 'settings-avatar';
 
     const renderAvatarPreview = (url) => {
-        avatarBox.innerHTML = '';
+        avatarBox.textContent = '';
         if (url) {
             const img = document.createElement('img');
             img.style.width = '100%';

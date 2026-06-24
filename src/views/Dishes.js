@@ -1,7 +1,9 @@
 import DishGrid from '../components/dishes/DishGrid.js';
 import AddDishModal from '../components/dishes/AddDishModal.js';
+import ViewDishModal from '../components/dishes/ViewDishModal.js';
 import { getLocal, setLocal } from '../utils/storage.js';
 import { onEvent, emitEvent } from '../utils/events.js';
+import { DISH_CATEGORIES } from '../utils/constants.js';
 import { t } from '../utils/i18n.js';
 import SearchBar from '../components/ui/SearchBar.js';
 
@@ -13,6 +15,10 @@ export default {
         // --- Page Content ---
         const pageContent = document.createElement('div');
         pageContent.className = 'page-content';
+
+        // Sticky Container for Header and Actions
+        const stickyHeader = document.createElement('div');
+        stickyHeader.className = 'sticky-header';
 
         // Page Header
         const pageHeader = document.createElement('div');
@@ -34,7 +40,7 @@ export default {
         });
         pageHeader.appendChild(addBtn);
         
-        pageContent.appendChild(pageHeader);
+        stickyHeader.appendChild(pageHeader);
 
         // Action Bar
         const actionBar = document.createElement('div');
@@ -42,6 +48,7 @@ export default {
 
         let searchQuery = '';
         let filterStatus = 'all';
+        let filterCategory = 'all';
         
         const searchComponent = SearchBar({
             placeholder: t('dishes.search.placeholder'),
@@ -52,40 +59,65 @@ export default {
         });
         searchComponent.style.flex = '1';
         
-        const filterSelect = document.createElement('select');
-        filterSelect.className = 'form-control filter-select';
+        const filterStatusSelect = document.createElement('select');
+        filterStatusSelect.className = 'form-control filter-select';
+        
+        const filterCatSelect = document.createElement('select');
+        filterCatSelect.className = 'form-control filter-select';
         
         const updateFilterOptions = () => {
-            filterSelect.textContent = '';
-            
-            const optionsData = [
+            // Status Options
+            filterStatusSelect.textContent = '';
+            const statusOptions = [
                 { value: 'all', text: t('filter.all') || 'All Dishes' },
                 { value: 'available', text: t('dishes.kpi.available') || 'Available' },
                 { value: 'unavailable', text: t('dishes.kpi.unavailable') || 'Out of Stock' },
                 { value: 'alert', text: t('filter.alert') || 'With Warnings' }
             ];
-            
-            optionsData.forEach(opt => {
+            statusOptions.forEach(opt => {
                 const optionEl = document.createElement('option');
                 optionEl.value = opt.value;
                 optionEl.textContent = opt.text;
-                filterSelect.appendChild(optionEl);
+                filterStatusSelect.appendChild(optionEl);
             });
+            filterStatusSelect.value = filterStatus;
             
-            filterSelect.value = filterStatus;
+            // Category Options
+            filterCatSelect.textContent = '';
+            const allCatOpt = document.createElement('option');
+            allCatOpt.value = 'all';
+            allCatOpt.textContent = t('filter.allCategories') || 'All Categories';
+            filterCatSelect.appendChild(allCatOpt);
+            
+            Object.keys(DISH_CATEGORIES).forEach(key => {
+                const catInfo = DISH_CATEGORIES[key];
+                const opt = document.createElement('option');
+                opt.value = key;
+                opt.textContent = t(catInfo.labelKey) || key;
+                filterCatSelect.appendChild(opt);
+            });
+            filterCatSelect.value = filterCategory;
         };
         updateFilterOptions();
         
         onEvent('langChanged', updateFilterOptions);
         
-        filterSelect.addEventListener('change', (e) => {
+        filterStatusSelect.addEventListener('change', (e) => {
             filterStatus = e.target.value;
             updateView();
         });
         
+        filterCatSelect.addEventListener('change', (e) => {
+            filterCategory = e.target.value;
+            updateView();
+        });
+        
         actionBar.appendChild(searchComponent);
-        actionBar.appendChild(filterSelect);
-        pageContent.appendChild(actionBar);
+        actionBar.appendChild(filterCatSelect);
+        actionBar.appendChild(filterStatusSelect);
+        
+        stickyHeader.appendChild(actionBar);
+        pageContent.appendChild(stickyHeader);
 
         // Data Container
         const dataContainer = document.createElement('div');
@@ -99,6 +131,8 @@ export default {
             
             const filteredDishes = activeDishes.filter(dish => {
                 if (searchQuery && !dish.name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+                
+                if (filterCategory !== 'all' && dish.category !== filterCategory) return false;
                 
                 if (filterStatus === 'available' && !dish.isAvailable) return false;
                 if (filterStatus === 'unavailable' && dish.isAvailable) return false;
@@ -147,6 +181,7 @@ export default {
 
         wrapper.appendChild(pageContent);
         wrapper.appendChild(AddDishModal());
+        wrapper.appendChild(ViewDishModal());
 
         return wrapper;
     }
