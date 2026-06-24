@@ -1,4 +1,5 @@
 import { t } from '../../utils/i18n.js';
+import { getLocal, setLocal } from '../../utils/storage.js';
 
 export const SecurityCard = () => {
     const securityCard = document.createElement('div');
@@ -56,6 +57,38 @@ export const SecurityCard = () => {
     const secSaveBtn = document.createElement('button');
     secSaveBtn.className = 'btn-primary';
     secSaveBtn.textContent = t('btn.save');
+    
+    secSaveBtn.addEventListener('click', () => {
+        const currentPass = curPassInput.value;
+        const newPass = newPassInput.value;
+        const confPass = confPassInput.value;
+
+        if (!currentPass || !newPass || !confPass) {
+            alert(t('settings.security.err.empty'));
+            return;
+        }
+
+        const user = getLocal('default_user', true);
+        if (!user || user.password !== currentPass) {
+            alert(t('settings.security.err.current'));
+            return;
+        }
+
+        if (newPass !== confPass) {
+            alert(t('settings.security.err.match'));
+            return;
+        }
+
+        user.password = newPass;
+        setLocal('default_user', user, true);
+        
+        curPassInput.value = '';
+        newPassInput.value = '';
+        confPassInput.value = '';
+        
+        alert(t('settings.security.success'));
+    });
+    
     secActions.appendChild(secSaveBtn);
     
     securityCard.appendChild(securityHeader);
