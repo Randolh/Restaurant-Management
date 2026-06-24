@@ -207,7 +207,7 @@ export default function ViewDishModal() {
                 
                 const qtySpan = document.createElement('span');
                 qtySpan.style.color = 'var(--color-text-variant)';
-                qtySpan.textContent = `${recipeItem.qty} ${recipeItem.unit}`;
+                qtySpan.textContent = `${recipeItem.qty} ${t('unit.' + recipeItem.unit) || recipeItem.unit}`;
                 
                 itemDiv.appendChild(nameSpan);
                 itemDiv.appendChild(qtySpan);

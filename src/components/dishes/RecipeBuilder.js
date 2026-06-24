@@ -53,7 +53,7 @@ export default function RecipeBuilder(onChange) {
             nameSpan.textContent = item.name + ' ';
             const stockSpan = document.createElement('span');
             stockSpan.className = 'stock-info';
-            stockSpan.textContent = `(${item.unit})`;
+            stockSpan.textContent = `(${t('unit.' + item.unit) || item.unit})`;
             nameSpan.appendChild(stockSpan);
             
             // Check if ingredient is missing or deleted in inventory
@@ -136,7 +136,7 @@ export default function RecipeBuilder(onChange) {
             spanName.textContent = item.name + ' ';
             const spanUnit = document.createElement('span');
             spanUnit.className = 'stock-info';
-            spanUnit.textContent = `(${item.unit || 'unit'})`;
+            spanUnit.textContent = `(${t('unit.' + item.unit) || item.unit || 'unit'})`;
             spanName.appendChild(spanUnit);
             
             const actionsDiv = document.createElement('div');
