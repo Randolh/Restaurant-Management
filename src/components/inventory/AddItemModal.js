@@ -1,4 +1,5 @@
 import { INVENTORY_CATEGORIES, MEASUREMENT_UNITS } from '../../utils/constants.js';
+import { getLocal, setLocal } from '../../utils/storage.js';
 
 export default function AddItemModal() {
     const modal = document.createElement('div');
@@ -23,11 +24,11 @@ export default function AddItemModal() {
     mBody.className = 'modal-body';
     
     const fields = [
-        { label: 'Name', type: 'text', placeholder: 'e.g. Tomato' },
+        { id: 'item-name', label: 'Name', type: 'text', placeholder: 'e.g. Tomato' },
         { label: 'Category', type: 'select', options: Object.keys(INVENTORY_CATEGORIES) },
         { label: 'Unit measure', type: 'select', options: MEASUREMENT_UNITS },
-        { label: 'Initial stock', type: 'number', placeholder: '100' },
-        { label: 'Unit Cost ($)', type: 'number', placeholder: '0.00', step: '0.01' }
+        { id: 'item-stock', label: 'Initial stock', type: 'number', placeholder: '100' },
+        { id: 'item-cost', label: 'Unit Cost ($)', type: 'number', placeholder: '0.00', step: '0.01' }
     ];
 
     fields.forEach(field => {
@@ -116,6 +117,7 @@ export default function AddItemModal() {
             const input = document.createElement('input');
             input.type = field.type;
             input.className = 'form-control';
+            if (field.id) input.id = field.id;
             if (field.placeholder) input.placeholder = field.placeholder;
             if (field.step) input.step = field.step;
             group.appendChild(input);
@@ -127,10 +129,33 @@ export default function AddItemModal() {
     const mFooter = document.createElement('div');
     mFooter.className = 'modal-footer';
 
+    const resetForm = () => {
+        const nameInput = document.getElementById('item-name');
+        if (nameInput) nameInput.value = '';
+        
+        const stockInput = document.getElementById('item-stock');
+        if (stockInput) stockInput.value = '';
+        
+        const costInput = document.getElementById('item-cost');
+        if (costInput) costInput.value = '';
+        
+        const catSelect = document.getElementById('category-select');
+        if (catSelect) {
+            catSelect.selectedIndex = 0;
+        }
+        
+        const defaultCheck = document.getElementById('unit-default-checkbox');
+        if (defaultCheck) {
+            defaultCheck.checked = true;
+            defaultCheck.dispatchEvent(new Event('change'));
+        }
+    };
+
     const cancelBtn = document.createElement('button');
     cancelBtn.className = 'btn-secondary';
     cancelBtn.textContent = 'Cancel';
     cancelBtn.addEventListener('click', () => {
+        resetForm();
         const toggle = document.getElementById('add-item-modal-toggle');
         if (toggle) toggle.checked = false;
     });
@@ -139,6 +164,39 @@ export default function AddItemModal() {
     const addBtn = document.createElement('button');
     addBtn.className = 'btn-primary';
     addBtn.textContent = 'Add Item';
+    addBtn.addEventListener('click', () => {
+        const name = document.getElementById('item-name')?.value;
+        const category = document.getElementById('category-select')?.value;
+        const unit = document.getElementById('unit-select')?.value;
+        const stock = document.getElementById('item-stock')?.value;
+        const cost = document.getElementById('item-cost')?.value;
+        
+        if (!name) {
+            alert('Please enter a name for the item');
+            return;
+        }
+
+        const newItem = {
+            id: Date.now(),
+            name,
+            category,
+            unit,
+            stock,
+            cost
+        };
+
+        const existingItems = getLocal('inventoryItems', true) || [];
+        existingItems.push(newItem);
+        setLocal('inventoryItems', existingItems);
+        
+        resetForm();
+        
+        const toggle = document.getElementById('add-item-modal-toggle');
+        if (toggle) toggle.checked = false;
+        
+        // Notify the app that data changed
+        window.dispatchEvent(new CustomEvent('inventoryUpdated'));
+    });
     mFooter.appendChild(addBtn);
     
     modalContainer.appendChild(mFooter);
