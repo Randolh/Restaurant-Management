@@ -131,13 +131,28 @@ const setupEventListeners = () => {
         const currentPath = window.location.hash.replace('#', '') || '/';
         router.navigate(currentPath, false);
     });
+    onEvent('profileUpdated', () => {
+        const profile = getLocal('restaurant_profile', true) || {};
+        document.title = profile.name || 'Restaurant Management';
+        
+        const isProtected = !!getSession('session_token');
+        renderLayout(isProtected);
+        const currentPath = window.location.hash.replace('#', '') || '/';
+        router.navigate(currentPath, false);
+    });
 }
 
 const initApp = () => {
     initializeSession()
     setupEventListeners()
     
-    // Initial render assumes unprotected layout (no header), 
+    // Set initial title if exists
+    const profile = getLocal('restaurant_profile', true) || {};
+    if (profile.name) {
+        document.title = profile.name;
+    }
+    
+    // Initial render assumes unprotected layout (no header),  
     // router will update it via onRouteChanged before rendering the view
     renderLayout(false)
     

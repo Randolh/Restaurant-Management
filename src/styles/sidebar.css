@@ -192,6 +192,11 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
 }
 
 .sidebar-header h2 span {
@@ -200,6 +205,9 @@
   font-weight: 600;
   font-size: 13px;
   letter-spacing: 0.05em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 

@@ -1,4 +1,7 @@
 import { t } from '../../utils/i18n.js';
+import { getLocal, setLocal } from '../../utils/storage.js';
+import { emitEvent } from '../../utils/events.js';
+import showToast from '../ui/Toast.js';
 
 export const ProfileCard = () => {
     const profileCard = document.createElement('div');
@@ -56,9 +59,30 @@ export const ProfileCard = () => {
     nameInput.type = 'text';
     nameInput.className = 'form-control';
     nameInput.placeholder = t('settings.profile.name.placeholder');
-    nameInput.value = 'My Awesome Restaurant'; // Can keep a default value, or set value from storage later
+    nameInput.maxLength = 16;
+    
+    const subtitleGroup = document.createElement('div');
+    subtitleGroup.className = 'form-group';
+    const subtitleLabel = document.createElement('label');
+    subtitleLabel.className = 'form-label';
+    subtitleLabel.textContent = t('settings.profile.subtitle');
+    const subtitleInput = document.createElement('input');
+    subtitleInput.type = 'text';
+    subtitleInput.className = 'form-control';
+    subtitleInput.placeholder = t('settings.profile.subtitle.placeholder');
+    subtitleInput.maxLength = 18;
+    
+    // Set initial values
+    const profile = getLocal('restaurant_profile', true) || {};
+    nameInput.value = profile.name || '';
+    subtitleInput.value = profile.subtitle || '';
+    logoInput.value = profile.logo || '';
+    
     nameGroup.appendChild(nameLabel);
     nameGroup.appendChild(nameInput);
+    
+    subtitleGroup.appendChild(subtitleLabel);
+    subtitleGroup.appendChild(subtitleInput);
     
     const profileActions = document.createElement('div');
     profileActions.style.display = 'flex';
@@ -67,11 +91,23 @@ export const ProfileCard = () => {
     const profileSaveBtn = document.createElement('button');
     profileSaveBtn.className = 'btn-primary';
     profileSaveBtn.textContent = t('btn.save');
+    
+    profileSaveBtn.addEventListener('click', () => {
+        const name = nameInput.value.trim();
+        const subtitle = subtitleInput.value.trim();
+        const logo = logoInput.value.trim();
+        
+        setLocal('restaurant_profile', { name, subtitle, logo }, true);
+        showToast(t('settings.profile.success'), 'success');
+        emitEvent('profileUpdated');
+    });
+    
     profileActions.appendChild(profileSaveBtn);
     
     profileCard.appendChild(profileHeader);
     profileCard.appendChild(avatarUpload);
     profileCard.appendChild(nameGroup);
+    profileCard.appendChild(subtitleGroup);
     profileCard.appendChild(profileActions);
 
     return profileCard;
