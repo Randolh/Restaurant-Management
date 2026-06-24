@@ -15,7 +15,8 @@ export const INVENTORY_CATEGORIES = {
     'Beverages': { icon: 'fa-wine-bottle', defaultUnit: 'Liter (l)' },
     'Nuts and Seeds': { icon: 'fa-seedling', defaultUnit: 'Kilogram (kg)' },
     'Frozen Foods': { icon: 'fa-snowflake', defaultUnit: 'Package' },
-    'Snacks and Sweets': { icon: 'fa-cookie-bite', defaultUnit: 'Package' }
+    'Snacks and Sweets': { icon: 'fa-cookie-bite', defaultUnit: 'Package' },
+    'Other': { icon: 'fa-box', defaultUnit: 'Unit (unit)' }
 };
 
 export const MEASUREMENT_UNITS = [

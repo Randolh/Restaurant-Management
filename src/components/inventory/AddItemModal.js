@@ -25,8 +25,8 @@ export default function AddItemModal() {
     const fields = [
         { label: 'Name', type: 'text', placeholder: 'e.g. Tomato' },
         { label: 'Category', type: 'select', options: Object.keys(INVENTORY_CATEGORIES) },
-        { label: 'Initial stock', type: 'number', placeholder: '100' },
         { label: 'Unit measure', type: 'select', options: MEASUREMENT_UNITS },
+        { label: 'Initial stock', type: 'number', placeholder: '100' },
         { label: 'Unit Cost ($)', type: 'number', placeholder: '0.00', step: '0.01' }
     ];
 
@@ -36,7 +36,47 @@ export default function AddItemModal() {
 
         const label = document.createElement('label');
         label.className = 'form-label';
-        label.textContent = field.label;
+        
+        if (field.label === 'Unit measure') {
+            label.style.display = 'flex';
+            label.style.justifyContent = 'space-between';
+            label.style.alignItems = 'center';
+            
+            const span = document.createElement('span');
+            span.textContent = field.label;
+            label.appendChild(span);
+            
+            const defaultLabel = document.createElement('label');
+            defaultLabel.style.display = 'flex';
+            defaultLabel.style.alignItems = 'center';
+            defaultLabel.style.gap = '4px';
+            defaultLabel.style.fontWeight = 'normal';
+            defaultLabel.style.fontSize = '12px';
+            defaultLabel.style.cursor = 'pointer';
+            
+            const defaultCheckbox = document.createElement('input');
+            defaultCheckbox.type = 'checkbox';
+            defaultCheckbox.id = 'unit-default-checkbox';
+            defaultCheckbox.checked = true;
+            
+            defaultCheckbox.addEventListener('change', (e) => {
+                const unitSelect = document.getElementById('unit-select');
+                const catSelect = document.getElementById('category-select');
+                if (unitSelect && catSelect) {
+                    unitSelect.disabled = e.target.checked;
+                    if (e.target.checked && catSelect.value) {
+                        unitSelect.value = INVENTORY_CATEGORIES[catSelect.value].defaultUnit;
+                    }
+                }
+            });
+            
+            defaultLabel.appendChild(defaultCheckbox);
+            defaultLabel.appendChild(document.createTextNode('Default'));
+            label.appendChild(defaultLabel);
+        } else {
+            label.textContent = field.label;
+        }
+        
         group.appendChild(label);
         
         if (field.type === 'select') {
@@ -47,12 +87,14 @@ export default function AddItemModal() {
                 select.id = 'category-select';
                 select.addEventListener('change', (e) => {
                     const unitSelect = document.getElementById('unit-select');
-                    if (unitSelect) {
+                    const defaultCheck = document.getElementById('unit-default-checkbox');
+                    if (unitSelect && defaultCheck && defaultCheck.checked) {
                         unitSelect.value = INVENTORY_CATEGORIES[e.target.value].defaultUnit;
                     }
                 });
             } else if (field.label === 'Unit measure') {
                 select.id = 'unit-select';
+                select.disabled = true; // default is true initially
             }
 
             field.options.forEach(opt => {
@@ -60,6 +102,15 @@ export default function AddItemModal() {
                 option.textContent = opt;
                 select.appendChild(option);
             });
+            
+            if (field.label === 'Unit measure') {
+                setTimeout(() => {
+                    const catSelect = document.getElementById('category-select');
+                    if (catSelect && catSelect.value) {
+                        select.value = INVENTORY_CATEGORIES[catSelect.value].defaultUnit;
+                    }
+                }, 0);
+            }
             group.appendChild(select);
         } else {
             const input = document.createElement('input');
