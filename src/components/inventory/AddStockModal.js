@@ -1,5 +1,6 @@
 import { getLocal, setLocal } from '../../utils/storage.js';
 import { emitEvent } from '../../utils/events.js';
+import { t } from '../../utils/i18n.js';
 
 export default function AddStockModal() {
     const wrapper = document.createElement('div');
@@ -26,7 +27,7 @@ export default function AddStockModal() {
     mHeader.className = 'modal-header';
     const h2 = document.createElement('h2');
     h2.id = 'add-stock-modal-title';
-    h2.textContent = 'Add Stock';
+    h2.textContent = t('stockModal.title', { name: '' });
     mHeader.appendChild(h2);
     modalContainer.appendChild(mHeader);
     
@@ -49,14 +50,14 @@ export default function AddStockModal() {
 
     const label = document.createElement('label');
     label.className = 'form-label';
-    label.textContent = 'Quantity to Add';
+    label.textContent = t('stockModal.label.qty');
     group.appendChild(label);
 
     const input = document.createElement('input');
     input.type = 'number';
     input.className = 'form-control';
     input.id = 'add-stock-amount';
-    input.placeholder = 'e.g. 50';
+    input.placeholder = t('stockModal.placeholder.qty');
     group.appendChild(input);
     
     mBody.appendChild(group);
@@ -74,7 +75,7 @@ export default function AddStockModal() {
 
     const cancelBtn = document.createElement('button');
     cancelBtn.className = 'btn-secondary';
-    cancelBtn.textContent = 'Cancel';
+    cancelBtn.textContent = t('btn.cancel');
     cancelBtn.addEventListener('click', () => {
         resetForm();
         const toggle = document.getElementById('add-stock-modal-toggle');
@@ -84,7 +85,7 @@ export default function AddStockModal() {
     
     const addBtn = document.createElement('button');
     addBtn.className = 'btn-primary';
-    addBtn.textContent = 'Accept';
+    addBtn.textContent = t('btn.accept');
     addBtn.id = 'add-stock-modal-save-btn';
     addBtn.addEventListener('click', () => {
         const amount = document.getElementById('add-stock-amount')?.value;
@@ -92,7 +93,7 @@ export default function AddStockModal() {
         
         let errors = [];
         if (!amount || isNaN(amount) || Number(amount) <= 0) {
-            errors.push('• Quantity must be a valid number strictly greater than 0.');
+            errors.push(t('stockModal.err.qty'));
         }
         
         if (errors.length > 0) {
@@ -114,7 +115,7 @@ export default function AddStockModal() {
             
             emitEvent('inventoryUpdated');
         } else {
-            errorContainer.innerHTML = '• Item not found.';
+            errorContainer.innerHTML = t('stockModal.err.notFound');
             errorContainer.style.display = 'block';
         }
     });

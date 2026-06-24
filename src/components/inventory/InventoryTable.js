@@ -1,5 +1,6 @@
 import showConfirm from '../ui/ConfirmModal.js';
 import { emitEvent } from '../../utils/events.js';
+import { t } from '../../utils/i18n.js';
 
 export default function InventoryTable(data) {
     const tableContainer = document.createElement('div');
@@ -13,7 +14,7 @@ export default function InventoryTable(data) {
     
     const thead = document.createElement('thead');
     const theadTr = document.createElement('tr');
-    ['Name', 'Stock Level', 'Unit', 'Actions'].forEach(text => {
+    [t('table.col.name'), t('table.col.stock'), t('table.col.unit'), t('table.col.actions')].forEach(text => {
         const th = document.createElement('th');
         th.textContent = text;
         theadTr.appendChild(th);
@@ -130,7 +131,7 @@ export default function InventoryTable(data) {
             iDelete.className = 'fa-solid fa-trash';
             btnDelete.appendChild(iDelete);
             btnDelete.addEventListener('click', () => {
-                showConfirm(`Are you sure you want to delete ${item.name}?`, () => {
+                showConfirm(t('table.deleteConfirm', { name: item.name }), () => {
                     emitEvent('deleteItem', { id: item.original.id });
                 });
             });
@@ -149,7 +150,7 @@ export default function InventoryTable(data) {
         tableInfo.className = 'table-info';
         const startDisplay = totalItems === 0 ? 0 : startIndex + 1;
         const endDisplay = Math.min(endIndex, totalItems);
-        tableInfo.textContent = `Showing ${startDisplay}-${endDisplay} of ${totalItems}`;
+        tableInfo.textContent = t('table.showing', { start: startDisplay, end: endDisplay, total: totalItems });
         tableFooter.appendChild(tableInfo);
         
         const pagination = document.createElement('div');

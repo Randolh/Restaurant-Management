@@ -1,3 +1,5 @@
+import { t } from '../../utils/i18n.js';
+
 export default function showConfirm(message, onConfirm) {
     const wrapper = document.createElement('div');
     
@@ -21,7 +23,7 @@ export default function showConfirm(message, onConfirm) {
     const mHeader = document.createElement('div');
     mHeader.className = 'modal-header';
     const h2 = document.createElement('h2');
-    h2.textContent = 'Confirm Action';
+    h2.textContent = t('modal.confirmTitle');
     mHeader.appendChild(h2);
     modalContainer.appendChild(mHeader);
     
@@ -45,7 +47,7 @@ export default function showConfirm(message, onConfirm) {
 
     const cancelBtn = document.createElement('button');
     cancelBtn.className = 'btn-secondary';
-    cancelBtn.textContent = 'Cancel';
+    cancelBtn.textContent = t('btn.cancel');
     cancelBtn.addEventListener('click', closeAndCleanup);
     overlay.addEventListener('click', closeAndCleanup);
     
@@ -53,7 +55,7 @@ export default function showConfirm(message, onConfirm) {
     
     const confirmBtn = document.createElement('button');
     confirmBtn.className = 'btn-danger';
-    confirmBtn.textContent = 'Confirm';
+    confirmBtn.textContent = t('btn.confirm');
     confirmBtn.addEventListener('click', () => {
         onConfirm();
         closeAndCleanup();

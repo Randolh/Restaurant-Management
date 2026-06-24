@@ -1,6 +1,7 @@
 import { INVENTORY_CATEGORIES, MEASUREMENT_UNITS } from '../../utils/constants.js';
 import { getLocal, setLocal } from '../../utils/storage.js';
 import { emitEvent } from '../../utils/events.js';
+import { t } from '../../utils/i18n.js';
 
 export default function AddItemModal() {
     const wrapper = document.createElement('div');
@@ -27,7 +28,7 @@ export default function AddItemModal() {
     mHeader.className = 'modal-header';
     const h2 = document.createElement('h2');
     h2.id = 'add-item-modal-title';
-    h2.textContent = 'Add Ingredient';
+    h2.textContent = t('itemModal.title.add');
     mHeader.appendChild(h2);
     modalContainer.appendChild(mHeader);
     
@@ -46,12 +47,12 @@ export default function AddItemModal() {
     mBody.appendChild(errorContainer);
     
     const fields = [
-        { id: 'item-name', label: 'Name', type: 'text', placeholder: 'e.g. Tomato' },
-        { label: 'Category', type: 'select', options: Object.keys(INVENTORY_CATEGORIES) },
-        { label: 'Unit measure', type: 'select', options: MEASUREMENT_UNITS },
-        { id: 'item-stock', label: 'Initial stock', type: 'number', placeholder: '100' },
-        { id: 'item-min-stock', label: 'Min Stock', type: 'number', placeholder: '50' },
-        { id: 'item-cost', label: 'Unit Cost ($)', type: 'number', placeholder: '0.00', step: '0.01' }
+        { id: 'item-name', label: t('itemModal.label.name'), type: 'text', placeholder: t('itemModal.placeholder.name') },
+        { label: t('itemModal.label.category'), type: 'select', options: Object.keys(INVENTORY_CATEGORIES) },
+        { label: t('itemModal.label.unit'), type: 'select', options: MEASUREMENT_UNITS },
+        { id: 'item-stock', label: t('itemModal.label.stock'), type: 'number', placeholder: '100' },
+        { id: 'item-min-stock', label: t('itemModal.label.minStock'), type: 'number', placeholder: '50' },
+        { id: 'item-cost', label: t('itemModal.label.cost'), type: 'number', placeholder: '0.00', step: '0.01' }
     ];
 
     fields.forEach(field => {
@@ -61,7 +62,7 @@ export default function AddItemModal() {
         const label = document.createElement('label');
         label.className = 'form-label';
         
-        if (field.label === 'Unit measure') {
+        if (field.label === t('itemModal.label.unit')) {
             label.style.display = 'flex';
             label.style.justifyContent = 'space-between';
             label.style.alignItems = 'center';
@@ -78,12 +79,12 @@ export default function AddItemModal() {
             defaultLabel.style.fontSize = '12px';
             defaultLabel.style.cursor = 'pointer';
             
-            const defaultCheckbox = document.createElement('input');
-            defaultCheckbox.type = 'checkbox';
-            defaultCheckbox.id = 'unit-default-checkbox';
-            defaultCheckbox.checked = true;
+            const defaultCheck = document.createElement('input');
+            defaultCheck.type = 'checkbox';
+            defaultCheck.id = 'unit-default-checkbox';
+            defaultCheck.checked = true;
             
-            defaultCheckbox.addEventListener('change', (e) => {
+            defaultCheck.addEventListener('change', (e) => {
                 const unitSelect = document.getElementById('unit-select');
                 const catSelect = document.getElementById('category-select');
                 if (unitSelect && catSelect) {
@@ -94,8 +95,8 @@ export default function AddItemModal() {
                 }
             });
             
-            defaultLabel.appendChild(defaultCheckbox);
-            defaultLabel.appendChild(document.createTextNode('Default'));
+            defaultLabel.appendChild(defaultCheck);
+            defaultLabel.appendChild(document.createTextNode(' ' + t('itemModal.label.autoUnit')));
             label.appendChild(defaultLabel);
         } else {
             label.textContent = field.label;
@@ -105,9 +106,9 @@ export default function AddItemModal() {
         
         if (field.type === 'select') {
             const select = document.createElement('select');
-            select.className = 'form-select';
+            select.className = 'form-control';
             
-            if (field.label === 'Category') {
+            if (field.label === t('itemModal.label.category')) {
                 select.id = 'category-select';
                 select.addEventListener('change', (e) => {
                     const unitSelect = document.getElementById('unit-select');
@@ -116,7 +117,7 @@ export default function AddItemModal() {
                         unitSelect.value = INVENTORY_CATEGORIES[e.target.value].defaultUnit;
                     }
                 });
-            } else if (field.label === 'Unit measure') {
+            } else if (field.label === t('itemModal.label.unit')) {
                 select.id = 'unit-select';
                 select.disabled = true; // default is true initially
             }
@@ -127,7 +128,7 @@ export default function AddItemModal() {
                 select.appendChild(option);
             });
             
-            if (field.label === 'Unit measure') {
+            if (field.label === t('itemModal.label.unit')) {
                 setTimeout(() => {
                     const catSelect = document.getElementById('category-select');
                     if (catSelect && catSelect.value) {
@@ -187,15 +188,15 @@ export default function AddItemModal() {
         const saveBtn = document.getElementById('add-item-modal-save-btn');
         if (saveBtn) {
             saveBtn.dataset.editId = '';
-            saveBtn.textContent = 'Add Item';
+            saveBtn.textContent = t('btn.add');
         }
         const title = document.getElementById('add-item-modal-title');
-        if (title) title.textContent = 'Add Ingredient';
+        if (title) title.textContent = t('itemModal.title.add');
     };
 
     const cancelBtn = document.createElement('button');
-    cancelBtn.className = 'btn-secondary';
-    cancelBtn.textContent = 'Cancel';
+    cancelBtn.className = 'btn-outline';
+    cancelBtn.textContent = t('btn.cancel');
     cancelBtn.addEventListener('click', () => {
         resetForm();
         const toggle = document.getElementById('add-item-modal-toggle');
@@ -205,8 +206,8 @@ export default function AddItemModal() {
     
     const addBtn = document.createElement('button');
     addBtn.className = 'btn-primary';
-    addBtn.textContent = 'Add Item';
     addBtn.id = 'add-item-modal-save-btn';
+    addBtn.textContent = t('btn.add');
     addBtn.addEventListener('click', () => {
         const name = document.getElementById('item-name')?.value.trim();
         const category = document.getElementById('category-select')?.value;
@@ -218,17 +219,17 @@ export default function AddItemModal() {
         let errors = [];
         
         if (!name) {
-            errors.push('• Item name is required.');
+            errors.push(t('itemModal.err.name'));
         }
         
         if (!stock || isNaN(stock) || Number(stock) <= 0) {
-            errors.push('• Initial stock must be a valid number strictly greater than 0.');
+            errors.push(t('itemModal.err.stock'));
         }
         if (!minStock || isNaN(minStock) || Number(minStock) < 0) {
-            errors.push('• Min stock must be a valid number greater than or equal to 0.');
+            errors.push(t('itemModal.err.minStock'));
         }
         if (!cost || isNaN(cost) || Number(cost) <= 0) {
-            errors.push('• Unit Cost must be a valid number strictly greater than 0.');
+            errors.push(t('itemModal.err.cost'));
         }
         
         if (errors.length > 0) {

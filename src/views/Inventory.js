@@ -5,6 +5,7 @@ import AddStockModal from '../components/inventory/AddStockModal.js';
 import { INVENTORY_CATEGORIES } from '../utils/constants.js';
 import { getLocal, setLocal } from '../utils/storage.js';
 import { onEvent, emitEvent } from '../utils/events.js';
+import { t } from '../utils/i18n.js';
 
 export default {
     render() {
@@ -22,7 +23,7 @@ export default {
         pageHeader.className = 'page-header';
 
         const h1 = document.createElement('h1');
-        h1.textContent = 'Inventory';
+        h1.textContent = t('inventory.title');
         pageHeader.appendChild(h1);
         
         const addBtn = document.createElement('button');
@@ -31,7 +32,7 @@ export default {
         const icon = document.createElement('i');
         icon.className = 'fa-solid fa-plus';
         addBtn.appendChild(icon);
-        addBtn.appendChild(document.createTextNode(' Add Item'));
+        addBtn.appendChild(document.createTextNode(' ' + t('btn.add')));
         addBtn.addEventListener('click', () => {
             emitEvent('openAddItemModal');
         });
@@ -69,9 +70,9 @@ export default {
 
             kpiContainer.innerHTML = '';
             const kpis = [
-                { title: 'Total Items', value: totalItems.toString() },
-                { title: 'Low Stock', value: lowStockItems.toString() },
-                { title: 'Inventory Value', value: `$${inventoryValue.toFixed(2)}` }
+                { title: t('inventory.kpi.total'), value: totalItems.toString() },
+                { title: t('inventory.kpi.lowStock'), value: lowStockItems.toString() },
+                { title: t('inventory.kpi.value'), value: `$${inventoryValue.toFixed(2)}` }
             ];
             kpiContainer.appendChild(KpiGrid(kpis));
             
@@ -107,7 +108,7 @@ export default {
                 emptyMessage.style.padding = '20px';
                 emptyMessage.style.textAlign = 'center';
                 emptyMessage.style.color = 'var(--color-text-variant)';
-                emptyMessage.textContent = 'No items found in inventory. Click "Add Item" to start.';
+                emptyMessage.textContent = t('table.empty');
                 tableContainer.appendChild(emptyMessage);
             } else {
                 tableContainer.appendChild(InventoryTable(formattedData));
@@ -124,7 +125,7 @@ export default {
         onEvent('openAddStockModal', (e) => {
             const item = e.detail.item;
             const title = document.getElementById('add-stock-modal-title');
-            if (title) title.textContent = `Add Stock: ${item.name}`;
+            if (title) title.textContent = t('stockModal.title', { name: item.name });
             
             const saveBtn = document.getElementById('add-stock-modal-save-btn');
             if (saveBtn) saveBtn.dataset.itemId = item.id;
@@ -135,12 +136,12 @@ export default {
 
         onEvent('openAddItemModal', () => {
             const title = document.getElementById('add-item-modal-title');
-            if (title) title.textContent = 'Add Ingredient';
+            if (title) title.textContent = t('itemModal.title.add');
             
             const saveBtn = document.getElementById('add-item-modal-save-btn');
             if (saveBtn) {
                 saveBtn.dataset.editId = '';
-                saveBtn.textContent = 'Add Item';
+                saveBtn.textContent = t('btn.add');
             }
             
             const nameInput = document.getElementById('item-name');
@@ -163,7 +164,7 @@ export default {
             const item = e.detail.item;
             
             const title = document.getElementById('add-item-modal-title');
-            if (title) title.textContent = 'Edit Ingredient';
+            if (title) title.textContent = t('itemModal.title.edit');
             
             document.getElementById('item-name').value = item.name;
             
@@ -187,7 +188,7 @@ export default {
             const saveBtn = document.getElementById('add-item-modal-save-btn');
             if (saveBtn) {
                 saveBtn.dataset.editId = item.id;
-                saveBtn.textContent = 'Save Changes';
+                saveBtn.textContent = t('btn.saveChanges');
             }
             
             const toggle = document.getElementById('add-item-modal-toggle');
