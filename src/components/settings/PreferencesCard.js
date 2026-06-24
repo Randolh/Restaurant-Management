@@ -43,9 +43,6 @@ export const PreferencesCard = () => {
     langSelect.appendChild(esOpt);
     
     langSelect.value = getLang();
-    langSelect.addEventListener('change', (e) => {
-        setLang(e.target.value);
-    });
     
     langGroup.appendChild(langLabel);
     langGroup.appendChild(langSelect);
@@ -96,6 +93,11 @@ export const PreferencesCard = () => {
     const prefsSaveBtn = document.createElement('button');
     prefsSaveBtn.className = 'btn-primary';
     prefsSaveBtn.textContent = t('btn.save');
+    
+    prefsSaveBtn.addEventListener('click', () => {
+        setLang(langSelect.value);
+    });
+    
     prefsActions.appendChild(prefsSaveBtn);
     
     prefsCard.appendChild(prefsHeader);

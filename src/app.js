@@ -122,7 +122,7 @@ const setupEventListeners = () => {
         const isProtected = !!getSession('session_token'); // Check if protected to re-render layout
         renderLayout(isProtected);
         const currentPath = window.location.hash.replace('#', '') || '/';
-        router.navigate(currentPath);
+        router.navigate(currentPath, false);
     });
 }
 

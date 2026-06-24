@@ -262,7 +262,7 @@ const locales = {
     }
 };
 
-let currentLang = getLocal('appLang', false) || 'es';
+let currentLang = getLocal('appLang', false) || 'en';
 
 export const setLang = (lang) => {
     if (locales[lang]) {
