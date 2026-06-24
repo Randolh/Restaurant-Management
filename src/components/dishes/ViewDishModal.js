@@ -46,71 +46,36 @@ export default function ViewDishModal() {
 
     // Body
     const body = document.createElement('div');
-    body.className = 'modal-body';
-    body.style.display = 'flex';
-    body.style.flexDirection = 'column';
-    body.style.gap = 'var(--stack-md)';
-    body.style.overflowY = 'auto';
-    body.style.maxHeight = '70vh';
+    body.className = 'modal-body view-dish-body';
 
     // Warning Banner
     const warningBanner = document.createElement('div');
-    warningBanner.style.display = 'none';
-    warningBanner.style.backgroundColor = 'rgba(220, 20, 60, 0.1)';
-    warningBanner.style.color = 'var(--brand-primary)';
-    warningBanner.style.padding = '8px 12px';
-    warningBanner.style.borderRadius = 'var(--radius-sm)';
-    warningBanner.style.fontSize = 'var(--font-size-body-sm)';
-    warningBanner.style.alignItems = 'center';
-    warningBanner.style.gap = '8px';
+    warningBanner.className = 'view-dish-warning';
     body.appendChild(warningBanner);
 
     // Image & basic info
     const infoSection = document.createElement('div');
     infoSection.className = 'view-dish-info';
-    infoSection.style.display = 'flex';
-    infoSection.style.gap = 'var(--stack-md)';
-    infoSection.style.alignItems = 'flex-start';
 
     const imgContainer = document.createElement('div');
-    imgContainer.style.width = '120px';
-    imgContainer.style.height = '120px';
-    imgContainer.style.borderRadius = 'var(--radius-md)';
-    imgContainer.style.overflow = 'hidden';
-    imgContainer.style.backgroundColor = 'var(--elevation-2-bg)';
-    imgContainer.style.display = 'flex';
-    imgContainer.style.alignItems = 'center';
-    imgContainer.style.justifyContent = 'center';
-    imgContainer.style.flexShrink = '0';
-    imgContainer.style.position = 'relative';
+    imgContainer.className = 'view-dish-img-container';
     
     const textInfo = document.createElement('div');
-    textInfo.style.flex = '1';
-    textInfo.style.minWidth = '0';
-    textInfo.style.display = 'flex';
-    textInfo.style.flexDirection = 'column';
-    textInfo.style.gap = '8px';
+    textInfo.className = 'view-dish-text-info';
 
     const dishName = document.createElement('h3');
-    dishName.style.margin = '0';
-    dishName.style.color = 'var(--brand-surface-text)';
-    dishName.style.fontSize = 'var(--font-size-headline-md)';
+    dishName.className = 'view-dish-name';
 
     const dishPrice = document.createElement('div');
-    dishPrice.style.fontSize = 'var(--font-size-headline-sm)';
-    dishPrice.style.fontWeight = '700';
-    dishPrice.style.color = 'var(--brand-primary)';
+    dishPrice.className = 'view-dish-price';
 
     const dishStatus = document.createElement('div');
+    
     const dishCategory = document.createElement('div');
-    dishCategory.style.color = 'var(--color-text-variant)';
-    dishCategory.style.fontSize = 'var(--font-size-body-sm)';
+    dishCategory.className = 'view-dish-category';
 
     const dishDesc = document.createElement('p');
-    dishDesc.style.margin = '0';
-    dishDesc.style.color = 'var(--color-text-variant)';
-    dishDesc.style.fontSize = 'var(--font-size-body-md)';
-    dishDesc.style.wordBreak = 'break-word';
+    dishDesc.className = 'view-dish-desc';
 
     textInfo.appendChild(dishName);
     textInfo.appendChild(dishPrice);
@@ -126,21 +91,12 @@ export default function ViewDishModal() {
     // Ingredients Section
     const ingredientsSection = document.createElement('div');
     const ingredientsTitle = document.createElement('h3');
-    ingredientsTitle.style.margin = '0 0 12px 0';
-    ingredientsTitle.style.fontSize = 'var(--font-size-body-lg)';
-    ingredientsTitle.style.color = 'var(--brand-surface-text)';
+    ingredientsTitle.className = 'view-dish-ingredients-title';
     ingredientsTitle.textContent = t('viewDish.ingredients') || 'Ingredients';
     ingredientsSection.appendChild(ingredientsTitle);
 
     const ingredientsList = document.createElement('div');
     ingredientsList.className = 'view-dish-ingredients';
-    ingredientsList.style.display = 'flex';
-    ingredientsList.style.flexDirection = 'column';
-    ingredientsList.style.gap = '8px';
-    ingredientsList.style.backgroundColor = 'var(--elevation-1-bg)';
-    ingredientsList.style.padding = 'var(--stack-md)';
-    ingredientsList.style.borderRadius = 'var(--radius-md)';
-    ingredientsList.style.border = 'var(--elevation-border)';
     ingredientsSection.appendChild(ingredientsList);
     
     body.appendChild(ingredientsSection);
@@ -174,25 +130,17 @@ export default function ViewDishModal() {
         if (dish.image) {
             const img = document.createElement('img');
             img.src = dish.image;
-            img.style.width = '100%';
-            img.style.height = '100%';
-            img.style.objectFit = 'cover';
+            img.className = 'view-dish-img';
             img.onerror = () => {
                 imgContainer.textContent = '';
                 const icon = document.createElement('i');
-                icon.className = `fa-solid ${catInfo?.icon || 'fa-utensils'} fallback-icon`;
-                icon.style.fontSize = '48px';
-                icon.style.color = 'var(--color-text-variant)';
-                icon.style.margin = '0';
+                icon.className = `fa-solid ${catInfo?.icon || 'fa-utensils'} fallback-icon view-dish-fallback-icon`;
                 imgContainer.appendChild(icon);
             };
             imgContainer.appendChild(img);
         } else {
             const icon = document.createElement('i');
-            icon.className = `fa-solid ${catInfo?.icon || 'fa-utensils'} fallback-icon`;
-            icon.style.fontSize = '48px';
-            icon.style.color = 'var(--color-text-variant)';
-            icon.style.margin = '0';
+            icon.className = `fa-solid ${catInfo?.icon || 'fa-utensils'} fallback-icon view-dish-fallback-icon`;
             imgContainer.appendChild(icon);
         }
         
@@ -205,23 +153,20 @@ export default function ViewDishModal() {
             dish.recipe.forEach(recipeItem => {
                 const invItem = inventoryItems.find(i => i.id === recipeItem.id);
                 const itemDiv = document.createElement('div');
-                itemDiv.style.display = 'flex';
-                itemDiv.style.justifyContent = 'space-between';
-                itemDiv.style.alignItems = 'center';
-                itemDiv.style.fontSize = 'var(--font-size-body-md)';
+                itemDiv.className = 'view-dish-ingredient-item';
                 
                 const nameSpan = document.createElement('span');
-                nameSpan.style.color = 'var(--brand-surface-text)';
+                nameSpan.className = 'view-dish-ingredient-name';
                 if (!invItem || invItem.deleted) {
                     hasDeletedIngredients = true;
                     nameSpan.textContent = `[!] ${t('dishModal.ingredients.deleted')}`;
-                    nameSpan.style.color = 'var(--brand-primary)';
+                    nameSpan.classList.add('text-warning');
                 } else {
                     nameSpan.textContent = invItem.name;
                 }
                 
                 const qtySpan = document.createElement('span');
-                qtySpan.style.color = 'var(--color-text-variant)';
+                qtySpan.className = 'view-dish-ingredient-qty';
                 qtySpan.textContent = `${recipeItem.qty} ${t('unit.' + recipeItem.unit) || recipeItem.unit}`;
                 
                 itemDiv.appendChild(nameSpan);
@@ -230,8 +175,7 @@ export default function ViewDishModal() {
             });
         } else {
             const emptyMsg = document.createElement('div');
-            emptyMsg.style.color = 'var(--color-text-variant)';
-            emptyMsg.style.fontStyle = 'italic';
+            emptyMsg.className = 'view-dish-empty';
             emptyMsg.textContent = t('dishModal.ingredients.empty') || 'No ingredients';
             ingredientsList.appendChild(emptyMsg);
         }

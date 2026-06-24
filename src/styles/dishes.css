@@ -592,3 +592,122 @@
   text-overflow: ellipsis;
 }
 
+
+/* --- View Dish Modal Styles --- */
+.view-dish-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack-md);
+  overflow-y: auto;
+  max-height: 70vh;
+}
+
+.view-dish-warning {
+  display: none;
+  background-color: rgba(220, 20, 60, 0.1);
+  color: var(--brand-primary);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-body-sm);
+  align-items: center;
+  gap: 8px;
+}
+
+.view-dish-info {
+  display: flex;
+  gap: var(--stack-md);
+  align-items: flex-start;
+}
+
+.view-dish-img-container {
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background-color: var(--elevation-2-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.view-dish-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.view-dish-fallback-icon {
+  font-size: 48px !important;
+  color: var(--color-text-variant) !important;
+  margin: 0 !important;
+}
+
+.view-dish-text-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.view-dish-name {
+  margin: 0;
+  color: var(--brand-surface-text);
+  font-size: var(--font-size-headline-md);
+}
+
+.view-dish-price {
+  font-size: var(--font-size-headline-sm);
+  font-weight: 700;
+  color: var(--brand-primary);
+}
+
+.view-dish-category {
+  color: var(--color-text-variant);
+  font-size: var(--font-size-body-sm);
+}
+
+.view-dish-desc {
+  margin: 0;
+  color: var(--color-text-variant);
+  font-size: var(--font-size-body-md);
+  word-break: break-word;
+}
+
+.view-dish-ingredients-title {
+  margin: 0 0 12px 0;
+  font-size: var(--font-size-body-lg);
+  color: var(--brand-surface-text);
+}
+
+.view-dish-ingredients {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: var(--elevation-1-bg);
+  padding: var(--stack-md);
+  border-radius: var(--radius-md);
+  border: var(--elevation-border);
+}
+
+.view-dish-ingredient-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-size-body-md);
+}
+
+.view-dish-ingredient-name {
+  color: var(--brand-surface-text);
+}
+
+.view-dish-ingredient-qty {
+  color: var(--color-text-variant);
+}
+
+.view-dish-empty {
+  color: var(--color-text-variant);
+  font-style: italic;
+}
