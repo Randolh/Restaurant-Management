@@ -52,7 +52,8 @@ export default function Sidebar() {
     const links = [
         { path: '/inventory', icon: 'fa-box', text: t('nav.inventory') },
         { path: '/dishes', icon: 'fa-utensils', text: t('nav.dishes') },
-        { path: '/orders', icon: 'fa-receipt', text: t('nav.orders') }
+        { path: '/orders', icon: 'fa-receipt', text: t('nav.orders') },
+        { path: '/history', icon: 'fa-clock-rotate-left', text: t('nav.history') }
     ];
 
     links.forEach(link => {

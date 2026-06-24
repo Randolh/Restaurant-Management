@@ -1,4 +1,4 @@
-import { t } from '../../utils/i18n.js';
+import { t, formatCurrency } from '../../utils/i18n.js';
 import { getLocal, setLocal } from '../../utils/storage.js';
 import { emitEvent, onEvent } from '../../utils/events.js';
 import { DEFAULT_TAX_RATE } from '../../utils/constants.js';
@@ -101,7 +101,7 @@ const AddOrderModal = () => {
 
             const priceText = document.createElement('span');
             priceText.className = 'order-dish-price';
-            priceText.textContent = `$${parseFloat(dish.price).toFixed(2)}`;
+            priceText.textContent = formatCurrency(parseFloat(dish.price));
 
             infoDiv.appendChild(nameText);
             infoDiv.appendChild(priceText);
@@ -168,9 +168,9 @@ const AddOrderModal = () => {
             emptyMsg.textContent = t('orders.modal.emptyTicket');
             ticketItemsContainer.appendChild(emptyMsg);
             
-            subtotalEl.textContent = '$0.00';
-            taxEl.textContent = '$0.00';
-            totalEl.textContent = '$0.00';
+            subtotalEl.textContent = formatCurrency(0);
+            taxEl.textContent = formatCurrency(0);
+            totalEl.textContent = formatCurrency(0);
             
             if (window.confirmOrderBtn) window.confirmOrderBtn.disabled = true;
             return;
@@ -237,7 +237,7 @@ const AddOrderModal = () => {
 
             const priceText = document.createElement('span');
             priceText.className = 'order-dish-price';
-            priceText.textContent = `$${item.price.toFixed(2)} x`;
+            priceText.textContent = `${formatCurrency(item.price)} x`;
             priceText.style.marginRight = '4px';
 
             actionsCol.appendChild(priceText);
@@ -253,9 +253,9 @@ const AddOrderModal = () => {
         const tax = subtotal * currentTaxRate;
         const total = subtotal + tax;
 
-        subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
-        taxEl.textContent = `$${tax.toFixed(2)}`;
-        totalEl.textContent = `$${total.toFixed(2)}`;
+        subtotalEl.textContent = formatCurrency(subtotal);
+        taxEl.textContent = formatCurrency(tax);
+        totalEl.textContent = formatCurrency(total);
     };
 
     // --- Left Panel ---

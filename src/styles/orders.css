@@ -26,7 +26,8 @@
   gap: var(--stack-sm);
   flex-grow: 1;
   overflow-x: auto;
-  padding-bottom: var(--stack-md); /* Space for scrollbar */
+  padding-bottom: var(--stack-md);
+  /* Space for scrollbar */
   align-items: stretch;
   /* Smooth scrolling for mobile */
   scroll-snap-type: x mandatory;
@@ -53,20 +54,13 @@
   min-width: 320px;
   width: 320px;
   flex-shrink: 0;
-  background-color: var(--brand-neutral); /* Matches background, visually seamless */
-  border: var(--elevation-border);
+  background-color: var(--elevation-1-bg);
+  border: none;
   border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
   height: 100%;
   scroll-snap-align: start;
-}
-
-/* To give a subtle distinction to the column area */
-.kanban-column {
-  background-color: var(--elevation-1-bg);
-  border: none;
-  border-radius: var(--radius-lg);
 }
 
 .kanban-header {
@@ -114,7 +108,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--stack-md);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
@@ -207,7 +201,8 @@
   .kanban-board {
     overflow-x: hidden;
     gap: 0;
-    padding-bottom: 0; /* Remove scrollbar space */
+    padding-bottom: 0;
+    /* Remove scrollbar space */
   }
 
   .kanban-column {
@@ -234,13 +229,15 @@
   }
 
   /* Core Carousel Logic */
-  #view-pending:checked ~ .kanban-board .kanban-column.pending {
+  #view-pending:checked~.kanban-board .kanban-column.pending {
     display: flex;
   }
-  #view-inprogress:checked ~ .kanban-board .kanban-column.in-progress {
+
+  #view-inprogress:checked~.kanban-board .kanban-column.in-progress {
     display: flex;
   }
-  #view-ready:checked ~ .kanban-board .kanban-column.ready {
+
+  #view-ready:checked~.kanban-board .kanban-column.ready {
     display: flex;
   }
 }
@@ -289,7 +286,8 @@
 .pos-right-panel {
   padding: var(--stack-lg);
   flex: 2;
-  background-color: var(--brand-neutral); /* optional distinct background */
+  background-color: var(--brand-neutral);
+  /* optional distinct background */
 }
 
 @media (min-width: 900px) {
@@ -297,7 +295,7 @@
     flex-direction: row;
     align-items: stretch;
   }
-  
+
   .pos-right-panel {
     padding-top: 0;
     padding-left: 0;
@@ -374,7 +372,8 @@
   padding: 8px 12px;
   border-radius: var(--radius-md);
   border-bottom: none;
-  margin-bottom: 8px; /* space between search results */
+  margin-bottom: 8px;
+  /* space between search results */
 }
 
 .order-dish-item.is-search-result.selected {
@@ -386,7 +385,8 @@
   justify-content: space-between;
   align-items: center;
   flex: 1;
-  min-width: 0; /* needed for flex child truncation */
+  min-width: 0;
+  /* needed for flex child truncation */
   gap: 12px;
   margin-right: 12px;
 }
@@ -470,7 +470,8 @@
 .orders-wrapper {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 20px); /* Account for top bar / bottom nav */
+  height: calc(100vh - 20px);
+  /* Account for top bar / bottom nav */
 }
 
 .orders-wrapper .page-content {
@@ -481,10 +482,141 @@
   padding-bottom: 0;
 }
 
-.kanban-wrapper, .kanban-board-container {
+.kanban-wrapper,
+.kanban-board-container {
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
+/* Order Details Modal Styles */
+.order-details-modal.modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  /* display is managed by JS (none/flex) */
+}
+.order-details-modal .modal-container {
+  max-width: 600px;
+}
+
+.order-details-modal .info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--stack-md);
+  padding: var(--stack-sm) 0;
+  border-bottom: 1px solid var(--elevation-border-color);
+}
+
+.order-details-modal .date-info {
+  text-align: right;
+}
+
+.order-details-modal .items-title {
+  margin-bottom: var(--stack-sm);
+}
+
+.order-details-modal .table-responsive {
+  margin-bottom: var(--stack-md);
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.order-details-modal .data-table {
+  table-layout: fixed;
+  width: 100%;
+  min-width: 0;
+}
+
+.order-details-modal .data-table th,
+.order-details-modal .data-table td {
+  font-size: 0.9rem;
+  padding: 10px 8px;
+}
+
+.order-details-modal td.col-item {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.order-details-modal .col-qty {
+  text-align: center;
+  white-space: nowrap;
+  width: 70px;
+}
+
+.order-details-modal .col-price,
+.order-details-modal .col-subtotal {
+  text-align: right;
+  white-space: nowrap;
+  width: 90px;
+}
+
+.order-details-modal .totals-container {
+  margin-left: auto;
+  width: 250px;
+}
+
+.order-details-modal .totals-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.order-details-modal .totals-row.grand-total {
+  font-weight: 700;
+  font-size: 1.1em;
+  border-top: 1px solid var(--elevation-border-color);
+  padding-top: 8px;
+}
+
+.order-details-modal .grand-total-val {
+  color: var(--brand-primary);
+}
+
+@media (max-width: 768px) {
+  .order-details-modal .modal-container {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+  }
+
+  .order-details-modal .modal-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .order-details-modal .table-responsive {
+    max-height: 250px;
+    overflow-y: auto;
+  }
+
+  /* Make table text and spacing smaller on mobile */
+  .order-details-modal .data-table th,
+  .order-details-modal .data-table td {
+    font-size: 0.75rem;
+    padding: 6px 2px;
+  }
+
+  .order-details-modal .col-qty {
+    width: 45px;
+  }
+
+  .order-details-modal .col-price,
+  .order-details-modal .col-subtotal {
+    width: 65px;
+  }
+}
