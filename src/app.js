@@ -4,6 +4,7 @@ import BottomNav from './components/BottomNav.js'
 import TopBar from './components/TopBar.js'
 import Inventory from './views/Inventory.js'
 import Dishes from './views/Dishes.js'
+import Orders from './views/Orders.js'
 import Settings from './views/Settings.js'
 import Login from './views/Login.js'
 import AccessDenied from './views/AccessDenied.js'
@@ -16,6 +17,7 @@ const routes = {
     '/': { component: Inventory, requiresAuth: true },
     '/inventory': { component: Inventory, requiresAuth: true },
     '/dishes': { component: Dishes, requiresAuth: true },
+    '/orders': { component: Orders, requiresAuth: true },
     '/settings': { component: Settings, requiresAuth: true },
     '/login': { component: Login, requiresAuth: false },
     '/access-denied': { component: AccessDenied, requiresAuth: false },
@@ -93,6 +95,54 @@ const initializeSession = () => {
     // Check if user requested to stay logged in
     if (getLocal('keep_logged_in') === 'true') {
         setSession('session_token', 'active');
+    }
+
+    // Initialize dummy orders data if not exists
+    if (!getLocal('ordersItems')) {
+        const dummyOrders = [
+            {
+                id: '1234',
+                customerName: 'Walk-in Customer',
+                phoneNumber: '',
+                status: 'pending',
+                items: [
+                    { name: 'Tonkotsu Ramen', qty: 2, price: 14.50 },
+                    { name: 'Edamame', qty: 1, price: 5.00 }
+                ],
+                subtotal: 34.00,
+                tax: 2.72,
+                total: 36.72,
+                createdAt: Date.now() - 10 * 60000 // 10 mins ago
+            },
+            {
+                id: '1235',
+                customerName: 'Alice Smith',
+                phoneNumber: '555-0102',
+                status: 'in-progress',
+                items: [
+                    { name: 'Spicy Miso', qty: 1, price: 15.00 },
+                    { name: 'Gyoza', qty: 2, price: 7.00 }
+                ],
+                subtotal: 29.00,
+                tax: 2.32,
+                total: 31.32,
+                createdAt: Date.now() - 15 * 60000 // 15 mins ago
+            },
+            {
+                id: '1236',
+                customerName: 'Bob Johnson',
+                phoneNumber: '555-0103',
+                status: 'ready',
+                items: [
+                    { name: 'Classic Cheeseburger', qty: 1, price: 12.00 }
+                ],
+                subtotal: 12.00,
+                tax: 0.96,
+                total: 12.96,
+                createdAt: Date.now() - 25 * 60000 // 25 mins ago
+            }
+        ];
+        setLocal('ordersItems', dummyOrders);
     }
 }
 
