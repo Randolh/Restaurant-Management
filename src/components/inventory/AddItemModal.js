@@ -2,6 +2,15 @@ import { INVENTORY_CATEGORIES, MEASUREMENT_UNITS } from '../../utils/constants.j
 import { getLocal, setLocal } from '../../utils/storage.js';
 
 export default function AddItemModal() {
+    const wrapper = document.createElement('div');
+    
+    const toggle = document.createElement('input');
+    toggle.type = 'checkbox';
+    toggle.id = 'add-item-modal-toggle';
+    toggle.className = 'modal-toggle';
+    toggle.hidden = true;
+    wrapper.appendChild(toggle);
+
     const modal = document.createElement('div');
     modal.className = 'modal';
     
@@ -16,6 +25,7 @@ export default function AddItemModal() {
     const mHeader = document.createElement('div');
     mHeader.className = 'modal-header';
     const h2 = document.createElement('h2');
+    h2.id = 'add-item-modal-title';
     h2.textContent = 'Add Ingredient';
     mHeader.appendChild(h2);
     modalContainer.appendChild(mHeader);
@@ -163,6 +173,14 @@ export default function AddItemModal() {
         
         errorContainer.style.display = 'none';
         errorContainer.innerHTML = '';
+        
+        const saveBtn = document.getElementById('add-item-modal-save-btn');
+        if (saveBtn) {
+            saveBtn.dataset.editId = '';
+            saveBtn.textContent = 'Add Item';
+        }
+        const title = document.getElementById('add-item-modal-title');
+        if (title) title.textContent = 'Add Ingredient';
     };
 
     const cancelBtn = document.createElement('button');
@@ -178,6 +196,7 @@ export default function AddItemModal() {
     const addBtn = document.createElement('button');
     addBtn.className = 'btn-primary';
     addBtn.textContent = 'Add Item';
+    addBtn.id = 'add-item-modal-save-btn';
     addBtn.addEventListener('click', () => {
         const name = document.getElementById('item-name')?.value.trim();
         const category = document.getElementById('category-select')?.value;
@@ -205,17 +224,26 @@ export default function AddItemModal() {
             return;
         }
 
-        const newItem = {
-            id: Date.now(),
-            name,
-            category,
-            unit,
-            stock,
-            cost
-        };
-
         const existingItems = getLocal('inventoryItems', true) || [];
-        existingItems.push(newItem);
+        const editId = addBtn.dataset.editId;
+        
+        if (editId) {
+            const index = existingItems.findIndex(i => i.id == editId);
+            if (index !== -1) {
+                existingItems[index] = { ...existingItems[index], name, category, unit, stock, cost };
+            }
+        } else {
+            const newItem = {
+                id: Date.now(),
+                name,
+                category,
+                unit,
+                stock,
+                cost
+            };
+            existingItems.push(newItem);
+        }
+        
         setLocal('inventoryItems', existingItems);
         
         resetForm();
@@ -231,5 +259,6 @@ export default function AddItemModal() {
     modalContainer.appendChild(mFooter);
 
     modal.appendChild(modalContainer);
-    return modal;
+    wrapper.appendChild(modal);
+    return wrapper;
 }

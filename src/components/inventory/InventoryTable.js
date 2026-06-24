@@ -85,6 +85,9 @@ export default function InventoryTable(data) {
         const iAdd = document.createElement('i');
         iAdd.className = 'fa-solid fa-plus';
         btnAdd.appendChild(iAdd);
+        btnAdd.addEventListener('click', () => {
+            window.dispatchEvent(new CustomEvent('openAddStockModal', { detail: { item: item.original } }));
+        });
         tableActions.appendChild(btnAdd);
 
         const btnEdit = document.createElement('button');
@@ -92,6 +95,9 @@ export default function InventoryTable(data) {
         const iEdit = document.createElement('i');
         iEdit.className = 'fa-solid fa-pen';
         btnEdit.appendChild(iEdit);
+        btnEdit.addEventListener('click', () => {
+            window.dispatchEvent(new CustomEvent('openEditItemModal', { detail: { item: item.original } }));
+        });
         tableActions.appendChild(btnEdit);
         
         const btnDelete = document.createElement('button');
@@ -99,6 +105,11 @@ export default function InventoryTable(data) {
         const iDelete = document.createElement('i');
         iDelete.className = 'fa-solid fa-trash';
         btnDelete.appendChild(iDelete);
+        btnDelete.addEventListener('click', () => {
+            if (confirm(`Are you sure you want to delete ${item.name}?`)) {
+                window.dispatchEvent(new CustomEvent('deleteItem', { detail: { id: item.original.id } }));
+            }
+        });
         tableActions.appendChild(btnDelete);
         
         tdActions.appendChild(tableActions);

@@ -1,21 +1,16 @@
 import KpiGrid from '../components/inventory/KpiGrid.js';
 import InventoryTable from '../components/inventory/InventoryTable.js';
 import AddItemModal from '../components/inventory/AddItemModal.js';
+import AddStockModal from '../components/inventory/AddStockModal.js';
 import { INVENTORY_CATEGORIES } from '../utils/constants.js';
-import { getLocal } from '../utils/storage.js';
+import { getLocal, setLocal } from '../utils/storage.js';
 
 export default {
     render() {
         const wrapper = document.createElement('div');
         wrapper.className = 'inventory-wrapper';
         
-        // --- 1. Hidden checkbox for Modal ---
-        const modalToggle = document.createElement('input');
-        modalToggle.type = 'checkbox';
-        modalToggle.id = 'add-item-modal-toggle';
-        modalToggle.className = 'modal-toggle';
-        modalToggle.hidden = true;
-        wrapper.appendChild(modalToggle);
+
 
         // --- 2. Page Content ---
         const pageContent = document.createElement('div');
@@ -63,7 +58,11 @@ export default {
         const updateTable = () => {
             const items = getLocal('inventoryItems', true) || [];
             
-            const formattedData = items.map(item => ({
+            // Filter out soft deleted items
+            const activeItems = items.filter(item => !item.deleted);
+            
+            const formattedData = activeItems.map(item => ({
+                original: item, // Pass original data for table actions
                 name: item.name,
                 icon: INVENTORY_CATEGORIES[item.category]?.icon || 'fa-box',
                 stockText: item.stock || '0',
@@ -93,10 +92,68 @@ export default {
         // Listen for updates from AddItemModal
         window.addEventListener('inventoryUpdated', updateTable);
 
+        // --- Global Action Listeners ---
+        window.addEventListener('openAddStockModal', (e) => {
+            const item = e.detail.item;
+            const title = document.getElementById('add-stock-modal-title');
+            if (title) title.textContent = `Add Stock: ${item.name}`;
+            
+            const saveBtn = document.getElementById('add-stock-modal-save-btn');
+            if (saveBtn) saveBtn.dataset.itemId = item.id;
+            
+            const toggle = document.getElementById('add-stock-modal-toggle');
+            if (toggle) toggle.checked = true;
+        });
+
+        window.addEventListener('openEditItemModal', (e) => {
+            const item = e.detail.item;
+            
+            const title = document.getElementById('add-item-modal-title');
+            if (title) title.textContent = 'Edit Ingredient';
+            
+            document.getElementById('item-name').value = item.name;
+            
+            const catSelect = document.getElementById('category-select');
+            if (catSelect) catSelect.value = item.category;
+            
+            const defaultCheck = document.getElementById('unit-default-checkbox');
+            if (defaultCheck) {
+                defaultCheck.checked = false; // Disable auto-sync for edit to preserve specific unit
+                defaultCheck.dispatchEvent(new Event('change'));
+            }
+            
+            const unitSelect = document.getElementById('unit-select');
+            if (unitSelect) unitSelect.value = item.unit;
+            
+            document.getElementById('item-stock').value = item.stock;
+            document.getElementById('item-cost').value = item.cost;
+            
+            const saveBtn = document.getElementById('add-item-modal-save-btn');
+            if (saveBtn) {
+                saveBtn.dataset.editId = item.id;
+                saveBtn.textContent = 'Save Changes';
+            }
+            
+            const toggle = document.getElementById('add-item-modal-toggle');
+            if (toggle) toggle.checked = true;
+        });
+
+        window.addEventListener('deleteItem', (e) => {
+            const id = e.detail.id;
+            const items = getLocal('inventoryItems', true) || [];
+            const index = items.findIndex(i => i.id == id);
+            if (index !== -1) {
+                items[index].deleted = true;
+                setLocal('inventoryItems', items);
+                window.dispatchEvent(new CustomEvent('inventoryUpdated'));
+            }
+        });
+
         wrapper.appendChild(pageContent);
 
-        // --- 3. Modal ---
+        // --- 3. Modals ---
         wrapper.appendChild(AddItemModal());
+        wrapper.appendChild(AddStockModal());
 
         return wrapper;
     }
