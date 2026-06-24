@@ -178,6 +178,9 @@
   color: var(--brand-surface-text);
   font-size: var(--font-size-headline-md);
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dish-info p {
