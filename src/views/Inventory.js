@@ -1,6 +1,7 @@
 import KpiGrid from '../components/inventory/KpiGrid.js';
 import InventoryTable from '../components/inventory/InventoryTable.js';
 import AddItemModal from '../components/inventory/AddItemModal.js';
+import { DUMMY_INVENTORY_DATA } from '../utils/constants.js';
 
 export default {
     render() {
@@ -51,13 +52,7 @@ export default {
         pageContent.appendChild(KpiGrid(kpis));
 
         // Data Table
-        const dummyData = [
-            { name: 'Tomato', icon: 'fa-apple-whole', stockText: '800/1000', stockPercent: '80%', progressClass: 'safe', progressWidth: '80%', unit: 'units' },
-            { name: 'Sauce', icon: 'fa-bottle-droplet', stockText: '12/60', stockPercent: '20%', progressClass: 'danger', progressWidth: '20%', unit: 'kg' },
-            { name: 'Cheese', icon: 'fa-cheese', stockText: '150/300', stockPercent: '50%', progressClass: 'warning', progressWidth: '50%', unit: 'Portions' },
-            { name: 'Noodles', icon: 'fa-bowl-food', stockText: '5/8', stockPercent: '62%', progressClass: 'warning', progressWidth: '62%', unit: 'Pack' }
-        ];
-        pageContent.appendChild(InventoryTable(dummyData));
+        pageContent.appendChild(InventoryTable(DUMMY_INVENTORY_DATA));
 
         wrapper.appendChild(pageContent);
 

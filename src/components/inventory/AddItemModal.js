@@ -1,3 +1,5 @@
+import { INVENTORY_CATEGORIES, MEASUREMENT_UNITS } from '../../utils/constants.js';
+
 export default function AddItemModal() {
     const modal = document.createElement('div');
     modal.className = 'modal';
@@ -22,9 +24,9 @@ export default function AddItemModal() {
     
     const fields = [
         { label: 'Name', type: 'text', placeholder: 'e.g. Tomato' },
-        { label: 'Category', type: 'select', options: ['Vegetables', 'Meats', 'Dairy', 'Grains', 'Liquids'] },
+        { label: 'Category', type: 'select', options: Object.keys(INVENTORY_CATEGORIES) },
         { label: 'Initial stock', type: 'number', placeholder: '100' },
-        { label: 'Unit measure', type: 'select', options: ['kg', 'units', 'liters', 'portions', 'packs'] },
+        { label: 'Unit measure', type: 'select', options: MEASUREMENT_UNITS },
         { label: 'Unit Cost ($)', type: 'number', placeholder: '0.00', step: '0.01' }
     ];
 
@@ -40,6 +42,19 @@ export default function AddItemModal() {
         if (field.type === 'select') {
             const select = document.createElement('select');
             select.className = 'form-select';
+            
+            if (field.label === 'Category') {
+                select.id = 'category-select';
+                select.addEventListener('change', (e) => {
+                    const unitSelect = document.getElementById('unit-select');
+                    if (unitSelect) {
+                        unitSelect.value = INVENTORY_CATEGORIES[e.target.value].defaultUnit;
+                    }
+                });
+            } else if (field.label === 'Unit measure') {
+                select.id = 'unit-select';
+            }
+
             field.options.forEach(opt => {
                 const option = document.createElement('option');
                 option.textContent = opt;
