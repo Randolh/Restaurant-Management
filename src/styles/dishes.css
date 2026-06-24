@@ -577,3 +577,18 @@
 .modal-title {
   margin: 0;
 }
+
+.ingredient-name-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.ingredient-name-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
