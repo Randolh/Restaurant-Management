@@ -6,6 +6,7 @@ export default function BottomNav() {
 
     const links = [
         { path: '/orders', icon: 'fa-receipt', text: t('nav.orders') },
+        { path: '/history', icon: 'fa-clock-rotate-left', text: t('nav.history') },
         { path: '/dishes', icon: 'fa-utensils', text: t('nav.dishes') },
         { path: '/inventory', icon: 'fa-box', text: t('nav.inventory') },
         { path: '/settings', icon: 'fa-gear', text: t('nav.settings') }
