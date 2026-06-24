@@ -183,8 +183,8 @@ export default {
         const renderTable = () => {
             tbody.replaceChildren();
             
-            // Filter completed/cancelled
-            let orders = allOrders.filter(o => o.status === 'completed' || o.status === 'cancelled');
+            // Filter completed/cancelled removed, show all orders
+            let orders = [...allOrders];
             
             // Sort by date desc
             orders.sort((a, b) => b.createdAt - a.createdAt);
@@ -232,8 +232,9 @@ export default {
                 const d = new Date(order.createdAt);
                 const dateStr = d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
                 
-                const badgeClass = order.status === 'completed' ? 'completed' : 'cancelled';
-                const statusLabel = order.status.charAt(0).toUpperCase() + order.status.slice(1);
+                const badgeClass = (order.status || 'pending').toLowerCase();
+                // We use translation or fallback for status label
+                const statusLabel = t(`orders.kanban.${order.status}.singular`) || t(`orders.kanban.${order.status}`) || order.status.charAt(0).toUpperCase() + order.status.slice(1);
                 
                 const tdId = document.createElement('td');
                 tdId.textContent = '#' + order.id;

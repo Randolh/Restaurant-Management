@@ -396,3 +396,18 @@ input:-webkit-autofill:active {
   background-color: rgba(244, 67, 54, 0.15);
   color: var(--color-danger);
 }
+
+.status-badge.pending {
+  background-color: rgba(245, 158, 11, 0.15);
+  color: var(--color-warning, #f59e0b);
+}
+
+.status-badge.inprogress {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: var(--color-info, #3b82f6);
+}
+
+.status-badge.ready {
+  background-color: rgba(139, 92, 246, 0.15);
+  color: var(--brand-primary, #8b5cf6);
+}
