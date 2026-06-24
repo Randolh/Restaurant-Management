@@ -40,7 +40,12 @@ export default {
         searchWrapper.appendChild(searchInput);
         searchWrapper.appendChild(searchIcon);
         
+        const dateInput = document.createElement('input');
+        dateInput.type = 'date';
+        dateInput.className = 'form-control';
+        
         controls.appendChild(searchWrapper);
+        controls.appendChild(dateInput);
         
         header.appendChild(h1);
         header.appendChild(controls);
@@ -102,6 +107,7 @@ export default {
         let currentPage = 1;
         const itemsPerPage = 8;
         let currentQuery = '';
+        let currentDate = '';
         
         const paginationContainer = document.createElement('div');
         paginationContainer.className = 'pagination';
@@ -121,7 +127,7 @@ export default {
             prevBtn.addEventListener('click', () => {
                 if (currentPage > 1) {
                     currentPage--;
-                    renderTable(currentQuery);
+                    renderTable();
                 }
             });
             paginationContainer.appendChild(prevBtn);
@@ -132,7 +138,7 @@ export default {
                 pageBtn.textContent = i;
                 pageBtn.addEventListener('click', () => {
                     currentPage = i;
-                    renderTable(currentQuery);
+                    renderTable();
                 });
                 paginationContainer.appendChild(pageBtn);
             }
@@ -146,14 +152,13 @@ export default {
             nextBtn.addEventListener('click', () => {
                 if (currentPage < totalPages) {
                     currentPage++;
-                    renderTable(currentQuery);
+                    renderTable();
                 }
             });
             paginationContainer.appendChild(nextBtn);
         };
         
-        const renderTable = (query = '') => {
-            currentQuery = query;
+        const renderTable = () => {
             tbody.replaceChildren();
             
             // Filter completed/cancelled
@@ -163,12 +168,21 @@ export default {
             orders.sort((a, b) => b.createdAt - a.createdAt);
             
             // Apply search filter
-            if (query.trim() !== '') {
-                const lowerQ = query.toLowerCase();
+            if (currentQuery.trim() !== '') {
+                const lowerQ = currentQuery.toLowerCase();
                 orders = orders.filter(o => 
                     (o.customerName && o.customerName.toLowerCase().includes(lowerQ)) ||
                     (o.id && o.id.toLowerCase().includes(lowerQ))
                 );
+            }
+
+            // Apply date filter
+            if (currentDate) {
+                orders = orders.filter(o => {
+                    const d = new Date(o.createdAt);
+                    const oDate = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+                    return oDate === currentDate;
+                });
             }
             
             const totalItems = orders.length;
@@ -244,10 +258,22 @@ export default {
             });
         };
         
-        // Search listener
+        // Search listener with debounce
+        let debounceTimer;
         searchInput.addEventListener('input', (e) => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                currentQuery = e.target.value;
+                currentPage = 1;
+                renderTable();
+            }, 300);
+        });
+
+        // Date filter listener
+        dateInput.addEventListener('change', (e) => {
+            currentDate = e.target.value;
             currentPage = 1;
-            renderTable(e.target.value);
+            renderTable();
         });
         
         // Initial load
