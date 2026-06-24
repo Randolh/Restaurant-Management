@@ -59,7 +59,7 @@ export default function AddDishModal() {
     
     const stepIndicator = document.createElement('div');
     stepIndicator.className = 'step-indicator';
-    stepIndicator.textContent = 'Step 1 of 2: Details';
+    stepIndicator.textContent = t('dishModal.step1') || 'Step 1 of 2: Details';
     
     modalHeader.appendChild(titleRow);
     modalHeader.appendChild(stepIndicator);
@@ -250,13 +250,13 @@ export default function AddDishModal() {
     const backBtn = document.createElement('button');
     backBtn.type = 'button';
     backBtn.className = 'btn-secondary';
-    backBtn.textContent = 'Back';
+    backBtn.textContent = t('btn.back') || 'Back';
     backBtn.style.display = 'none';
     
     const nextBtn = document.createElement('button');
     nextBtn.type = 'button';
     nextBtn.className = 'btn-primary';
-    nextBtn.textContent = 'Next';
+    nextBtn.textContent = t('btn.next') || 'Next';
     
     const saveBtn = document.createElement('button');
     saveBtn.type = 'submit';
@@ -278,13 +278,13 @@ export default function AddDishModal() {
     const updateCarousel = () => {
         carouselTrack.style.transform = `translateX(-${currentSlide * 50}%)`;
         if (currentSlide === 0) {
-            stepIndicator.textContent = 'Step 1 of 2: Details';
+            stepIndicator.textContent = t('dishModal.step1') || 'Step 1 of 2: Details';
             backBtn.style.display = 'none';
             cancelLbl.style.display = '';
             nextBtn.style.display = '';
             saveBtn.style.display = 'none';
         } else {
-            stepIndicator.textContent = 'Step 2 of 2: Ingredients';
+            stepIndicator.textContent = t('dishModal.step2') || 'Step 2 of 2: Ingredients';
             backBtn.style.display = '';
             cancelLbl.style.display = 'none';
             nextBtn.style.display = 'none';
