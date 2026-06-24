@@ -221,6 +221,38 @@
   color: white;
 }
 
+.dish-warning-badge {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  background: rgba(243, 156, 18, 0.9);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  z-index: 10;
+  backdrop-filter: blur(4px);
+  cursor: help;
+}
+
+.text-warning {
+  color: var(--color-warning) !important;
+}
+
+.recipe-item-warning {
+  font-size: 11px;
+  color: var(--color-warning);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+}
+
 /* --- Recipe Builder CSS --- */
 .recipe-builder {
   display: grid;

@@ -55,7 +55,22 @@ export default function RecipeBuilder(onChange) {
             stockSpan.className = 'stock-info';
             stockSpan.textContent = `(${item.unit})`;
             nameSpan.appendChild(stockSpan);
-            nameDiv.appendChild(nameSpan);
+            
+            // Check if ingredient is deleted in inventory
+            const invItem = allInventoryItems.find(i => i.id === item.id);
+            if (invItem && invItem.deleted) {
+                nameSpan.classList.add('text-warning');
+                const warnLbl = document.createElement('div');
+                warnLbl.className = 'recipe-item-warning';
+                warnLbl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${t('dishModal.ingredients.deleted') || 'Deleted from inventory'}`;
+                
+                const wrapperDiv = document.createElement('div');
+                wrapperDiv.appendChild(nameSpan);
+                wrapperDiv.appendChild(warnLbl);
+                nameDiv.appendChild(wrapperDiv);
+            } else {
+                nameDiv.appendChild(nameSpan);
+            }
 
             const actionsDiv = document.createElement('div');
             actionsDiv.className = 'recipe-item-actions';

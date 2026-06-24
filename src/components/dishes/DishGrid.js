@@ -1,10 +1,13 @@
 import { emitEvent } from '../../utils/events.js';
 import { t, formatCurrency } from '../../utils/i18n.js';
 import { DISH_CATEGORIES } from '../../utils/constants.js';
+import { getLocal } from '../../utils/storage.js';
 
 export default function DishGrid(dishes) {
     const grid = document.createElement('div');
     grid.className = 'dishes-grid';
+    
+    const inventoryItems = getLocal('inventoryItems', true) || [];
 
     dishes.forEach(dish => {
         const card = document.createElement('article');
@@ -49,6 +52,22 @@ export default function DishGrid(dishes) {
             badge.textContent = t('dishes.kpi.unavailable');
         }
         imgContainer.appendChild(badge);
+
+        // Deleted Ingredients Warning
+        const hasDeletedIngredients = (dish.recipe || []).some(recipeItem => {
+            const invItem = inventoryItems.find(i => i.id === recipeItem.id);
+            return invItem && invItem.deleted;
+        });
+
+        if (hasDeletedIngredients) {
+            const warningBadge = document.createElement('div');
+            warningBadge.className = 'dish-warning-badge';
+            warningBadge.title = t('dishes.warning.deletedIngredient') || 'Warning: Recipe contains deleted ingredients';
+            const warnIcon = document.createElement('i');
+            warnIcon.className = 'fa-solid fa-triangle-exclamation';
+            warningBadge.appendChild(warnIcon);
+            imgContainer.appendChild(warningBadge);
+        }
 
         // Content Container
         const content = document.createElement('div');
