@@ -7,6 +7,7 @@ import { getLocal, setLocal } from '../utils/storage.js';
 import { onEvent, emitEvent } from '../utils/events.js';
 import { t, formatCurrency } from '../utils/i18n.js';
 import SearchBar from '../components/ui/SearchBar.js';
+import showToast from '../components/ui/Toast.js';
 
 export default {
     render() {
@@ -249,10 +250,21 @@ export default {
             const id = e.detail.id;
             const items = getLocal('inventoryItems', true) || [];
             const index = items.findIndex(i => i.id == id);
+            
             if (index !== -1) {
+                // Check for conflicts with dishes
+                const dishes = getLocal('dishesItems', true) || [];
+                const affectedDishes = dishes.filter(d => !d.deleted && (d.recipe || []).some(r => r.id == id));
+                
+                if (affectedDishes.length > 0) {
+                    const msg = t('inventory.warning.inUse', { count: affectedDishes.length });
+                    showToast(msg, 'warning');
+                }
+                
                 items.splice(index, 1);
                 setLocal('inventoryItems', items);
                 emitEvent('inventoryUpdated');
+                emitEvent('dishesUpdated'); // trigger dish view update to show warnings
             }
         });
 
