@@ -77,4 +77,4 @@ export const DISH_CATEGORIES = {
 };
 
 export const DEFAULT_PROFIT_MARGIN = 0.30;
-export const DEFAULT_TAX_RATE = 0.08;
+export const DEFAULT_TAX_RATE = 0.03;

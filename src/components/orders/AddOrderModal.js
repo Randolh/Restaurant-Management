@@ -38,6 +38,11 @@ const AddOrderModal = () => {
     const posLayout = document.createElement('div');
     posLayout.className = 'pos-layout';
 
+    const getTaxRate = () => {
+        const saved = getLocal('appTaxRate', false);
+        return saved !== null ? parseFloat(saved) : DEFAULT_TAX_RATE;
+    };
+
     // State
     let cart = [];
     let searchQuery = '';
@@ -244,7 +249,8 @@ const AddOrderModal = () => {
             ticketItemsContainer.appendChild(row);
         });
 
-        const tax = subtotal * DEFAULT_TAX_RATE;
+        const currentTaxRate = getTaxRate();
+        const tax = subtotal * currentTaxRate;
         const total = subtotal + tax;
 
         subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
@@ -336,7 +342,8 @@ const AddOrderModal = () => {
     const sumRow2 = document.createElement('div');
     sumRow2.className = 'ticket-summary-row';
     const l2 = document.createElement('span');
-    l2.textContent = t('orders.modal.tax') + ` (${(DEFAULT_TAX_RATE * 100).toFixed(0)}%)`;
+    const currentTaxRate = getTaxRate();
+    l2.textContent = t('orders.modal.tax') + ` (${(currentTaxRate * 100).toFixed(0)}%)`;
     sumRow2.appendChild(l2);
     sumRow2.appendChild(taxEl);
 
@@ -378,6 +385,7 @@ const AddOrderModal = () => {
     confirmBtn.addEventListener('click', () => {
         if (cart.length === 0) return;
 
+        const currentTaxRate = getTaxRate();
         const newOrder = {
             id: Date.now().toString(36).toUpperCase(),
             customerName: customerInput.value.trim() || t('orders.modal.anonymous') || 'Walk-in Customer',
@@ -385,8 +393,8 @@ const AddOrderModal = () => {
             status: 'pending',
             items: cart.map(item => ({ ...item })),
             subtotal: cart.reduce((sum, item) => sum + (item.price * item.qty), 0),
-            tax: cart.reduce((sum, item) => sum + (item.price * item.qty), 0) * DEFAULT_TAX_RATE,
-            total: cart.reduce((sum, item) => sum + (item.price * item.qty), 0) * (1 + DEFAULT_TAX_RATE),
+            tax: cart.reduce((sum, item) => sum + (item.price * item.qty), 0) * currentTaxRate,
+            total: cart.reduce((sum, item) => sum + (item.price * item.qty), 0) * (1 + currentTaxRate),
             createdAt: Date.now()
         };
 
