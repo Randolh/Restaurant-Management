@@ -53,6 +53,18 @@ export default function ViewDishModal() {
     body.style.overflowY = 'auto';
     body.style.maxHeight = '70vh';
 
+    // Warning Banner
+    const warningBanner = document.createElement('div');
+    warningBanner.style.display = 'none';
+    warningBanner.style.backgroundColor = 'rgba(220, 20, 60, 0.1)';
+    warningBanner.style.color = 'var(--brand-primary)';
+    warningBanner.style.padding = '8px 12px';
+    warningBanner.style.borderRadius = 'var(--radius-sm)';
+    warningBanner.style.fontSize = 'var(--font-size-body-sm)';
+    warningBanner.style.alignItems = 'center';
+    warningBanner.style.gap = '8px';
+    body.appendChild(warningBanner);
+
     // Image & basic info
     const infoSection = document.createElement('div');
     infoSection.className = 'view-dish-info';
@@ -140,6 +152,7 @@ export default function ViewDishModal() {
     // Update Data
     onEvent('openViewDishModal', (e) => {
         const dish = e.detail.dish;
+        const inventoryItems = getLocal('inventoryItems', true) || [];
         
         dishName.textContent = dish.name;
         dishPrice.textContent = formatCurrency(dish.price || 0);
@@ -183,8 +196,9 @@ export default function ViewDishModal() {
             imgContainer.appendChild(icon);
         }
         
+        let hasDeletedIngredients = false;
+        
         ingredientsList.textContent = '';
-        const inventoryItems = getLocal('inventoryItems', true) || [];
         let totalCost = 0;
         
         if (dish.recipe && dish.recipe.length > 0) {
@@ -199,6 +213,7 @@ export default function ViewDishModal() {
                 const nameSpan = document.createElement('span');
                 nameSpan.style.color = 'var(--brand-surface-text)';
                 if (!invItem || invItem.deleted) {
+                    hasDeletedIngredients = true;
                     nameSpan.textContent = `[!] ${t('dishModal.ingredients.deleted')}`;
                     nameSpan.style.color = 'var(--brand-primary)';
                 } else {
@@ -219,6 +234,13 @@ export default function ViewDishModal() {
             emptyMsg.style.fontStyle = 'italic';
             emptyMsg.textContent = t('dishModal.ingredients.empty') || 'No ingredients';
             ingredientsList.appendChild(emptyMsg);
+        }
+        
+        if (hasDeletedIngredients) {
+            warningBanner.style.display = 'flex';
+            warningBanner.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <span>${t('dishes.warning.deletedIngredient') || 'Warning: Recipe contains deleted ingredients'}</span>`;
+        } else {
+            warningBanner.style.display = 'none';
         }
         
         toggle.checked = true;
