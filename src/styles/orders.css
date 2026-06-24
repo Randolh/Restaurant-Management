@@ -574,3 +574,43 @@
 .order-details-modal .grand-total-val {
   color: var(--brand-primary);
 }
+
+@media (max-width: 768px) {
+  .order-details-modal .modal-container {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+  }
+
+  .order-details-modal .modal-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .order-details-modal .table-responsive {
+    max-height: 250px;
+    overflow-y: auto;
+  }
+
+  /* Make table text and spacing smaller on mobile */
+  .order-details-modal .data-table th,
+  .order-details-modal .data-table td {
+    font-size: 0.75rem;
+    padding: 6px 2px;
+  }
+
+  .order-details-modal .col-qty {
+    width: 45px;
+  }
+
+  .order-details-modal .col-price,
+  .order-details-modal .col-subtotal {
+    width: 65px;
+  }
+}
