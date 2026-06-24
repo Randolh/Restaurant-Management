@@ -42,3 +42,11 @@ export const MEASUREMENT_UNITS = [
     'Bunch',
     'Clove (garlic)'
 ];
+
+export const CURRENCIES = [
+    { code: 'GTQ', symbol: 'Q', label: 'GTQ (Q)' },
+    { code: 'COP', symbol: '$', label: 'COP ($)' },
+    { code: 'MXN', symbol: '$', label: 'MXN ($)' },
+    { code: 'USD', symbol: '$', label: 'USD ($)' },
+    { code: 'EUR', symbol: '€', label: 'EUR (€)' }
+];

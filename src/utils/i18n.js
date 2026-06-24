@@ -1,4 +1,6 @@
 import { getLocal, setLocal } from './storage.js';
+import { emitEvent } from './events.js';
+import { CURRENCIES } from './constants.js';
 
 const locales = {
     en: {
@@ -34,7 +36,7 @@ const locales = {
         'itemModal.label.autoUnit': 'Auto-select default unit',
         'itemModal.label.stock': 'Initial stock',
         'itemModal.label.minStock': 'Min Stock',
-        'itemModal.label.cost': 'Unit Cost ($)',
+        'itemModal.label.cost': 'Unit Cost ({currency})',
         'itemModal.err.name': '• Item name is required.',
         'itemModal.err.stock': '• Initial stock must be a valid number strictly greater than 0.',
         'itemModal.err.minStock': '• Min stock must be a valid number greater than or equal to 0.',
@@ -61,6 +63,39 @@ const locales = {
         'login.remember': 'Stay signed in',
         'login.btn': 'Login',
         'login.error.invalid': 'Invalid email or password.',
+
+        'settings.title': 'Settings',
+        'settings.account': 'Account Actions',
+        'settings.preferences': 'Preferences',
+        'settings.preferences.desc': 'Customize your regional settings.',
+        'settings.language': 'Language',
+        'settings.currency': 'Currency Symbol',
+        'settings.profile.title': 'General Profile',
+        'settings.profile.desc': 'Manage your restaurant details and logo.',
+        'settings.profile.logo': 'Logo URL',
+        'settings.profile.logo.hint': 'Paste a valid image URL (JPG, PNG)',
+        'settings.profile.logo.error': 'Invalid image URL or image failed to load.',
+        'settings.profile.name': 'Restaurant Name',
+        'settings.profile.name.placeholder': 'My Awesome Restaurant',
+        'settings.profile.subtitle': 'Subtitle',
+        'settings.profile.subtitle.placeholder': 'Sushi Bar',
+        'settings.profile.success': 'Profile updated successfully.',
+        'settings.security.title': 'Security',
+        'settings.security.desc': 'Ensure your account stays secure.',
+        'settings.security.current': 'Current Password',
+        'settings.security.new': 'New Password',
+        'settings.security.confirm': 'Confirm Password',
+        'settings.security.err.current': 'Current password is incorrect.',
+        'settings.security.err.match': 'New passwords do not match.',
+        'settings.security.err.empty': 'Please fill all fields.',
+        'settings.security.success': 'Password changed successfully.',
+        'settings.data.title': 'Data Management',
+        'settings.data.desc': 'Development tools and destructive actions.',
+        'settings.data.loadDefault': 'Load Default Categories',
+        'settings.data.loadDummy': 'Load Dummy Data (Test Data)',
+        'settings.data.warning': 'This action is irreversible and will delete all your inventory, dishes, and orders.',
+        'settings.data.wipe': 'Wipe Data & Start from Scratch',
+        'btn.save': 'Save',
 
         'access.title': 'ACCESS DENIED',
         'access.desc': 'You do not have permission to view this page. Please sign in to continue.',
@@ -140,7 +175,7 @@ const locales = {
         'itemModal.label.autoUnit': 'Auto-seleccionar unidad por defecto',
         'itemModal.label.stock': 'Stock inicial',
         'itemModal.label.minStock': 'Stock Mínimo',
-        'itemModal.label.cost': 'Costo Unitario ($)',
+        'itemModal.label.cost': 'Costo Unitario ({currency})',
         'itemModal.err.name': '• El nombre es obligatorio.',
         'itemModal.err.stock': '• El stock debe ser mayor a 0.',
         'itemModal.err.minStock': '• El stock mínimo no puede ser negativo.',
@@ -167,6 +202,39 @@ const locales = {
         'login.remember': 'Mantener sesión iniciada',
         'login.btn': 'Ingresar',
         'login.error.invalid': 'Correo o contraseña inválidos.',
+
+        'settings.title': 'Configuración',
+        'settings.account': 'Acciones de Cuenta',
+        'settings.preferences': 'Preferencias',
+        'settings.preferences.desc': 'Personaliza tu configuración regional.',
+        'settings.language': 'Idioma',
+        'settings.currency': 'Símbolo de Moneda',
+        'settings.profile.title': 'Perfil General',
+        'settings.profile.desc': 'Administra los detalles y logotipo de tu restaurante.',
+        'settings.profile.logo': 'URL del Logotipo',
+        'settings.profile.logo.hint': 'Pega una URL válida de imagen (JPG, PNG)',
+        'settings.profile.logo.error': 'URL de imagen inválida o no se pudo cargar.',
+        'settings.profile.name': 'Nombre del Restaurante',
+        'settings.profile.name.placeholder': 'Mi Increíble Restaurante',
+        'settings.profile.subtitle': 'Subtítulo',
+        'settings.profile.subtitle.placeholder': 'Bar de Sushi',
+        'settings.profile.success': 'Perfil actualizado exitosamente.',
+        'settings.security.title': 'Seguridad',
+        'settings.security.desc': 'Asegura que tu cuenta se mantenga protegida.',
+        'settings.security.current': 'Contraseña Actual',
+        'settings.security.new': 'Nueva Contraseña',
+        'settings.security.confirm': 'Confirmar Contraseña',
+        'settings.security.err.current': 'La contraseña actual es incorrecta.',
+        'settings.security.err.match': 'Las contraseñas nuevas no coinciden.',
+        'settings.security.err.empty': 'Por favor llena todos los campos.',
+        'settings.security.success': 'Contraseña cambiada exitosamente.',
+        'settings.data.title': 'Gestión de Datos',
+        'settings.data.desc': 'Herramientas de desarrollo y acciones destructivas.',
+        'settings.data.loadDefault': 'Cargar Categorías por Defecto',
+        'settings.data.loadDummy': 'Cargar Datos de Prueba',
+        'settings.data.warning': 'Esta acción es irreversible y borrará todo el inventario, platillos y pedidos.',
+        'settings.data.wipe': 'Borrar Datos y Empezar de Cero',
+        'btn.save': 'Guardar',
 
         'access.title': 'ACCESO DENEGADO',
         'access.desc': 'No tienes permiso para ver esta página. Por favor, inicia sesión para continuar.',
@@ -215,17 +283,30 @@ const locales = {
     }
 };
 
-let currentLang = getLocal('appLang', false) || 'es';
+let currentLang = getLocal('appLang', false) || 'en';
+let currentCurrency = getLocal('appCurrency', false) || 'USD';
 
 export const setLang = (lang) => {
     if (locales[lang]) {
         currentLang = lang;
         setLocal('appLang', lang, false);
-        window.dispatchEvent(new CustomEvent('langChanged'));
+        emitEvent('langChanged');
     }
 };
 
+export const setCurrency = (curr) => {
+    currentCurrency = curr;
+    setLocal('appCurrency', curr, false);
+    emitEvent('currencyChanged');
+};
+
 export const getLang = () => currentLang;
+export const getCurrency = () => currentCurrency;
+export const getCurrencySymbol = () => {
+    const curr = CURRENCIES.find(c => c.code === currentCurrency);
+    return curr ? curr.symbol : '$';
+};
+export const formatCurrency = (val) => `${getCurrencySymbol()}${Number(val).toFixed(2)}`;
 
 export const t = (key, params = {}) => {
     let text = locales[currentLang]?.[key] || locales['en']?.[key] || key;

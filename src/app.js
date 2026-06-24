@@ -3,9 +3,10 @@ import Sidebar from './components/Sidebar.js'
 import BottomNav from './components/BottomNav.js'
 import TopBar from './components/TopBar.js'
 import Inventory from './views/Inventory.js'
+import Settings from './views/Settings.js'
 import Login from './views/Login.js'
 import AccessDenied from './views/AccessDenied.js'
-import { getLocal, setLocal, setSession, removeLocal, removeSession } from './utils/storage.js'
+import { getLocal, setLocal, getSession, setSession, removeLocal, removeSession } from './utils/storage.js'
 import { onEvent, emitEvent } from './utils/events.js'
 import { t } from './utils/i18n.js'
 
@@ -13,6 +14,7 @@ import { t } from './utils/i18n.js'
 const routes = {
     '/': { component: Inventory, requiresAuth: true },
     '/inventory': { component: Inventory, requiresAuth: true },
+    '/settings': { component: Settings, requiresAuth: true },
     '/login': { component: Login, requiresAuth: false },
     '/access-denied': { component: AccessDenied, requiresAuth: false },
 }
@@ -115,13 +117,51 @@ const setupEventListeners = () => {
         removeLocal('keep_logged_in');
         router.navigate('/login');
     });
+
+    onEvent('langChanged', () => {
+        const isProtected = !!getSession('session_token'); // Check if protected to re-render layout
+        renderLayout(isProtected);
+        const currentPath = window.location.hash.replace('#', '') || '/';
+        router.navigate(currentPath, false);
+    });
+
+    onEvent('currencyChanged', () => {
+        const isProtected = !!getSession('session_token');
+        renderLayout(isProtected);
+        const currentPath = window.location.hash.replace('#', '') || '/';
+        router.navigate(currentPath, false);
+    });
+    onEvent('profileUpdated', () => {
+        const profile = getLocal('restaurant_profile', true) || {};
+        document.title = profile.name || 'Restaurant Management';
+        
+        const link = document.querySelector("link[rel~='icon']");
+        if (link) {
+            link.href = profile.logo || './favicon.svg';
+        }
+        
+        const isProtected = !!getSession('session_token');
+        renderLayout(isProtected);
+        const currentPath = window.location.hash.replace('#', '') || '/';
+        router.navigate(currentPath, false);
+    });
 }
 
 const initApp = () => {
     initializeSession()
     setupEventListeners()
     
-    // Initial render assumes unprotected layout (no header), 
+    // Set initial title and favicon if exists
+    const profile = getLocal('restaurant_profile', true) || {};
+    if (profile.name) {
+        document.title = profile.name;
+    }
+    const link = document.querySelector("link[rel~='icon']");
+    if (link && profile.logo) {
+        link.href = profile.logo;
+    }
+    
+    // Initial render assumes unprotected layout (no header),  
     // router will update it via onRouteChanged before rendering the view
     renderLayout(false)
     

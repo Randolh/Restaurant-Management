@@ -5,7 +5,7 @@ import AddStockModal from '../components/inventory/AddStockModal.js';
 import { INVENTORY_CATEGORIES } from '../utils/constants.js';
 import { getLocal, setLocal } from '../utils/storage.js';
 import { onEvent, emitEvent } from '../utils/events.js';
-import { t } from '../utils/i18n.js';
+import { t, formatCurrency } from '../utils/i18n.js';
 import SearchBar from '../components/ui/SearchBar.js';
 
 export default {
@@ -102,7 +102,7 @@ export default {
                         updateTable();
                     }
                 },
-                { title: t('inventory.kpi.value'), value: `$${inventoryValue.toFixed(2)}` }
+                { title: t('inventory.kpi.value'), value: formatCurrency(inventoryValue) }
             ];
             kpiContainer.appendChild(KpiGrid(kpis));
             

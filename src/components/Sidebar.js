@@ -1,4 +1,5 @@
 import { emitEvent } from '../utils/events.js';
+import { getLocal } from '../utils/storage.js';
 import { t } from '../utils/i18n.js';
 
 export default function Sidebar() {
@@ -18,15 +19,19 @@ export default function Sidebar() {
     header.className = 'sidebar-header';
     const logoDiv = document.createElement('div');
     logoDiv.className = 'sidebar-logo';
+    const profile = getLocal('restaurant_profile', true) || {};
+    
     const logoImg = document.createElement('img');
-    logoImg.src = './favicon.svg';
+    logoImg.src = profile.logo || './favicon.svg';
     logoImg.alt = 'Restaurant Logo';
+    // Small styling tweak if user uploads a logo to ensure it fits the box:
+    logoImg.style.objectFit = 'contain';
     logoDiv.appendChild(logoImg);
     
     const h2 = document.createElement('h2');
-    h2.textContent = t('app.title');
+    h2.textContent = profile.name || t('app.title');
     const h2Span = document.createElement('span');
-    h2Span.textContent = t('app.subtitle');
+    h2Span.textContent = profile.subtitle || t('app.subtitle');
     h2.appendChild(h2Span);
     
     const closeBtn = document.createElement('label');
