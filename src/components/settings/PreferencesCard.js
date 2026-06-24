@@ -1,5 +1,5 @@
 import { t, getLang, setLang, getCurrency, setCurrency } from '../../utils/i18n.js';
-import { CURRENCIES, DEFAULT_PROFIT_MARGIN } from '../../utils/constants.js';
+import { CURRENCIES, DEFAULT_PROFIT_MARGIN, DEFAULT_TAX_RATE } from '../../utils/constants.js';
 import { getLocal, setLocal } from '../../utils/storage.js';
 import showToast from '../ui/Toast.js';
 
@@ -112,6 +112,31 @@ export const PreferencesCard = () => {
     
     formRow.appendChild(marginCol);
     
+    // Tax Rate Col
+    const taxCol = document.createElement('div');
+    taxCol.className = 'form-col';
+    const taxGroup = document.createElement('div');
+    taxGroup.className = 'form-group';
+    const taxLabel = document.createElement('label');
+    taxLabel.className = 'form-label';
+    taxLabel.textContent = t('settings.taxRate') || 'Tax Rate (%)';
+    
+    const taxInput = document.createElement('input');
+    taxInput.type = 'number';
+    taxInput.className = 'form-control';
+    taxInput.min = '0';
+    taxInput.step = '1';
+    
+    const savedTax = getLocal('appTaxRate', false);
+    const currentTax = savedTax !== null ? parseFloat(savedTax) : DEFAULT_TAX_RATE;
+    taxInput.value = Math.round(currentTax * 100);
+    
+    taxGroup.appendChild(taxLabel);
+    taxGroup.appendChild(taxInput);
+    taxCol.appendChild(taxGroup);
+    
+    formRow.appendChild(taxCol);
+    
     const prefsActions = document.createElement('div');
     prefsActions.style.display = 'flex';
     prefsActions.style.justifyContent = 'flex-end';
@@ -125,8 +150,19 @@ export const PreferencesCard = () => {
         setCurrency(currSelect.value);
         
         const marginVal = parseFloat(marginInput.value) / 100;
+        const taxVal = parseFloat(taxInput.value) / 100;
+        
+        let saved = false;
         if (!isNaN(marginVal) && marginVal >= 0) {
             setLocal('appProfitMargin', marginVal.toString(), false);
+            saved = true;
+        }
+        if (!isNaN(taxVal) && taxVal >= 0) {
+            setLocal('appTaxRate', taxVal.toString(), false);
+            saved = true;
+        }
+        
+        if (saved) {
             showToast(t('settings.profile.success') || 'Settings saved successfully');
         }
     });
