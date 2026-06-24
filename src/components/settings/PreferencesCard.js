@@ -1,5 +1,7 @@
 import { t, getLang, setLang, getCurrency, setCurrency } from '../../utils/i18n.js';
-import { CURRENCIES } from '../../utils/constants.js';
+import { CURRENCIES, DEFAULT_PROFIT_MARGIN } from '../../utils/constants.js';
+import { getLocal, setLocal } from '../../utils/storage.js';
+import showToast from '../ui/Toast.js';
 
 export const PreferencesCard = () => {
     const prefsCard = document.createElement('div');
@@ -15,7 +17,10 @@ export const PreferencesCard = () => {
     prefsHeader.appendChild(prefsP);
     
     const formRow = document.createElement('div');
-    formRow.className = 'form-row';
+    formRow.style.display = 'flex';
+    formRow.style.flexDirection = 'column';
+    formRow.style.gap = 'var(--stack-md)';
+    formRow.style.marginBottom = 'var(--stack-md)';
     
     // Language Col
     const langCol = document.createElement('div');
@@ -82,6 +87,31 @@ export const PreferencesCard = () => {
     formRow.appendChild(langCol);
     formRow.appendChild(currCol);
     
+    // Profit Margin Col
+    const marginCol = document.createElement('div');
+    marginCol.className = 'form-col';
+    const marginGroup = document.createElement('div');
+    marginGroup.className = 'form-group';
+    const marginLabel = document.createElement('label');
+    marginLabel.className = 'form-label';
+    marginLabel.textContent = t('settings.profitMargin') || 'Profit Margin (%)';
+    
+    const marginInput = document.createElement('input');
+    marginInput.type = 'number';
+    marginInput.className = 'form-control';
+    marginInput.min = '0';
+    marginInput.step = '1';
+    
+    const savedMargin = getLocal('appProfitMargin', false);
+    const currentMargin = savedMargin !== null ? parseFloat(savedMargin) : DEFAULT_PROFIT_MARGIN;
+    marginInput.value = Math.round(currentMargin * 100);
+    
+    marginGroup.appendChild(marginLabel);
+    marginGroup.appendChild(marginInput);
+    marginCol.appendChild(marginGroup);
+    
+    formRow.appendChild(marginCol);
+    
     const prefsActions = document.createElement('div');
     prefsActions.style.display = 'flex';
     prefsActions.style.justifyContent = 'flex-end';
@@ -93,6 +123,12 @@ export const PreferencesCard = () => {
     prefsSaveBtn.addEventListener('click', () => {
         setLang(langSelect.value);
         setCurrency(currSelect.value);
+        
+        const marginVal = parseFloat(marginInput.value) / 100;
+        if (!isNaN(marginVal) && marginVal >= 0) {
+            setLocal('appProfitMargin', marginVal.toString(), false);
+            showToast(t('settings.profile.success') || 'Settings saved successfully');
+        }
     });
     
     prefsActions.appendChild(prefsSaveBtn);

@@ -1,6 +1,6 @@
 import { emitEvent, onEvent } from '../../utils/events.js';
 import { getLocal, setLocal } from '../../utils/storage.js';
-import { DISH_CATEGORIES, PROFIT_MARGIN } from '../../utils/constants.js';
+import { DISH_CATEGORIES, DEFAULT_PROFIT_MARGIN } from '../../utils/constants.js';
 import { t } from '../../utils/i18n.js';
 import showToast from '../ui/Toast.js';
 import RecipeBuilder from './RecipeBuilder.js';
@@ -26,7 +26,9 @@ export default function AddDishModal() {
             }
         });
         
-        const suggestedPrice = Math.ceil(totalCost * (1 + PROFIT_MARGIN));
+        const savedMargin = getLocal('appProfitMargin', false);
+        const margin = savedMargin !== null ? parseFloat(savedMargin) : DEFAULT_PROFIT_MARGIN;
+        const suggestedPrice = Math.ceil(totalCost * (1 + margin));
         inputPrice.value = suggestedPrice;
     };
 
