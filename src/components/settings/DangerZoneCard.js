@@ -19,16 +19,7 @@ export const DangerZoneCard = () => {
     devToolsBox.style.gap = '12px';
     devToolsBox.style.marginTop = '8px';
     
-    const loadDefBtn = document.createElement('button');
-    loadDefBtn.className = 'btn-secondary';
-    loadDefBtn.style.justifyContent = 'flex-start';
-    loadDefBtn.style.gap = '12px';
-    const tagsIcon = document.createElement('i');
-    tagsIcon.className = 'fa-solid fa-tags';
-    tagsIcon.style.width = '24px';
-    loadDefBtn.appendChild(tagsIcon);
-    loadDefBtn.appendChild(document.createTextNode(' ' + t('settings.data.loadDefault')));
-    
+
     const loadDumBtn = document.createElement('button');
     loadDumBtn.className = 'btn-secondary';
     loadDumBtn.style.justifyContent = 'flex-start';
@@ -39,7 +30,6 @@ export const DangerZoneCard = () => {
     loadDumBtn.appendChild(dbIcon);
     loadDumBtn.appendChild(document.createTextNode(' ' + t('settings.data.loadDummy')));
     
-    devToolsBox.appendChild(loadDefBtn);
     devToolsBox.appendChild(loadDumBtn);
     
     const divider = document.createElement('hr');
