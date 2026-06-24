@@ -16,8 +16,9 @@ const OrderCard = ({ order, btnKey, onAction, onCancel }) => {
     
     const headerLeft = document.createElement('div');
     headerLeft.style.display = 'flex';
-    headerLeft.style.alignItems = 'center';
-    headerLeft.style.gap = '8px';
+    headerLeft.style.flexDirection = 'column';
+    headerLeft.style.alignItems = 'flex-start';
+    headerLeft.style.gap = '2px';
 
     const idSpan = document.createElement('span');
     idSpan.className = 'order-id';
