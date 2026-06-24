@@ -2,3 +2,9 @@
     max-width: 300px;
     width: 100%;
 }
+
+@media (max-width: 768px) {
+    .search-bar-component {
+        max-width: 100%;
+    }
+}
