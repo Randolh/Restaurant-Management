@@ -73,7 +73,7 @@ const AddOrderModal = () => {
 
             const nameText = document.createElement('span');
             nameText.className = 'order-dish-name';
-            nameText.textContent = dish.name;
+            nameText.textContent = dish.name.length > 10 ? dish.name.substring(0, 10) + '...' : dish.name;
 
             const priceText = document.createElement('span');
             priceText.className = 'order-dish-price';
@@ -153,7 +153,7 @@ const AddOrderModal = () => {
 
             const nameText = document.createElement('span');
             nameText.className = 'order-dish-name';
-            nameText.textContent = item.name;
+            nameText.textContent = item.name.length > 10 ? item.name.substring(0, 10) + '...' : item.name;
 
             infoDiv.appendChild(nameText);
 
