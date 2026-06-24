@@ -1,5 +1,6 @@
 import showConfirm from '../ui/ConfirmModal.js';
 import { emitEvent } from '../../utils/events.js';
+import { getLocal } from '../../utils/storage.js';
 import { t } from '../../utils/i18n.js';
 
 export default function InventoryTable(data) {
@@ -133,7 +134,15 @@ export default function InventoryTable(data) {
             iDelete.className = 'fa-solid fa-trash';
             btnDelete.appendChild(iDelete);
             btnDelete.addEventListener('click', () => {
-                showConfirm(t('table.deleteConfirm', { name: item.name }), () => {
+                const dishes = getLocal('dishesItems', true) || [];
+                const affectedDishes = dishes.filter(d => !d.deleted && (d.recipe || []).some(r => r.id == item.original.id));
+                
+                let confirmMsg = t('table.deleteConfirm', { name: item.name });
+                if (affectedDishes.length > 0) {
+                    confirmMsg += '\n\n' + t('inventory.warning.inUse', { count: affectedDishes.length });
+                }
+                
+                showConfirm(confirmMsg, () => {
                     emitEvent('deleteItem', { id: item.original.id });
                 });
             });
