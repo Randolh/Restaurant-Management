@@ -92,49 +92,6 @@ export default {
         onEvent('dishesUpdated', updateView);
 
         // --- Global Action Listeners ---
-        onEvent('openAddDishModal', () => {
-            const title = document.getElementById('add-dish-modal-title');
-            if (title) title.textContent = t('dishModal.title.add');
-            
-            const saveBtn = document.getElementById('add-dish-modal-save-btn');
-            if (saveBtn) {
-                saveBtn.dataset.editId = '';
-                saveBtn.textContent = t('btn.add');
-            }
-            
-            document.getElementById('dish-name').value = '';
-            document.getElementById('dish-category').value = 'Main Courses';
-            document.getElementById('dish-price').value = '';
-            document.getElementById('dish-image').value = '';
-            document.getElementById('dish-desc').value = '';
-            document.getElementById('dish-available').checked = true;
-
-            const toggle = document.getElementById('add-dish-modal-toggle');
-            if (toggle) toggle.checked = true;
-        });
-
-        onEvent('openEditDishModal', (e) => {
-            const dish = e.detail.dish;
-            
-            const title = document.getElementById('add-dish-modal-title');
-            if (title) title.textContent = t('dishModal.title.edit');
-            
-            document.getElementById('dish-name').value = dish.name;
-            document.getElementById('dish-category').value = dish.category;
-            document.getElementById('dish-price').value = dish.price;
-            document.getElementById('dish-image').value = dish.image || '';
-            document.getElementById('dish-desc').value = dish.description || '';
-            document.getElementById('dish-available').checked = dish.isAvailable;
-            
-            const saveBtn = document.getElementById('add-dish-modal-save-btn');
-            if (saveBtn) {
-                saveBtn.dataset.editId = dish.id;
-                saveBtn.textContent = t('btn.saveChanges');
-            }
-            
-            const toggle = document.getElementById('add-dish-modal-toggle');
-            if (toggle) toggle.checked = true;
-        });
 
         onEvent('deleteDish', (e) => {
             const id = e.detail.id;

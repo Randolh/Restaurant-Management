@@ -1,6 +1,6 @@
 import { t } from '../../utils/i18n.js';
 
-export default function RecipeBuilder() {
+export default function RecipeBuilder(onChange) {
     const wrapper = document.createElement('div');
     wrapper.className = 'recipe-builder';
 
@@ -69,6 +69,7 @@ export default function RecipeBuilder() {
             qtyInput.dataset.index = index;
             qtyInput.addEventListener('change', (e) => {
                 currentRecipe[index].qty = parseInt(e.target.value, 10) || 1;
+                if (onChange) onChange();
             });
 
             const btnRemove = document.createElement('button');
@@ -81,6 +82,7 @@ export default function RecipeBuilder() {
             btnRemove.addEventListener('click', () => {
                 currentRecipe.splice(index, 1);
                 renderRecipeList();
+                if (onChange) onChange();
             });
 
             actionsDiv.appendChild(qtyInput);
@@ -142,6 +144,7 @@ export default function RecipeBuilder() {
                 inputSearch.value = '';
                 searchDropdown.style.display = 'none';
                 renderRecipeList();
+                if (onChange) onChange();
             });
             
             actionsDiv.appendChild(btnAdd);

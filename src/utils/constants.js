@@ -74,3 +74,5 @@ export const DISH_CATEGORIES = {
     'sides': { icon: 'fa-french-fries', labelKey: 'category.sides' },
     'specials': { icon: 'fa-star', labelKey: 'category.specials' }
 };
+
+export const PROFIT_MARGIN = 0.30;

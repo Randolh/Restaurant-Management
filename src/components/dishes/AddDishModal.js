@@ -1,6 +1,6 @@
 import { emitEvent, onEvent } from '../../utils/events.js';
 import { getLocal, setLocal } from '../../utils/storage.js';
-import { DISH_CATEGORIES } from '../../utils/constants.js';
+import { DISH_CATEGORIES, PROFIT_MARGIN } from '../../utils/constants.js';
 import { t } from '../../utils/i18n.js';
 import showToast from '../ui/Toast.js';
 import RecipeBuilder from './RecipeBuilder.js';
@@ -11,8 +11,27 @@ import { validateDishForm, isValidImageUrl } from '../../utils/validators.js';
 export default function AddDishModal() {
     const wrapper = document.createElement('div');
     
+    // Auto-calculate Price logic
+    const calculateSuggestedPrice = () => {
+        if (!inputAutoPrice || !inputAutoPrice.checked) return;
+        
+        const currentRecipe = recipeBuilder.getRecipe();
+        const inventoryItems = getLocal('inventoryItems', true) || [];
+        
+        let totalCost = 0;
+        currentRecipe.forEach(item => {
+            const invItem = inventoryItems.find(i => i.id === item.id);
+            if (invItem && invItem.cost) {
+                totalCost += (parseFloat(invItem.cost) * item.qty);
+            }
+        });
+        
+        const suggestedPrice = Math.ceil(totalCost * (1 + PROFIT_MARGIN));
+        inputPrice.value = suggestedPrice;
+    };
+
     // Instantiate sub-components
-    const recipeBuilder = RecipeBuilder();
+    const recipeBuilder = RecipeBuilder(calculateSuggestedPrice);
     const imagePreview = ImagePreview();
     
     // Carousel State
@@ -189,6 +208,36 @@ export default function AddDishModal() {
     groupPrice.appendChild(labelPrice);
     groupPrice.appendChild(inputPrice);
     colPrice.appendChild(groupPrice);
+
+    // Auto-Price Checkbox
+    let inputAutoPrice;
+    const groupAutoPrice = document.createElement('div');
+    groupAutoPrice.className = 'form-group checkbox-group';
+    groupAutoPrice.style.marginTop = '4px';
+    inputAutoPrice = document.createElement('input');
+    inputAutoPrice.type = 'checkbox';
+    inputAutoPrice.id = 'dish-auto-price';
+    const labelAutoPrice = document.createElement('label');
+    labelAutoPrice.htmlFor = 'dish-auto-price';
+    labelAutoPrice.textContent = t('dishModal.autoPrice') || 'Auto-calculate price from ingredients';
+    labelAutoPrice.style.fontSize = 'var(--font-size-label-sm)';
+    
+    inputAutoPrice.addEventListener('change', (e) => {
+        if (e.target.checked) {
+            inputPrice.readOnly = true;
+            inputPrice.style.backgroundColor = 'var(--elevation-2-bg)';
+            inputPrice.style.color = 'var(--color-text-variant)';
+            calculateSuggestedPrice();
+        } else {
+            inputPrice.readOnly = false;
+            inputPrice.style.backgroundColor = '';
+            inputPrice.style.color = '';
+        }
+    });
+
+    groupAutoPrice.appendChild(inputAutoPrice);
+    groupAutoPrice.appendChild(labelAutoPrice);
+    colPrice.appendChild(groupAutoPrice);
 
     formRow2.appendChild(colCat);
     formRow2.appendChild(colPrice);
@@ -413,6 +462,7 @@ export default function AddDishModal() {
         
         currentSlide = 0;
         updateCarousel();
+        toggle.checked = true;
     });
 
     onEvent('openEditDishModal', (e) => {
@@ -427,6 +477,11 @@ export default function AddDishModal() {
         inputImage.value = dish.image || '';
         inputDesc.value = dish.description || '';
         inputAvail.checked = dish.isAvailable !== undefined ? dish.isAvailable : true;
+        
+        inputAutoPrice.checked = false;
+        inputPrice.readOnly = false;
+        inputPrice.style.backgroundColor = '';
+        inputPrice.style.color = '';
 
         formError.hide();
         imagePreview.setPreviewUrl(dish.image || '');
@@ -436,6 +491,7 @@ export default function AddDishModal() {
         
         currentSlide = 0;
         updateCarousel();
+        toggle.checked = true;
     });
 
     return wrapper;
