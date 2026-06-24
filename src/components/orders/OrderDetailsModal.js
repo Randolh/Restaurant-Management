@@ -38,11 +38,7 @@ export const OrderDetailsModal = () => {
         
         // Header Info
         const infoRow = document.createElement('div');
-        infoRow.style.display = 'flex';
-        infoRow.style.justifyContent = 'space-between';
-        infoRow.style.marginBottom = 'var(--stack-md)';
-        infoRow.style.padding = 'var(--stack-sm) 0';
-        infoRow.style.borderBottom = '1px solid var(--elevation-border-color)';
+        infoRow.className = 'info-row';
         
         const custInfo = document.createElement('div');
         const custLabel = document.createElement('strong');
@@ -58,7 +54,7 @@ export const OrderDetailsModal = () => {
         custInfo.appendChild(custPhone);
         
         const dateInfo = document.createElement('div');
-        dateInfo.style.textAlign = 'right';
+        dateInfo.className = 'date-info';
         const d = new Date(order.createdAt);
         const dateLabel = document.createElement('strong');
         dateLabel.textContent = (t('history.col.order') || 'Order #') + ': ';
@@ -79,7 +75,7 @@ export const OrderDetailsModal = () => {
         // Items Table
         const itemsTitle = document.createElement('h3');
         itemsTitle.textContent = t('history.modal.items') || 'Items';
-        itemsTitle.style.marginBottom = 'var(--stack-sm)';
+        itemsTitle.className = 'items-title';
         body.appendChild(itemsTitle);
         
         const tableContainer = document.createElement('div');
@@ -92,14 +88,15 @@ export const OrderDetailsModal = () => {
         const trHead = document.createElement('tr');
         const thItem = document.createElement('th');
         thItem.textContent = t('history.modal.items') || 'Item';
+        thItem.className = 'col-item';
         const thQty = document.createElement('th');
-        thQty.style.textAlign = 'center';
+        thQty.className = 'col-qty';
         thQty.textContent = 'Qty';
         const thPrice = document.createElement('th');
-        thPrice.style.textAlign = 'right';
+        thPrice.className = 'col-price';
         thPrice.textContent = 'Price';
         const thSubtotal = document.createElement('th');
-        thSubtotal.style.textAlign = 'right';
+        thSubtotal.className = 'col-subtotal';
         thSubtotal.textContent = 'Subtotal';
         trHead.appendChild(thItem);
         trHead.appendChild(thQty);
@@ -112,18 +109,19 @@ export const OrderDetailsModal = () => {
             const tr = document.createElement('tr');
             
             const tdName = document.createElement('td');
+            tdName.className = 'col-item';
             tdName.textContent = item.name;
             
             const tdQty = document.createElement('td');
-            tdQty.style.textAlign = 'center';
+            tdQty.className = 'col-qty';
             tdQty.textContent = item.qty;
             
             const tdPrice = document.createElement('td');
-            tdPrice.style.textAlign = 'right';
+            tdPrice.className = 'col-price';
             tdPrice.textContent = '$' + parseFloat(item.price).toFixed(2);
             
             const tdSub = document.createElement('td');
-            tdSub.style.textAlign = 'right';
+            tdSub.className = 'col-subtotal';
             tdSub.textContent = '$' + (parseFloat(item.price) * parseInt(item.qty, 10)).toFixed(2);
             
             tr.appendChild(tdName);
@@ -140,12 +138,9 @@ export const OrderDetailsModal = () => {
         
         // Totals
         const totalsDiv = document.createElement('div');
-        totalsDiv.style.marginLeft = 'auto';
-        totalsDiv.style.width = '250px';
+        totalsDiv.className = 'totals-container';
         const row1 = document.createElement('div');
-        row1.style.display = 'flex';
-        row1.style.justifyContent = 'space-between';
-        row1.style.marginBottom = '8px';
+        row1.className = 'totals-row';
         const l1 = document.createElement('span');
         l1.textContent = (t('history.modal.subtotal') || 'Subtotal') + ':';
         const v1 = document.createElement('span');
@@ -154,9 +149,7 @@ export const OrderDetailsModal = () => {
         row1.appendChild(v1);
         
         const row2 = document.createElement('div');
-        row2.style.display = 'flex';
-        row2.style.justifyContent = 'space-between';
-        row2.style.marginBottom = '8px';
+        row2.className = 'totals-row';
         const l2 = document.createElement('span');
         l2.textContent = (t('history.modal.tax') || 'Tax') + ':';
         const v2 = document.createElement('span');
@@ -165,16 +158,11 @@ export const OrderDetailsModal = () => {
         row2.appendChild(v2);
         
         const row3 = document.createElement('div');
-        row3.style.display = 'flex';
-        row3.style.justifyContent = 'space-between';
-        row3.style.fontWeight = '700';
-        row3.style.fontSize = '1.1em';
-        row3.style.borderTop = '1px solid var(--elevation-border-color)';
-        row3.style.paddingTop = '8px';
+        row3.className = 'totals-row grand-total';
         const l3 = document.createElement('span');
         l3.textContent = (t('history.modal.total') || 'Total') + ':';
         const v3 = document.createElement('span');
-        v3.style.color = 'var(--brand-primary)';
+        v3.className = 'grand-total-val';
         v3.textContent = '$' + parseFloat(order.total).toFixed(2);
         row3.appendChild(l3);
         row3.appendChild(v3);
@@ -199,17 +187,7 @@ export const OrderDetailsModal = () => {
     wrapper.style.display = 'none';
     
     // Manage visibility via CSS classes if needed or just display
-    wrapper.classList.add('modal-wrapper'); // Custom styling
-    // A little inline style trick for the wrapper to act as modal root
-    wrapper.style.position = 'fixed';
-    wrapper.style.top = '0';
-    wrapper.style.left = '0';
-    wrapper.style.width = '100vw';
-    wrapper.style.height = '100vh';
-    wrapper.style.zIndex = '9999';
-    wrapper.style.display = 'none';
-    wrapper.style.alignItems = 'center';
-    wrapper.style.justifyContent = 'center';
+    wrapper.classList.add('modal-wrapper', 'order-details-modal'); // Custom styling
     
     // We override wrapper styles with a class dynamically
     
