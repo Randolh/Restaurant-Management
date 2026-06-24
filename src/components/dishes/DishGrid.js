@@ -53,10 +53,10 @@ export default function DishGrid(dishes) {
         }
         imgContainer.appendChild(badge);
 
-        // Deleted Ingredients Warning
+        // Missing or Deleted Ingredients Warning
         const hasDeletedIngredients = (dish.recipe || []).some(recipeItem => {
             const invItem = inventoryItems.find(i => i.id === recipeItem.id);
-            return invItem && invItem.deleted;
+            return !invItem || invItem.deleted;
         });
 
         if (hasDeletedIngredients) {

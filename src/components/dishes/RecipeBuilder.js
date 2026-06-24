@@ -56,9 +56,9 @@ export default function RecipeBuilder(onChange) {
             stockSpan.textContent = `(${item.unit})`;
             nameSpan.appendChild(stockSpan);
             
-            // Check if ingredient is deleted in inventory
+            // Check if ingredient is missing or deleted in inventory
             const invItem = allInventoryItems.find(i => i.id === item.id);
-            if (invItem && invItem.deleted) {
+            if (!invItem || invItem.deleted) {
                 nameSpan.classList.add('text-warning');
                 const warnLbl = document.createElement('div');
                 warnLbl.className = 'recipe-item-warning';

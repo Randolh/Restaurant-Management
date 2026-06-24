@@ -296,6 +296,29 @@ export default function AddDishModal() {
     cancelLbl.className = 'btn-secondary';
     cancelLbl.textContent = t('btn.cancel');
     
+    const deleteBtn = document.createElement('button');
+    deleteBtn.type = 'button';
+    deleteBtn.className = 'btn-secondary';
+    deleteBtn.innerHTML = `<i class="fa-solid fa-trash-can"></i> ` + (t('btn.delete') || 'Delete');
+    deleteBtn.style.color = 'var(--brand-primary)'; // Use red color
+    deleteBtn.style.marginRight = 'auto'; // Push other buttons to the right
+    deleteBtn.style.display = 'none';
+    
+    deleteBtn.addEventListener('click', () => {
+        const editId = saveBtn.dataset.editId;
+        if (editId) {
+            if (confirm(t('table.deleteConfirm')?.replace('{name}', inputName.value) || 'Are you sure you want to delete this?')) {
+                emitEvent('deleteDish', { id: editId });
+                toggle.checked = false;
+                form.reset();
+                formError.hide();
+                imagePreview.reset();
+                currentSlide = 0;
+                updateCarousel();
+            }
+        }
+    });
+    
     const backBtn = document.createElement('button');
     backBtn.type = 'button';
     backBtn.className = 'btn-secondary';
@@ -314,6 +337,7 @@ export default function AddDishModal() {
     saveBtn.id = 'add-dish-modal-save-btn';
     saveBtn.style.display = 'none';
     
+    modalFooter.appendChild(deleteBtn);
     modalFooter.appendChild(cancelLbl);
     modalFooter.appendChild(backBtn);
     modalFooter.appendChild(nextBtn);
@@ -332,12 +356,14 @@ export default function AddDishModal() {
             cancelLbl.style.display = '';
             nextBtn.style.display = '';
             saveBtn.style.display = 'none';
+            deleteBtn.style.display = saveBtn.dataset.editId ? '' : 'none';
         } else {
             stepIndicator.textContent = t('dishModal.step2') || 'Step 2 of 2: Ingredients';
             backBtn.style.display = '';
             cancelLbl.style.display = 'none';
             nextBtn.style.display = 'none';
             saveBtn.style.display = '';
+            deleteBtn.style.display = 'none';
         }
     };
 
