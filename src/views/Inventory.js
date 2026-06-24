@@ -48,12 +48,11 @@ export default {
 
         // Action Bar
         const actionBar = document.createElement('div');
-        actionBar.className = 'action-bar';
-        actionBar.style.display = 'flex';
-        actionBar.style.marginBottom = 'var(--stack-md)';
+        actionBar.className = 'action-bar dishes-action-bar';
 
         let searchQuery = '';
         let filterLowStock = false;
+        let filterCategory = 'all';
         
         const searchComponent = SearchBar({
             placeholder: t('inventory.search.placeholder'),
@@ -62,8 +61,38 @@ export default {
                 updateTable();
             }
         });
+        searchComponent.style.flex = '1';
+        
+        const filterSelect = document.createElement('select');
+        filterSelect.className = 'form-control filter-select';
+        
+        const updateFilterOptions = () => {
+            filterSelect.textContent = '';
+            
+            const allOpt = document.createElement('option');
+            allOpt.value = 'all';
+            allOpt.textContent = t('filter.allCategories') || 'All Categories';
+            filterSelect.appendChild(allOpt);
+
+            Object.keys(INVENTORY_CATEGORIES).forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat;
+                opt.textContent = t('cat.' + cat) || cat;
+                filterSelect.appendChild(opt);
+            });
+            
+            filterSelect.value = filterCategory;
+        };
+        updateFilterOptions();
+        onEvent('langChanged', updateFilterOptions);
+
+        filterSelect.addEventListener('change', (e) => {
+            filterCategory = e.target.value;
+            updateTable();
+        });
         
         actionBar.appendChild(searchComponent);
+        actionBar.appendChild(filterSelect);
         pageContent.appendChild(actionBar);
 
         // Data Table
@@ -108,7 +137,9 @@ export default {
             kpiContainer.appendChild(KpiGrid(kpis));
             
             const filteredItems = activeItems.filter(item => {
-                if (searchQuery && !item.name.toLowerCase().includes(searchQuery)) return false;
+                if (searchQuery && !item.name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+                
+                if (filterCategory !== 'all' && item.category !== filterCategory) return false;
                 
                 if (filterLowStock) {
                     const min = item.minStock !== undefined ? Number(item.minStock) : 50;
