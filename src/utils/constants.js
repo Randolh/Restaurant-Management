@@ -42,10 +42,3 @@ export const MEASUREMENT_UNITS = [
     'Bunch',
     'Clove (garlic)'
 ];
-
-export const DUMMY_INVENTORY_DATA = [
-    { name: 'Tomato', icon: INVENTORY_CATEGORIES['Fruits'].icon, stockText: '800/1000', stockPercent: '80%', progressClass: 'safe', progressWidth: '80%', unit: 'Unit (unit)' },
-    { name: 'Sauce', icon: INVENTORY_CATEGORIES['Sauces and Dressings'].icon, stockText: '12/60', stockPercent: '20%', progressClass: 'danger', progressWidth: '20%', unit: 'Kilogram (kg)' },
-    { name: 'Cheese', icon: INVENTORY_CATEGORIES['Eggs and Dairy'].icon, stockText: '150/300', stockPercent: '50%', progressClass: 'warning', progressWidth: '50%', unit: 'Serving' },
-    { name: 'Noodles', icon: INVENTORY_CATEGORIES['Grains and Cereals'].icon, stockText: '5/8', stockPercent: '62%', progressClass: 'warning', progressWidth: '62%', unit: 'Package' }
-];

@@ -51,20 +51,21 @@ export default function InventoryTable(data) {
         stockSpan.className = 'stock-text';
         stockSpan.textContent = item.stockText;
         stockLevel.appendChild(stockSpan);
-        
-        const progContainer = document.createElement('div');
-        progContainer.className = 'progress-container';
-        
-        const progFill = document.createElement('div');
-        progFill.className = `progress-fill ${item.progressClass}`;
-        progFill.style.width = item.progressWidth;
-        progContainer.appendChild(progFill);
-        stockLevel.appendChild(progContainer);
-        
-        const percentSpan = document.createElement('span');
-        percentSpan.className = 'stock-percent';
-        percentSpan.textContent = item.stockPercent;
-        stockLevel.appendChild(percentSpan);
+        if (item.progressWidth) {
+            const progContainer = document.createElement('div');
+            progContainer.className = 'progress-container';
+            
+            const progFill = document.createElement('div');
+            progFill.className = `progress-fill ${item.progressClass}`;
+            progFill.style.width = item.progressWidth;
+            progContainer.appendChild(progFill);
+            stockLevel.appendChild(progContainer);
+            
+            const percentSpan = document.createElement('span');
+            percentSpan.className = 'stock-percent';
+            percentSpan.textContent = item.stockPercent;
+            stockLevel.appendChild(percentSpan);
+        }
 
         tdStock.appendChild(stockLevel);
         tr.appendChild(tdStock);

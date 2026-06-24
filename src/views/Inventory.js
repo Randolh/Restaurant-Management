@@ -1,7 +1,8 @@
 import KpiGrid from '../components/inventory/KpiGrid.js';
 import InventoryTable from '../components/inventory/InventoryTable.js';
 import AddItemModal from '../components/inventory/AddItemModal.js';
-import { DUMMY_INVENTORY_DATA } from '../utils/constants.js';
+import { INVENTORY_CATEGORIES } from '../utils/constants.js';
+import { getLocal } from '../utils/storage.js';
 
 export default {
     render() {
@@ -52,7 +53,45 @@ export default {
         pageContent.appendChild(KpiGrid(kpis));
 
         // Data Table
-        pageContent.appendChild(InventoryTable(DUMMY_INVENTORY_DATA));
+        const tableContainer = document.createElement('div');
+        tableContainer.className = 'data-table-wrapper'; // A wrapper to hold the dynamic table
+        tableContainer.style.display = 'flex';
+        tableContainer.style.flexDirection = 'column';
+        tableContainer.style.flex = '1';
+        tableContainer.style.minHeight = '0';
+
+        const updateTable = () => {
+            const items = getLocal('inventoryItems', true) || [];
+            
+            const formattedData = items.map(item => ({
+                name: item.name,
+                icon: INVENTORY_CATEGORIES[item.category]?.icon || 'fa-box',
+                stockText: item.stock || '0',
+                stockPercent: '',
+                progressClass: 'safe',
+                progressWidth: '', 
+                unit: item.unit
+            }));
+
+            tableContainer.innerHTML = '';
+            
+            if (formattedData.length === 0) {
+                const emptyMessage = document.createElement('div');
+                emptyMessage.style.padding = '20px';
+                emptyMessage.style.textAlign = 'center';
+                emptyMessage.style.color = 'var(--color-text-variant)';
+                emptyMessage.textContent = 'No items found in inventory. Click "Add Item" to start.';
+                tableContainer.appendChild(emptyMessage);
+            } else {
+                tableContainer.appendChild(InventoryTable(formattedData));
+            }
+        };
+
+        updateTable();
+        pageContent.appendChild(tableContainer);
+
+        // Listen for updates from AddItemModal
+        window.addEventListener('inventoryUpdated', updateTable);
 
         wrapper.appendChild(pageContent);
 
