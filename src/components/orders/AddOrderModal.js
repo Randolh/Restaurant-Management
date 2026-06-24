@@ -410,6 +410,31 @@ const AddOrderModal = () => {
         currentOrders.unshift(newOrder); // add to top
         setLocal('ordersItems', currentOrders, true);
         
+        // Deduct inventory stock based on recipes
+        const inventoryItems = getLocal('inventoryItems', true) || [];
+        const allDishes = getLocal('dishesItems', true) || [];
+        let inventoryChanged = false;
+
+        cart.forEach(item => {
+            const dish = allDishes.find(d => d.id === item.dishId);
+            if (dish && dish.recipe && dish.recipe.length > 0) {
+                dish.recipe.forEach(ing => {
+                    const invItem = inventoryItems.find(i => i.id === ing.id);
+                    if (invItem && !invItem.deleted) {
+                        const newStock = parseFloat(invItem.stock) - (parseFloat(ing.qty) * item.qty);
+                        // Prevent negative stock just in case
+                        invItem.stock = Math.max(0, newStock).toString();
+                        inventoryChanged = true;
+                    }
+                });
+            }
+        });
+
+        if (inventoryChanged) {
+            setLocal('inventoryItems', inventoryItems, true);
+            emitEvent('inventoryUpdated'); // Refresh inventory view
+        }
+
         emitEvent('ordersUpdated');
         checkbox.checked = false; // close modal
     });
