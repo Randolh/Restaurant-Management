@@ -27,8 +27,7 @@ export default function AddDishModal() {
     modal.appendChild(overlay);
 
     const modalContainer = document.createElement('div');
-    modalContainer.className = 'modal-container';
-    modalContainer.style.maxWidth = '800px';
+    modalContainer.className = 'modal-container add-dish-modal-container';
 
     // Header
     const modalHeader = document.createElement('div');
@@ -53,16 +52,9 @@ export default function AddDishModal() {
     // Row 1
     const formRow1 = document.createElement('div');
     formRow1.className = 'form-row';
-    formRow1.style.display = 'flex';
-    formRow1.style.gap = 'var(--stack-md)';
-    formRow1.style.marginBottom = 'var(--stack-md)';
 
     const col1 = document.createElement('div');
     col1.className = 'form-col';
-    col1.style.flex = '1';
-    col1.style.display = 'flex';
-    col1.style.flexDirection = 'column';
-    col1.style.gap = 'var(--stack-sm)';
 
     const groupName = document.createElement('div');
     groupName.className = 'form-group';
@@ -97,22 +89,11 @@ export default function AddDishModal() {
     const imagePreviewBox = document.createElement('div');
     imagePreviewBox.id = 'dish-image-preview-box';
     imagePreviewBox.className = 'image-preview-box';
-    imagePreviewBox.style.width = '120px';
-    imagePreviewBox.style.height = '120px';
-    imagePreviewBox.style.borderRadius = 'var(--radius-md)';
-    imagePreviewBox.style.background = 'var(--elevation-1-bg)';
-    imagePreviewBox.style.display = 'flex';
-    imagePreviewBox.style.alignItems = 'center';
-    imagePreviewBox.style.justifyContent = 'center';
-    imagePreviewBox.style.overflow = 'hidden';
-    imagePreviewBox.style.border = 'var(--elevation-border)';
     
     const renderEmptyImage = () => {
         imagePreviewBox.innerHTML = '';
         const icon = document.createElement('i');
-        icon.className = 'fa-regular fa-image';
-        icon.style.fontSize = '32px';
-        icon.style.color = 'var(--color-text-variant)';
+        icon.className = 'fa-regular fa-image image-preview-empty';
         imagePreviewBox.appendChild(icon);
     };
     renderEmptyImage();
@@ -123,15 +104,11 @@ export default function AddDishModal() {
         if (url) {
             const img = document.createElement('img');
             img.src = url;
-            img.style.width = '100%';
-            img.style.height = '100%';
-            img.style.objectFit = 'cover';
+            img.className = 'image-preview-img';
             img.onerror = () => {
                 imagePreviewBox.innerHTML = '';
                 const errIcon = document.createElement('i');
-                errIcon.className = 'fa-solid fa-triangle-exclamation';
-                errIcon.style.color = 'var(--color-warning)';
-                errIcon.style.fontSize = '32px';
+                errIcon.className = 'fa-solid fa-triangle-exclamation image-preview-error';
                 imagePreviewBox.appendChild(errIcon);
             };
             imagePreviewBox.appendChild(img);
@@ -155,21 +132,14 @@ export default function AddDishModal() {
 
     const divider1 = document.createElement('hr');
     divider1.className = 'form-divider';
-    divider1.style.border = 'none';
-    divider1.style.borderTop = '1px solid var(--elevation-border-color)';
-    divider1.style.margin = 'var(--stack-md) 0';
     form.appendChild(divider1);
 
     // Row 2
     const formRow2 = document.createElement('div');
     formRow2.className = 'form-row';
-    formRow2.style.display = 'flex';
-    formRow2.style.gap = 'var(--stack-md)';
-    formRow2.style.marginBottom = 'var(--stack-md)';
 
     const colCat = document.createElement('div');
     colCat.className = 'form-col';
-    colCat.style.flex = '1';
     const groupCat = document.createElement('div');
     groupCat.className = 'form-group';
     const labelCat = document.createElement('label');
@@ -191,7 +161,6 @@ export default function AddDishModal() {
 
     const colPrice = document.createElement('div');
     colPrice.className = 'form-col';
-    colPrice.style.flex = '1';
     const groupPrice = document.createElement('div');
     groupPrice.className = 'form-group';
     const labelPrice = document.createElement('label');
@@ -228,18 +197,13 @@ export default function AddDishModal() {
     form.appendChild(groupDesc);
 
     const groupAvail = document.createElement('div');
-    groupAvail.className = 'form-group';
-    groupAvail.style.flexDirection = 'row';
-    groupAvail.style.alignItems = 'center';
-    groupAvail.style.gap = '8px';
-    groupAvail.style.marginTop = 'var(--stack-sm)';
+    groupAvail.className = 'form-group checkbox-group';
     const inputAvail = document.createElement('input');
     inputAvail.type = 'checkbox';
     inputAvail.id = 'dish-available';
     inputAvail.checked = true;
     const labelAvail = document.createElement('label');
     labelAvail.htmlFor = 'dish-available';
-    labelAvail.style.margin = '0';
     labelAvail.textContent = t('dishModal.available');
     groupAvail.appendChild(inputAvail);
     groupAvail.appendChild(labelAvail);
@@ -247,15 +211,10 @@ export default function AddDishModal() {
 
     const divider2 = document.createElement('hr');
     divider2.className = 'form-divider';
-    divider2.style.border = 'none';
-    divider2.style.borderTop = '1px solid var(--elevation-border-color)';
-    divider2.style.margin = 'var(--stack-md) 0';
     form.appendChild(divider2);
 
     const recipeHeader = document.createElement('h3');
-    recipeHeader.style.marginBottom = '0px';
-    recipeHeader.style.fontSize = 'var(--font-size-body-lg)';
-    recipeHeader.style.color = 'var(--brand-surface-text)';
+    recipeHeader.className = 'recipe-header';
     recipeHeader.textContent = t('dishModal.ingredients');
     form.appendChild(recipeHeader);
 
@@ -263,8 +222,7 @@ export default function AddDishModal() {
     recipeBuilder.className = 'recipe-builder';
 
     const colSearch = document.createElement('div');
-    colSearch.className = 'form-col';
-    colSearch.style.position = 'relative';
+    colSearch.className = 'form-col recipe-search-container';
     const recipeSearch = document.createElement('div');
     recipeSearch.className = 'recipe-search';
     const inputSearch = document.createElement('input');
@@ -319,9 +277,7 @@ export default function AddDishModal() {
         recipeListBox.innerHTML = '';
         if (currentRecipe.length === 0) {
             const emptyDiv = document.createElement('div');
-            emptyDiv.style.textAlign = 'center';
-            emptyDiv.style.color = 'var(--color-text-variant)';
-            emptyDiv.style.padding = '20px 0';
+            emptyDiv.className = 'recipe-empty-state';
             emptyDiv.textContent = t('dishModal.ingredients.empty') || 'No ingredients added';
             recipeListBox.appendChild(emptyDiv);
             return;
@@ -389,9 +345,7 @@ export default function AddDishModal() {
 
         if (matches.length === 0) {
             const noRes = document.createElement('div');
-            noRes.style.padding = '8px 12px';
-            noRes.style.color = 'var(--color-text-variant)';
-            noRes.style.fontSize = '13px';
+            noRes.className = 'search-no-results';
             noRes.textContent = 'No items found';
             searchDropdown.appendChild(noRes);
             searchDropdown.style.display = 'flex';

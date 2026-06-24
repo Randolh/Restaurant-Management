@@ -374,3 +374,95 @@
   align-items: center;
   gap: 4px;
 }
+
+/* --- Add Dish Modal Styles --- */
+.add-dish-modal-container {
+  max-width: 800px;
+}
+
+.form-row {
+  display: flex;
+  gap: var(--stack-md);
+  margin-bottom: var(--stack-md);
+}
+
+.form-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack-sm);
+}
+
+.form-col-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.image-preview-box {
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-md);
+  background: var(--elevation-1-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: var(--elevation-border);
+}
+
+.image-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-preview-error {
+  color: var(--color-warning);
+  font-size: 32px;
+}
+
+.image-preview-empty {
+  font-size: 32px;
+  color: var(--color-text-variant);
+}
+
+.form-divider {
+  border: none;
+  border-top: 1px solid var(--elevation-border-color);
+  margin: var(--stack-md) 0;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin-top: var(--stack-sm);
+}
+
+.checkbox-group label {
+  margin: 0;
+}
+
+.recipe-header {
+  margin-bottom: 0px;
+  font-size: var(--font-size-body-lg);
+  color: var(--brand-surface-text);
+}
+
+.recipe-search-container {
+  position: relative;
+}
+
+.search-no-results {
+  padding: 8px 12px;
+  color: var(--color-text-variant);
+  font-size: 13px;
+}
+
+.recipe-empty-state {
+  text-align: center;
+  color: var(--color-text-variant);
+  padding: 20px 0;
+}
