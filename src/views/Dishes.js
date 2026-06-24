@@ -139,7 +139,7 @@ export default {
             const dishes = getLocal('dishesItems', true) || [];
             const index = dishes.findIndex(d => d.id == id);
             if (index !== -1) {
-                dishes[index].deleted = true;
+                dishes.splice(index, 1);
                 setLocal('dishesItems', dishes, true);
                 emitEvent('dishesUpdated');
             }
