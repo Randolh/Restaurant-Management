@@ -1,6 +1,7 @@
 import { t } from '../../utils/i18n.js';
 import { getLocal, setLocal } from '../../utils/storage.js';
 import { emitEvent, onEvent } from '../../utils/events.js';
+import { DEFAULT_TAX_RATE } from '../../utils/constants.js';
 
 const AddOrderModal = () => {
     const wrapper = document.createElement('div');
@@ -201,8 +202,7 @@ const AddOrderModal = () => {
             ticketItemsContainer.appendChild(row);
         });
 
-        const taxRate = 0.08;
-        const tax = subtotal * taxRate;
+        const tax = subtotal * DEFAULT_TAX_RATE;
         const total = subtotal + tax;
 
         subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
@@ -294,7 +294,7 @@ const AddOrderModal = () => {
     const sumRow2 = document.createElement('div');
     sumRow2.className = 'ticket-summary-row';
     const l2 = document.createElement('span');
-    l2.textContent = t('orders.modal.tax') + ' (8%)';
+    l2.textContent = t('orders.modal.tax') + ` (${(DEFAULT_TAX_RATE * 100).toFixed(0)}%)`;
     sumRow2.appendChild(l2);
     sumRow2.appendChild(taxEl);
 
@@ -343,8 +343,8 @@ const AddOrderModal = () => {
             status: 'pending',
             items: cart.map(item => ({ ...item })),
             subtotal: cart.reduce((sum, item) => sum + (item.price * item.qty), 0),
-            tax: cart.reduce((sum, item) => sum + (item.price * item.qty), 0) * 0.08,
-            total: cart.reduce((sum, item) => sum + (item.price * item.qty), 0) * 1.08,
+            tax: cart.reduce((sum, item) => sum + (item.price * item.qty), 0) * DEFAULT_TAX_RATE,
+            total: cart.reduce((sum, item) => sum + (item.price * item.qty), 0) * (1 + DEFAULT_TAX_RATE),
             createdAt: Date.now()
         };
 
