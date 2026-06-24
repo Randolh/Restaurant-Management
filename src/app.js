@@ -3,6 +3,7 @@ import Sidebar from './components/Sidebar.js'
 import BottomNav from './components/BottomNav.js'
 import TopBar from './components/TopBar.js'
 import Inventory from './views/Inventory.js'
+import Dishes from './views/Dishes.js'
 import Settings from './views/Settings.js'
 import Login from './views/Login.js'
 import AccessDenied from './views/AccessDenied.js'
@@ -14,6 +15,7 @@ import { t } from './utils/i18n.js'
 const routes = {
     '/': { component: Inventory, requiresAuth: true },
     '/inventory': { component: Inventory, requiresAuth: true },
+    '/dishes': { component: Dishes, requiresAuth: true },
     '/settings': { component: Settings, requiresAuth: true },
     '/login': { component: Login, requiresAuth: false },
     '/access-denied': { component: AccessDenied, requiresAuth: false },

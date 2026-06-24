@@ -1,5 +1,6 @@
 import { INVENTORY_CATEGORIES, MEASUREMENT_UNITS } from '../../utils/constants.js';
 import { getLocal, setLocal } from '../../utils/storage.js';
+import FormError from '../ui/FormError.js';
 import { emitEvent } from '../../utils/events.js';
 import { t, getCurrencySymbol } from '../../utils/i18n.js';
 
@@ -35,16 +36,8 @@ export default function AddItemModal() {
     const mBody = document.createElement('div');
     mBody.className = 'modal-body';
     
-    const errorContainer = document.createElement('div');
-    errorContainer.className = 'form-error';
-    errorContainer.style.color = 'var(--brand-primary)'; // Red color
-    errorContainer.style.fontSize = 'var(--font-size-label-md)';
-    errorContainer.style.marginBottom = 'var(--stack-sm)';
-    errorContainer.style.padding = '8px 12px';
-    errorContainer.style.backgroundColor = 'rgba(220, 20, 60, 0.1)';
-    errorContainer.style.borderRadius = 'var(--radius-sm)';
-    errorContainer.style.display = 'none';
-    mBody.appendChild(errorContainer);
+    const formError = FormError();
+    mBody.appendChild(formError.element);
     
     const fields = [
         { id: 'item-name', label: t('itemModal.label.name'), type: 'text', placeholder: t('itemModal.placeholder.name') },
@@ -177,7 +170,7 @@ export default function AddItemModal() {
         
         const catSelect = document.getElementById('category-select');
         if (catSelect) {
-            catSelect.selectedIndex = 0;
+            catSelect.value = 'Other';
         }
         
         const defaultCheck = document.getElementById('unit-default-checkbox');
@@ -189,8 +182,7 @@ export default function AddItemModal() {
         const minStockInput = document.getElementById('item-min-stock');
         if (minStockInput) minStockInput.value = '50';
         
-        errorContainer.style.display = 'none';
-        errorContainer.innerHTML = '';
+        formError.hide();
         
         const saveBtn = document.getElementById('add-item-modal-save-btn');
         if (saveBtn) {
@@ -240,8 +232,7 @@ export default function AddItemModal() {
         }
         
         if (errors.length > 0) {
-            errorContainer.innerHTML = errors.join('<br>');
-            errorContainer.style.display = 'block';
+            formError.show(errors);
             return;
         }
 

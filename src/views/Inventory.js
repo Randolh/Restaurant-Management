@@ -196,6 +196,15 @@ export default {
             
             const costInput = document.getElementById('item-cost');
             if (costInput) costInput.value = '';
+            
+            const catSelect = document.getElementById('category-select');
+            if (catSelect) catSelect.value = 'Other';
+
+            const defaultCheck = document.getElementById('unit-default-checkbox');
+            if (defaultCheck) {
+                defaultCheck.checked = true;
+                defaultCheck.dispatchEvent(new Event('change'));
+            }
 
             const toggle = document.getElementById('add-item-modal-toggle');
             if (toggle) toggle.checked = true;
@@ -241,7 +250,7 @@ export default {
             const items = getLocal('inventoryItems', true) || [];
             const index = items.findIndex(i => i.id == id);
             if (index !== -1) {
-                items[index].deleted = true;
+                items.splice(index, 1);
                 setLocal('inventoryItems', items);
                 emitEvent('inventoryUpdated');
             }
