@@ -124,6 +124,13 @@ const setupEventListeners = () => {
         const currentPath = window.location.hash.replace('#', '') || '/';
         router.navigate(currentPath, false);
     });
+
+    onEvent('currencyChanged', () => {
+        const isProtected = !!getSession('session_token');
+        renderLayout(isProtected);
+        const currentPath = window.location.hash.replace('#', '') || '/';
+        router.navigate(currentPath, false);
+    });
 }
 
 const initApp = () => {

@@ -1,5 +1,6 @@
 import { getLocal, setLocal } from './storage.js';
 import { emitEvent } from './events.js';
+import { CURRENCIES } from './constants.js';
 
 const locales = {
     en: {
@@ -35,7 +36,7 @@ const locales = {
         'itemModal.label.autoUnit': 'Auto-select default unit',
         'itemModal.label.stock': 'Initial stock',
         'itemModal.label.minStock': 'Min Stock',
-        'itemModal.label.cost': 'Unit Cost ($)',
+        'itemModal.label.cost': 'Unit Cost ({currency})',
         'itemModal.err.name': '• Item name is required.',
         'itemModal.err.stock': '• Initial stock must be a valid number strictly greater than 0.',
         'itemModal.err.minStock': '• Min stock must be a valid number greater than or equal to 0.',
@@ -164,7 +165,7 @@ const locales = {
         'itemModal.label.autoUnit': 'Auto-seleccionar unidad por defecto',
         'itemModal.label.stock': 'Stock inicial',
         'itemModal.label.minStock': 'Stock Mínimo',
-        'itemModal.label.cost': 'Costo Unitario ($)',
+        'itemModal.label.cost': 'Costo Unitario ({currency})',
         'itemModal.err.name': '• El nombre es obligatorio.',
         'itemModal.err.stock': '• El stock debe ser mayor a 0.',
         'itemModal.err.minStock': '• El stock mínimo no puede ser negativo.',
@@ -263,6 +264,7 @@ const locales = {
 };
 
 let currentLang = getLocal('appLang', false) || 'en';
+let currentCurrency = getLocal('appCurrency', false) || 'USD';
 
 export const setLang = (lang) => {
     if (locales[lang]) {
@@ -272,7 +274,19 @@ export const setLang = (lang) => {
     }
 };
 
+export const setCurrency = (curr) => {
+    currentCurrency = curr;
+    setLocal('appCurrency', curr, false);
+    emitEvent('currencyChanged');
+};
+
 export const getLang = () => currentLang;
+export const getCurrency = () => currentCurrency;
+export const getCurrencySymbol = () => {
+    const curr = CURRENCIES.find(c => c.code === currentCurrency);
+    return curr ? curr.symbol : '$';
+};
+export const formatCurrency = (val) => `${getCurrencySymbol()}${Number(val).toFixed(2)}`;
 
 export const t = (key, params = {}) => {
     let text = locales[currentLang]?.[key] || locales['en']?.[key] || key;

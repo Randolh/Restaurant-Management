@@ -1,7 +1,7 @@
 import { INVENTORY_CATEGORIES, MEASUREMENT_UNITS } from '../../utils/constants.js';
 import { getLocal, setLocal } from '../../utils/storage.js';
 import { emitEvent } from '../../utils/events.js';
-import { t } from '../../utils/i18n.js';
+import { t, getCurrencySymbol } from '../../utils/i18n.js';
 
 export default function AddItemModal() {
     const wrapper = document.createElement('div');
@@ -52,7 +52,7 @@ export default function AddItemModal() {
         { label: t('itemModal.label.unit'), type: 'select', options: MEASUREMENT_UNITS },
         { id: 'item-stock', label: t('itemModal.label.stock'), type: 'number', placeholder: '100' },
         { id: 'item-min-stock', label: t('itemModal.label.minStock'), type: 'number', placeholder: '50' },
-        { id: 'item-cost', label: t('itemModal.label.cost'), type: 'number', placeholder: '0.00', step: '0.01' }
+        { id: 'item-cost', label: t('itemModal.label.cost', { currency: getCurrencySymbol() }), type: 'number', placeholder: '0.00', step: '0.01' }
     ];
 
     fields.forEach(field => {

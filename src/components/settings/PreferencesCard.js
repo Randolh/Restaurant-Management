@@ -1,4 +1,5 @@
-import { t, getLang, setLang } from '../../utils/i18n.js';
+import { t, getLang, setLang, getCurrency, setCurrency } from '../../utils/i18n.js';
+import { CURRENCIES } from '../../utils/constants.js';
 
 export const PreferencesCard = () => {
     const prefsCard = document.createElement('div');
@@ -65,19 +66,14 @@ export const PreferencesCard = () => {
     currSelect.style.background = 'var(--elevation-2-bg)';
     currSelect.style.color = 'var(--color-text)';
     
-    const usdOpt = document.createElement('option');
-    usdOpt.textContent = 'USD ($)';
-    const eurOpt = document.createElement('option');
-    eurOpt.textContent = 'EUR (€)';
-    const gbpOpt = document.createElement('option');
-    gbpOpt.textContent = 'GBP (£)';
-    const mxnOpt = document.createElement('option');
-    mxnOpt.textContent = 'MXN ($)';
+    CURRENCIES.forEach(curr => {
+        const opt = document.createElement('option');
+        opt.value = curr.code;
+        opt.textContent = curr.label;
+        currSelect.appendChild(opt);
+    });
     
-    currSelect.appendChild(usdOpt);
-    currSelect.appendChild(eurOpt);
-    currSelect.appendChild(gbpOpt);
-    currSelect.appendChild(mxnOpt);
+    currSelect.value = getCurrency();
     
     currGroup.appendChild(currLabel);
     currGroup.appendChild(currSelect);
@@ -96,6 +92,7 @@ export const PreferencesCard = () => {
     
     prefsSaveBtn.addEventListener('click', () => {
         setLang(langSelect.value);
+        setCurrency(currSelect.value);
     });
     
     prefsActions.appendChild(prefsSaveBtn);
