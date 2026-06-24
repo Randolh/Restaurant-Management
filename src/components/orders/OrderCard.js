@@ -37,7 +37,8 @@ const OrderCard = ({ order, btnKey, onAction }) => {
         qtySpan.textContent = `${item.qty}x`;
         
         pill.appendChild(qtySpan);
-        pill.appendChild(document.createTextNode(` ${item.name}`));
+        const itemName = item.name.length > 10 ? item.name.substring(0, 10) + '...' : item.name;
+        pill.appendChild(document.createTextNode(` ${itemName}`));
         itemsContainer.appendChild(pill);
     });
 
