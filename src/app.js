@@ -4,6 +4,7 @@ import BottomNav from './components/BottomNav.js'
 import TopBar from './components/TopBar.js'
 import Inventory from './views/Inventory.js'
 import Dishes from './views/Dishes.js'
+import Orders from './views/Orders.js'
 import Settings from './views/Settings.js'
 import Login from './views/Login.js'
 import AccessDenied from './views/AccessDenied.js'
@@ -16,6 +17,7 @@ const routes = {
     '/': { component: Inventory, requiresAuth: true },
     '/inventory': { component: Inventory, requiresAuth: true },
     '/dishes': { component: Dishes, requiresAuth: true },
+    '/orders': { component: Orders, requiresAuth: true },
     '/settings': { component: Settings, requiresAuth: true },
     '/login': { component: Login, requiresAuth: false },
     '/access-denied': { component: AccessDenied, requiresAuth: false },
@@ -94,6 +96,8 @@ const initializeSession = () => {
     if (getLocal('keep_logged_in') === 'true') {
         setSession('session_token', 'active');
     }
+
+
 }
 
 const setupEventListeners = () => {
