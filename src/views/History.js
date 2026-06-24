@@ -16,8 +16,7 @@ export default {
         h1.textContent = t('history.title') || 'Order History';
         
         const controls = document.createElement('div');
-        controls.style.display = 'flex';
-        controls.style.gap = 'var(--stack-md)';
+        controls.className = 'history-controls';
         
         // Search Input
         const searchWrapper = document.createElement('div');
@@ -25,10 +24,9 @@ export default {
         
         const searchInput = document.createElement('input');
         searchInput.type = 'text';
-        searchInput.className = 'form-control';
+        searchInput.className = 'form-control history-search-input';
         searchInput.placeholder = t('history.search') || 'Search orders...';
         searchInput.style.paddingLeft = '36px';
-        searchInput.style.width = '250px';
         
         const searchIcon = document.createElement('i');
         searchIcon.className = 'fa-solid fa-magnifying-glass';
