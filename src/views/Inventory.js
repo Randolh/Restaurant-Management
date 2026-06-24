@@ -39,13 +39,9 @@ export default {
         
         pageContent.appendChild(pageHeader);
 
-        // KPI Grid
-        const kpis = [
-            { title: 'Total Items', value: '123' },
-            { title: 'Low Stock', value: '12' },
-            { title: 'Inventory Value', value: '$1234' }
-        ];
-        pageContent.appendChild(KpiGrid(kpis));
+        // KPI Grid Container
+        const kpiContainer = document.createElement('div');
+        pageContent.appendChild(kpiContainer);
 
         // Data Table
         const tableContainer = document.createElement('div');
@@ -61,16 +57,48 @@ export default {
             // Filter out soft deleted items
             const activeItems = items.filter(item => !item.deleted);
             
-            const formattedData = activeItems.map(item => ({
-                original: item, // Pass original data for table actions
-                name: item.name,
-                icon: INVENTORY_CATEGORIES[item.category]?.icon || 'fa-box',
-                stockText: item.stock || '0',
-                stockPercent: '',
-                progressClass: 'safe',
-                progressWidth: '', 
-                unit: item.unit
-            }));
+            // Calculate KPIs
+            const totalItems = activeItems.length;
+            const lowStockItems = activeItems.filter(item => {
+                const min = item.minStock !== undefined ? Number(item.minStock) : 50;
+                return Number(item.stock || 0) < min;
+            }).length;
+            const inventoryValue = activeItems.reduce((acc, item) => {
+                return acc + (Number(item.stock || 0) * Number(item.cost || 0));
+            }, 0);
+
+            kpiContainer.innerHTML = '';
+            const kpis = [
+                { title: 'Total Items', value: totalItems.toString() },
+                { title: 'Low Stock', value: lowStockItems.toString() },
+                { title: 'Inventory Value', value: `$${inventoryValue.toFixed(2)}` }
+            ];
+            kpiContainer.appendChild(KpiGrid(kpis));
+            
+            const formattedData = activeItems.map(item => {
+                const stockVal = Number(item.stock || 0);
+                const min = item.minStock !== undefined ? Number(item.minStock) : 50;
+                
+                // Calculate progress bar info
+                let progressClass = 'safe';
+                if (stockVal < min) progressClass = 'danger';
+                else if (stockVal < min * 2.5) progressClass = 'warning';
+                
+                const maxTheoretical = min > 0 ? min * 5 : 100;
+                const progressWidth = `${Math.min((stockVal / maxTheoretical) * 100, 100)}%`;
+                const stockPercent = progressWidth;
+
+                return {
+                    original: item, // Pass original data for table actions
+                    name: item.name,
+                    icon: INVENTORY_CATEGORIES[item.category]?.icon || 'fa-box',
+                    stockText: item.stock || '0',
+                    stockPercent: stockPercent,
+                    progressClass: progressClass,
+                    progressWidth: progressWidth, 
+                    unit: item.unit
+                };
+            });
 
             tableContainer.innerHTML = '';
             
@@ -126,6 +154,8 @@ export default {
             if (unitSelect) unitSelect.value = item.unit;
             
             document.getElementById('item-stock').value = item.stock;
+            const minStockInput = document.getElementById('item-min-stock');
+            if (minStockInput) minStockInput.value = item.minStock !== undefined ? item.minStock : 50;
             document.getElementById('item-cost').value = item.cost;
             
             const saveBtn = document.getElementById('add-item-modal-save-btn');

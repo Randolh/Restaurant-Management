@@ -49,6 +49,7 @@ export default function AddItemModal() {
         { label: 'Category', type: 'select', options: Object.keys(INVENTORY_CATEGORIES) },
         { label: 'Unit measure', type: 'select', options: MEASUREMENT_UNITS },
         { id: 'item-stock', label: 'Initial stock', type: 'number', placeholder: '100' },
+        { id: 'item-min-stock', label: 'Min Stock', type: 'number', placeholder: '50' },
         { id: 'item-cost', label: 'Unit Cost ($)', type: 'number', placeholder: '0.00', step: '0.01' }
     ];
 
@@ -141,6 +142,11 @@ export default function AddItemModal() {
             if (field.id) input.id = field.id;
             if (field.placeholder) input.placeholder = field.placeholder;
             if (field.step) input.step = field.step;
+            
+            if (field.id === 'item-min-stock') {
+                input.value = '50';
+            }
+
             group.appendChild(input);
         }
         mBody.appendChild(group);
@@ -170,6 +176,9 @@ export default function AddItemModal() {
             defaultCheck.checked = true;
             defaultCheck.dispatchEvent(new Event('change'));
         }
+        
+        const minStockInput = document.getElementById('item-min-stock');
+        if (minStockInput) minStockInput.value = '50';
         
         errorContainer.style.display = 'none';
         errorContainer.innerHTML = '';
@@ -202,6 +211,7 @@ export default function AddItemModal() {
         const category = document.getElementById('category-select')?.value;
         const unit = document.getElementById('unit-select')?.value;
         const stock = document.getElementById('item-stock')?.value;
+        const minStock = document.getElementById('item-min-stock')?.value;
         const cost = document.getElementById('item-cost')?.value;
         
         let errors = [];
@@ -210,10 +220,12 @@ export default function AddItemModal() {
             errors.push('• Item name is required.');
         }
         
-        if (!stock || isNaN(stock) || Number(stock) < 0) {
-            errors.push('• Initial stock must be a valid number (≥ 0).');
+        if (!stock || isNaN(stock) || Number(stock) <= 0) {
+            errors.push('• Initial stock must be a valid number strictly greater than 0.');
         }
-        
+        if (!minStock || isNaN(minStock) || Number(minStock) < 0) {
+            errors.push('• Min stock must be a valid number greater than or equal to 0.');
+        }
         if (!cost || isNaN(cost) || Number(cost) <= 0) {
             errors.push('• Unit Cost must be a valid number strictly greater than 0.');
         }
@@ -230,7 +242,7 @@ export default function AddItemModal() {
         if (editId) {
             const index = existingItems.findIndex(i => i.id == editId);
             if (index !== -1) {
-                existingItems[index] = { ...existingItems[index], name, category, unit, stock, cost };
+                existingItems[index] = { ...existingItems[index], name, category, unit, stock, minStock, cost };
             }
         } else {
             const newItem = {
@@ -239,6 +251,7 @@ export default function AddItemModal() {
                 category,
                 unit,
                 stock,
+                minStock,
                 cost
             };
             existingItems.push(newItem);
