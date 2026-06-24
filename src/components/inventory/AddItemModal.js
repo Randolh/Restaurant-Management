@@ -23,6 +23,17 @@ export default function AddItemModal() {
     const mBody = document.createElement('div');
     mBody.className = 'modal-body';
     
+    const errorContainer = document.createElement('div');
+    errorContainer.className = 'form-error';
+    errorContainer.style.color = 'var(--brand-primary)'; // Red color
+    errorContainer.style.fontSize = 'var(--font-size-label-md)';
+    errorContainer.style.marginBottom = 'var(--stack-sm)';
+    errorContainer.style.padding = '8px 12px';
+    errorContainer.style.backgroundColor = 'rgba(220, 20, 60, 0.1)';
+    errorContainer.style.borderRadius = 'var(--radius-sm)';
+    errorContainer.style.display = 'none';
+    mBody.appendChild(errorContainer);
+    
     const fields = [
         { id: 'item-name', label: 'Name', type: 'text', placeholder: 'e.g. Tomato' },
         { label: 'Category', type: 'select', options: Object.keys(INVENTORY_CATEGORIES) },
@@ -149,6 +160,9 @@ export default function AddItemModal() {
             defaultCheck.checked = true;
             defaultCheck.dispatchEvent(new Event('change'));
         }
+        
+        errorContainer.style.display = 'none';
+        errorContainer.innerHTML = '';
     };
 
     const cancelBtn = document.createElement('button');
@@ -165,14 +179,29 @@ export default function AddItemModal() {
     addBtn.className = 'btn-primary';
     addBtn.textContent = 'Add Item';
     addBtn.addEventListener('click', () => {
-        const name = document.getElementById('item-name')?.value;
+        const name = document.getElementById('item-name')?.value.trim();
         const category = document.getElementById('category-select')?.value;
         const unit = document.getElementById('unit-select')?.value;
         const stock = document.getElementById('item-stock')?.value;
         const cost = document.getElementById('item-cost')?.value;
         
+        let errors = [];
+        
         if (!name) {
-            alert('Please enter a name for the item');
+            errors.push('• Item name is required.');
+        }
+        
+        if (!stock || isNaN(stock) || Number(stock) < 0) {
+            errors.push('• Initial stock must be a valid number (≥ 0).');
+        }
+        
+        if (!cost || isNaN(cost) || Number(cost) <= 0) {
+            errors.push('• Unit Cost must be a valid number strictly greater than 0.');
+        }
+        
+        if (errors.length > 0) {
+            errorContainer.innerHTML = errors.join('<br>');
+            errorContainer.style.display = 'block';
             return;
         }
 
