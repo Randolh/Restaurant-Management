@@ -76,4 +76,4 @@ export const DISH_CATEGORIES = {
     'other': { icon: 'fa-utensils', labelKey: 'category.other' }
 };
 
-export const PROFIT_MARGIN = 0.30;
+export const DEFAULT_PROFIT_MARGIN = 0.30;
