@@ -1,4 +1,4 @@
-import { t } from '../../utils/i18n.js';
+import { t, formatCurrency } from '../../utils/i18n.js';
 import { onEvent } from '../../utils/events.js';
 
 export const OrderDetailsModal = () => {
@@ -91,10 +91,10 @@ export const OrderDetailsModal = () => {
         thItem.className = 'col-item';
         const thQty = document.createElement('th');
         thQty.className = 'col-qty';
-        thQty.textContent = 'Qty';
+        thQty.textContent = t('history.modal.qty') || 'Qty';
         const thPrice = document.createElement('th');
         thPrice.className = 'col-price';
-        thPrice.textContent = 'Price';
+        thPrice.textContent = t('history.modal.price') || 'Price';
         const thSubtotal = document.createElement('th');
         thSubtotal.className = 'col-subtotal';
         thSubtotal.textContent = 'Subtotal';
@@ -118,11 +118,11 @@ export const OrderDetailsModal = () => {
             
             const tdPrice = document.createElement('td');
             tdPrice.className = 'col-price';
-            tdPrice.textContent = '$' + parseFloat(item.price).toFixed(2);
+            tdPrice.textContent = formatCurrency(item.price);
             
             const tdSub = document.createElement('td');
             tdSub.className = 'col-subtotal';
-            tdSub.textContent = '$' + (parseFloat(item.price) * parseInt(item.qty, 10)).toFixed(2);
+            tdSub.textContent = formatCurrency(parseFloat(item.price) * parseInt(item.qty, 10));
             
             tr.appendChild(tdName);
             tr.appendChild(tdQty);
@@ -144,7 +144,7 @@ export const OrderDetailsModal = () => {
         const l1 = document.createElement('span');
         l1.textContent = (t('history.modal.subtotal') || 'Subtotal') + ':';
         const v1 = document.createElement('span');
-        v1.textContent = '$' + parseFloat(order.subtotal).toFixed(2);
+        v1.textContent = formatCurrency(order.subtotal);
         row1.appendChild(l1);
         row1.appendChild(v1);
         
@@ -153,7 +153,7 @@ export const OrderDetailsModal = () => {
         const l2 = document.createElement('span');
         l2.textContent = (t('history.modal.tax') || 'Tax') + ':';
         const v2 = document.createElement('span');
-        v2.textContent = '$' + parseFloat(order.tax).toFixed(2);
+        v2.textContent = formatCurrency(order.tax);
         row2.appendChild(l2);
         row2.appendChild(v2);
         
@@ -163,7 +163,7 @@ export const OrderDetailsModal = () => {
         l3.textContent = (t('history.modal.total') || 'Total') + ':';
         const v3 = document.createElement('span');
         v3.className = 'grand-total-val';
-        v3.textContent = '$' + parseFloat(order.total).toFixed(2);
+        v3.textContent = formatCurrency(order.total);
         row3.appendChild(l3);
         row3.appendChild(v3);
         
