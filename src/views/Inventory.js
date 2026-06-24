@@ -241,7 +241,7 @@ export default {
             const items = getLocal('inventoryItems', true) || [];
             const index = items.findIndex(i => i.id == id);
             if (index !== -1) {
-                items[index].deleted = true;
+                items.splice(index, 1);
                 setLocal('inventoryItems', items);
                 emitEvent('inventoryUpdated');
             }
