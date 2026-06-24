@@ -1,5 +1,6 @@
 import { t } from '../../utils/i18n.js';
 import { getLocal, setLocal } from '../../utils/storage.js';
+import showToast from '../ui/Toast.js';
 
 export const SecurityCard = () => {
     const securityCard = document.createElement('div');
@@ -64,18 +65,18 @@ export const SecurityCard = () => {
         const confPass = confPassInput.value;
 
         if (!currentPass || !newPass || !confPass) {
-            alert(t('settings.security.err.empty'));
+            showToast(t('settings.security.err.empty'), 'warning');
             return;
         }
 
         const user = getLocal('default_user', true);
         if (!user || user.password !== currentPass) {
-            alert(t('settings.security.err.current'));
+            showToast(t('settings.security.err.current'), 'error');
             return;
         }
 
         if (newPass !== confPass) {
-            alert(t('settings.security.err.match'));
+            showToast(t('settings.security.err.match'), 'error');
             return;
         }
 
@@ -86,7 +87,7 @@ export const SecurityCard = () => {
         newPassInput.value = '';
         confPassInput.value = '';
         
-        alert(t('settings.security.success'));
+        showToast(t('settings.security.success'), 'success');
     });
     
     secActions.appendChild(secSaveBtn);
