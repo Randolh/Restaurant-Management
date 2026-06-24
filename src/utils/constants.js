@@ -50,3 +50,11 @@ export const CURRENCIES = [
     { code: 'USD', symbol: '$', label: 'USD ($)' },
     { code: 'EUR', symbol: '€', label: 'EUR (€)' }
 ];
+
+export const DISH_CATEGORIES = {
+    'Ramen': { icon: 'fa-bowl-food' },
+    'Burgers': { icon: 'fa-burger' },
+    'Bowls': { icon: 'fa-bowl-rice' },
+    'Drinks': { icon: 'fa-martini-glass' },
+    'Desserts': { icon: 'fa-ice-cream' }
+};
