@@ -21,10 +21,10 @@ export default {
 
         // Assemble Grid with modular components
         grid.appendChild(ProfileCard());
-        grid.appendChild(AccountCard());
         grid.appendChild(PreferencesCard());
         grid.appendChild(SecurityCard());
         grid.appendChild(DangerZoneCard());
+        grid.appendChild(AccountCard());
 
         wrapper.appendChild(header);
         wrapper.appendChild(grid);

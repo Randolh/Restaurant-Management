@@ -4,7 +4,6 @@
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: var(--stack-lg);
   margin-top: var(--stack-md);
-  align-items: start;
 }
 
 @media (max-width: 768px) {
