@@ -8,6 +8,7 @@ import Login from './views/Login.js'
 import AccessDenied from './views/AccessDenied.js'
 import { getLocal, setLocal, setSession, removeLocal, removeSession } from './utils/storage.js'
 import { onEvent, emitEvent } from './utils/events.js'
+import { t } from './utils/i18n.js'
 
 // Define routes with requiresAuth flag
 const routes = {
@@ -106,7 +107,7 @@ const setupEventListeners = () => {
             router.navigate(nextUrl);
         } else {
             // Failed
-            emitEvent('auth:login-error', { message: 'Invalid email or password.' });
+            emitEvent('auth:login-error', { message: t('login.error.invalid') });
         }
     });
 

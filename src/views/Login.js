@@ -1,4 +1,5 @@
 import { emitEvent, onEvent, offEvent } from '../utils/events.js';
+import { t } from '../utils/i18n.js';
 
 export default {
     render(params) {
@@ -29,7 +30,7 @@ export default {
         logoDiv.appendChild(logoImg);
         
         const title = document.createElement('h1');
-        title.textContent = 'Restaurant Management';
+        title.textContent = t('login.title');
         
         header.appendChild(logoDiv);
         header.appendChild(title);
@@ -59,7 +60,7 @@ export default {
         
         const emailLabel = document.createElement('label');
         emailLabel.htmlFor = 'email';
-        emailLabel.textContent = 'Email';
+        emailLabel.textContent = t('login.email');
         
         const emailWrapper = document.createElement('div');
         emailWrapper.className = 'input-wrapper';
@@ -87,7 +88,7 @@ export default {
         passwordHeader.className = 'password-header';
         const passwordLabel = document.createElement('label');
         passwordLabel.htmlFor = 'password';
-        passwordLabel.textContent = 'Password';
+        passwordLabel.textContent = t('login.password');
         passwordHeader.appendChild(passwordLabel);
         
         const passwordWrapper = document.createElement('div');
@@ -127,7 +128,7 @@ export default {
         
         const rememberLabel = document.createElement('label');
         rememberLabel.htmlFor = 'remember';
-        rememberLabel.textContent = 'Stay signed in';
+        rememberLabel.textContent = t('login.remember');
         
         rememberDiv.appendChild(rememberInput);
         rememberDiv.appendChild(rememberLabel);
@@ -139,7 +140,7 @@ export default {
         submitBtn.className = 'btn-primary';
         
         const submitText = document.createElement('span');
-        submitText.textContent = 'Login';
+        submitText.textContent = t('login.btn');
         const submitIcon = document.createElement('i');
         submitIcon.className = 'fa-solid fa-arrow-right';
         

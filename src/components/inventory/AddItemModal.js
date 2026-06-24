@@ -124,7 +124,14 @@ export default function AddItemModal() {
 
             field.options.forEach(opt => {
                 const option = document.createElement('option');
-                option.textContent = opt;
+                if (field.label === t('itemModal.label.category')) {
+                    option.textContent = t('cat.' + opt);
+                } else if (field.label === t('itemModal.label.unit')) {
+                    option.textContent = t('unit.' + opt);
+                } else {
+                    option.textContent = opt;
+                }
+                option.value = opt;
                 select.appendChild(option);
             });
             

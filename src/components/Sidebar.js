@@ -1,4 +1,5 @@
 import { emitEvent } from '../utils/events.js';
+import { t } from '../utils/i18n.js';
 
 export default function Sidebar() {
     const fragment = document.createDocumentFragment();
@@ -23,9 +24,9 @@ export default function Sidebar() {
     logoDiv.appendChild(logoImg);
     
     const h2 = document.createElement('h2');
-    h2.textContent = 'Restaurant ';
+    h2.textContent = t('app.title');
     const h2Span = document.createElement('span');
-    h2Span.textContent = 'Management';
+    h2Span.textContent = t('app.subtitle');
     h2.appendChild(h2Span);
     
     const closeBtn = document.createElement('label');
@@ -44,10 +45,10 @@ export default function Sidebar() {
     nav.className = 'sidebar-nav';
 
     const links = [
-        { path: '/', icon: 'fa-house', text: 'Home' },
-        { path: '/inventory', icon: 'fa-box', text: 'Inventory' },
-        { path: '/dishes', icon: 'fa-utensils', text: 'Dishes' },
-        { path: '/orders', icon: 'fa-receipt', text: 'Orders' }
+        { path: '/', icon: 'fa-house', text: t('nav.home') },
+        { path: '/inventory', icon: 'fa-box', text: t('nav.inventory') },
+        { path: '/dishes', icon: 'fa-utensils', text: t('nav.dishes') },
+        { path: '/orders', icon: 'fa-receipt', text: t('nav.orders') }
     ];
 
     links.forEach(link => {
@@ -77,7 +78,7 @@ export default function Sidebar() {
     const settingsIcon = document.createElement('i');
     settingsIcon.className = 'fa-solid fa-gear';
     const settingsSpan = document.createElement('span');
-    settingsSpan.textContent = 'Settings';
+    settingsSpan.textContent = t('nav.settings');
     settingsLink.appendChild(settingsIcon);
     settingsLink.appendChild(settingsSpan);
     footer.appendChild(settingsLink);
@@ -88,7 +89,7 @@ export default function Sidebar() {
     const logoutIcon = document.createElement('i');
     logoutIcon.className = 'fa-solid fa-arrow-right-from-bracket';
     const logoutSpan = document.createElement('span');
-    logoutSpan.textContent = 'Logout';
+    logoutSpan.textContent = t('nav.logout');
     logoutLink.appendChild(logoutIcon);
     logoutLink.appendChild(logoutSpan);
     logoutLink.addEventListener('click', (e) => {

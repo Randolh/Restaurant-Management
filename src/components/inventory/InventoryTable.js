@@ -97,7 +97,9 @@ export default function InventoryTable(data) {
 
             // Unit
             const tdUnit = document.createElement('td');
-            tdUnit.textContent = item.unit;
+            const unitDiv = document.createElement('div');
+            unitDiv.textContent = t('unit.' + item.unit);
+            tdUnit.appendChild(unitDiv);
             tr.appendChild(tdUnit);
 
             // Actions

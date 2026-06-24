@@ -1,3 +1,5 @@
+import { t } from '../utils/i18n.js';
+
 export default {
     render(params) {
         // Create wrapper
@@ -27,14 +29,14 @@ export default {
         const titleDiv = document.createElement('div');
         titleDiv.className = 'error-title';
         const titleText = document.createElement('h1');
-        titleText.textContent = 'ACCESS DENIED';
+        titleText.textContent = t('access.title');
         titleDiv.appendChild(titleText);
         mainCard.appendChild(titleDiv);
 
         // Message
         const desc = document.createElement('p');
         desc.className = 'error-description';
-        desc.textContent = 'You do not have permission to view this page. Please sign in to continue.';
+        desc.textContent = t('access.desc');
         mainCard.appendChild(desc);
 
         // Action Buttons
@@ -48,7 +50,7 @@ export default {
         loginLink.setAttribute('data-link', '');
         
         const loginText = document.createElement('span');
-        loginText.textContent = 'Back to Login';
+        loginText.textContent = t('access.btn');
         loginLink.appendChild(loginText);
         
         actionButtons.appendChild(loginLink);
