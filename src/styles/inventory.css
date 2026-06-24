@@ -174,7 +174,7 @@
 .table-actions {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
 }
 
 .btn-icon {
@@ -439,5 +439,9 @@
     background: var(--brand-neutral);
     border-color: var(--brand-primary);
     color: var(--brand-primary);
+  }
+
+  .item-name {
+    max-width: 100px;
   }
 }

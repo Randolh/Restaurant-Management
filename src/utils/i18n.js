@@ -86,7 +86,7 @@ const locales = {
         'table.showing': 'Showing {start}-{end} of {total}',
         'table.deleteConfirm': 'Are you sure you want to delete {name}?',
         'table.col.name': 'Name',
-        'table.col.stock': 'Stock Level',
+        'table.col.stock': 'Stock',
         'table.col.unit': 'Unit',
         'table.col.actions': 'Actions',
 
@@ -289,7 +289,7 @@ const locales = {
         'table.showing': 'Mostrando {start}-{end} de {total}',
         'table.deleteConfirm': '¿Estás seguro de que deseas eliminar {name}?',
         'table.col.name': 'Nombre',
-        'table.col.stock': 'Nivel de Stock',
+        'table.col.stock': 'Stock',
         'table.col.unit': 'Unidad',
         'table.col.actions': 'Acciones',
 
