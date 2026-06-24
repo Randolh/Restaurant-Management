@@ -338,7 +338,7 @@ const AddOrderModal = () => {
 
         const newOrder = {
             id: Math.floor(1000 + Math.random() * 9000).toString(),
-            customerName: customerInput.value.trim() || 'Walk-in Customer',
+            customerName: customerInput.value.trim() || t('orders.modal.anonymous') || 'Walk-in Customer',
             phoneNumber: phoneInput.value.trim(),
             status: 'pending',
             items: cart.map(item => ({ ...item })),
