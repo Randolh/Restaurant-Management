@@ -15,7 +15,7 @@ export default function RecipeBuilder(onChange) {
     inputSearch.type = 'text';
     inputSearch.className = 'form-control';
     inputSearch.placeholder = t('dishModal.ingredients.search') || 'Search ingredients...';
-    
+
     const searchDropdown = document.createElement('div');
     searchDropdown.className = 'search-results-dropdown';
     searchDropdown.style.display = 'none';
@@ -46,16 +46,16 @@ export default function RecipeBuilder(onChange) {
         currentRecipe.forEach((item, index) => {
             const row = document.createElement('div');
             row.className = 'recipe-item';
-            
+
             const nameDiv = document.createElement('div');
             nameDiv.className = 'recipe-item-name ingredient-name-container';
             const nameSpan = document.createElement('span');
             nameSpan.className = 'ingredient-name-text';
-            nameSpan.textContent = item.name;
+            nameSpan.textContent = item.name.length > 10 ? item.name.substring(0, 10) + '...' : item.name;
             const stockSpan = document.createElement('span');
             stockSpan.className = 'stock-info';
             stockSpan.textContent = `(${t('unit.' + item.unit) || item.unit})`;
-            
+
             // Check if ingredient is missing or deleted in inventory
             const invItem = allInventoryItems.find(i => i.id === item.id);
             if (!invItem || invItem.deleted) {
@@ -66,19 +66,19 @@ export default function RecipeBuilder(onChange) {
                 warnIcon.className = 'fa-solid fa-triangle-exclamation';
                 warnLbl.appendChild(warnIcon);
                 warnLbl.appendChild(document.createTextNode(' ' + (t('dishModal.ingredients.deleted') || 'Deleted from inventory')));
-                
+
                 const wrapperDiv = document.createElement('div');
                 wrapperDiv.className = 'ingredient-name-container';
                 wrapperDiv.style.flexDirection = 'column';
                 wrapperDiv.style.alignItems = 'flex-start';
-                
+
                 const topRow = document.createElement('div');
                 topRow.style.display = 'flex';
                 topRow.style.gap = '4px';
                 topRow.style.width = '100%';
                 topRow.appendChild(nameSpan);
                 topRow.appendChild(stockSpan);
-                
+
                 wrapperDiv.appendChild(topRow);
                 wrapperDiv.appendChild(warnLbl);
                 nameDiv.appendChild(wrapperDiv);
@@ -89,7 +89,7 @@ export default function RecipeBuilder(onChange) {
 
             const actionsDiv = document.createElement('div');
             actionsDiv.className = 'recipe-item-actions';
-            
+
             const qtyInput = document.createElement('input');
             qtyInput.type = 'number';
             qtyInput.className = 'form-control inline-qty';
@@ -146,18 +146,18 @@ export default function RecipeBuilder(onChange) {
         matches.forEach(item => {
             const el = document.createElement('div');
             el.className = 'search-result-item';
-            
+
             const nameContainer = document.createElement('div');
             nameContainer.className = 'ingredient-name-container';
             const spanName = document.createElement('span');
             spanName.className = 'ingredient-name-text';
-            spanName.textContent = item.name;
+            spanName.textContent = item.name.length > 10 ? item.name.substring(0, 10) + '...' : item.name;
             const spanUnit = document.createElement('span');
             spanUnit.className = 'stock-info';
             spanUnit.textContent = `(${t('unit.' + item.unit) || item.unit || 'unit'})`;
             nameContainer.appendChild(spanName);
             nameContainer.appendChild(spanUnit);
-            
+
             const actionsDiv = document.createElement('div');
             actionsDiv.className = 'search-result-actions';
             const btnAdd = document.createElement('button');
@@ -167,7 +167,7 @@ export default function RecipeBuilder(onChange) {
             const iconAdd = document.createElement('i');
             iconAdd.className = 'fa-solid fa-plus';
             btnAdd.appendChild(iconAdd);
-            
+
             btnAdd.addEventListener('click', () => {
                 currentRecipe.push({
                     id: item.id,
@@ -180,14 +180,14 @@ export default function RecipeBuilder(onChange) {
                 renderRecipeList();
                 if (onChange) onChange();
             });
-            
+
             actionsDiv.appendChild(btnAdd);
             el.appendChild(nameContainer);
             el.appendChild(actionsDiv);
-            
+
             searchDropdown.appendChild(el);
         });
-        
+
         searchDropdown.style.display = 'flex';
     };
 
@@ -204,9 +204,9 @@ export default function RecipeBuilder(onChange) {
     return {
         element: wrapper,
         setInventoryItems: (items) => { allInventoryItems = items || []; },
-        setRecipe: (recipe) => { 
-            currentRecipe = recipe ? [...recipe] : []; 
-            renderRecipeList(); 
+        setRecipe: (recipe) => {
+            currentRecipe = recipe ? [...recipe] : [];
+            renderRecipeList();
         },
         getRecipe: () => [...currentRecipe]
     };
