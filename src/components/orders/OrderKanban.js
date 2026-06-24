@@ -1,6 +1,7 @@
 import { t } from '../../utils/i18n.js';
 import { getLocal, setLocal } from '../../utils/storage.js';
 import { emitEvent } from '../../utils/events.js';
+import OrderCard from './OrderCard.js';
 
 const OrderKanban = () => {
     const container = document.createElement('div');
@@ -28,12 +29,6 @@ const OrderKanban = () => {
     board.className = 'kanban-board';
 
     const orders = getLocal('ordersItems', true) || [];
-
-    const formatTimeAgo = (timestamp) => {
-        const diffMs = Date.now() - timestamp;
-        const diffMins = Math.floor(diffMs / 60000);
-        return t('orders.card.timeAgo').replace('{time}', diffMins);
-    };
 
     const handleStatusChange = (orderId, newStatus) => {
         const currentOrders = getLocal('ordersItems', true) || [];
@@ -94,50 +89,11 @@ const OrderKanban = () => {
         cardsContainer.className = 'kanban-cards';
 
         colOrders.forEach(order => {
-            const card = document.createElement('article');
-            card.className = 'order-card';
-
-            const cardHeader = document.createElement('div');
-            cardHeader.className = 'order-header';
-            
-            const idSpan = document.createElement('span');
-            idSpan.className = 'order-id';
-            idSpan.textContent = `#${order.id}`;
-
-            const timeSpan = document.createElement('span');
-            timeSpan.className = 'order-time';
-            timeSpan.textContent = formatTimeAgo(order.createdAt);
-
-            cardHeader.appendChild(idSpan);
-            cardHeader.appendChild(timeSpan);
-            card.appendChild(cardHeader);
-
-            const itemsContainer = document.createElement('div');
-            itemsContainer.className = 'order-items';
-
-            order.items.forEach(item => {
-                const pill = document.createElement('span');
-                pill.className = 'item-pill';
-                
-                const qtySpan = document.createElement('span');
-                qtySpan.className = 'item-qty';
-                qtySpan.textContent = `${item.qty}x`;
-                
-                pill.appendChild(qtySpan);
-                pill.appendChild(document.createTextNode(` ${item.name}`));
-                itemsContainer.appendChild(pill);
+            const card = OrderCard({
+                order: order,
+                btnKey: btnKey,
+                onAction: () => handleStatusChange(order.id, nextStatus)
             });
-
-            card.appendChild(itemsContainer);
-
-            const actionBtn = document.createElement('button');
-            actionBtn.className = 'btn-kanban';
-            actionBtn.textContent = t(btnKey);
-            actionBtn.addEventListener('click', () => {
-                handleStatusChange(order.id, nextStatus);
-            });
-
-            card.appendChild(actionBtn);
             cardsContainer.appendChild(card);
         });
 
