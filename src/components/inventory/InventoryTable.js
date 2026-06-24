@@ -1,3 +1,5 @@
+import showConfirm from '../ui/ConfirmModal.js';
+
 export default function InventoryTable(data) {
     const tableContainer = document.createElement('div');
     tableContainer.className = 'data-table-container';
@@ -106,9 +108,9 @@ export default function InventoryTable(data) {
         iDelete.className = 'fa-solid fa-trash';
         btnDelete.appendChild(iDelete);
         btnDelete.addEventListener('click', () => {
-            if (confirm(`Are you sure you want to delete ${item.name}?`)) {
+            showConfirm(`Are you sure you want to delete ${item.name}?`, () => {
                 window.dispatchEvent(new CustomEvent('deleteItem', { detail: { id: item.original.id } }));
-            }
+            });
         });
         tableActions.appendChild(btnDelete);
         
