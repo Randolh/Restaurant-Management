@@ -1,4 +1,8 @@
 import { t } from '../../utils/i18n.js';
+import { removeLocal, setLocal } from '../../utils/storage.js';
+import { getDummyData } from '../../utils/dummyData.js';
+import showToast from '../ui/Toast.js';
+import showConfirm from '../ui/ConfirmModal.js';
 
 export const DangerZoneCard = () => {
     const dangerCard = document.createElement('div');
@@ -32,6 +36,19 @@ export const DangerZoneCard = () => {
     
     devToolsBox.appendChild(loadDumBtn);
     
+    loadDumBtn.addEventListener('click', () => {
+        showConfirm(t('settings.data.warning') + ' (Load Dummy Data)', () => {
+            const { dummyInventory, dummyDishes, dummyOrders } = getDummyData();
+            setLocal('inventoryItems', dummyInventory);
+            setLocal('dishesItems', dummyDishes);
+            setLocal('ordersItems', dummyOrders);
+            setLocal('appProfitMargin', '30');
+            setLocal('appTaxRate', '16');
+            showToast('Datos de prueba cargados', 'success');
+            setTimeout(() => window.location.reload(), 1000);
+        });
+    });
+    
     const divider = document.createElement('hr');
     divider.className = 'form-divider';
     divider.style.margin = '16px 0';
@@ -57,6 +74,18 @@ export const DangerZoneCard = () => {
     
     wipeBox.appendChild(wipeWarning);
     wipeBox.appendChild(wipeBtn);
+    
+    wipeBtn.addEventListener('click', () => {
+        showConfirm(t('settings.data.warning'), () => {
+            removeLocal('inventoryItems');
+            removeLocal('dishesItems');
+            removeLocal('ordersItems');
+            removeLocal('appProfitMargin');
+            removeLocal('appTaxRate');
+            showToast('Datos eliminados', 'success');
+            setTimeout(() => window.location.reload(), 1000);
+        });
+    });
     
     dangerCard.appendChild(dangerHeader);
     dangerCard.appendChild(devToolsBox);
