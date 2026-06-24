@@ -392,3 +392,52 @@
     display: none;
   }
 }
+
+/* KPI Carousel Styles */
+.kpi-carousel-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .kpi-grid-desktop {
+    display: none !important;
+  }
+  
+  .kpi-carousel-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .kpi-carousel-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .kpi-carousel-content .kpi-card {
+    width: 100%;
+  }
+
+  .kpi-carousel-btn {
+    background: var(--elevation-2-bg);
+    border: var(--elevation-border);
+    color: var(--brand-surface-text);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .kpi-carousel-btn:hover {
+    background: var(--brand-neutral);
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+  }
+}
