@@ -85,8 +85,31 @@
   align-items: center;
 }
 
+.search-wrapper {
+  position: relative;
+}
+
 .history-search-input {
   width: 250px;
+  padding-left: 36px;
+}
+
+.history-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-variant);
+}
+
+.history-empty-msg {
+  text-align: center;
+  padding: var(--stack-xl);
+  color: var(--color-text-variant);
+}
+
+.history-total-col {
+  font-weight: 600;
 }
 
 @media (max-width: 768px) {

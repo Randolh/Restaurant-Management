@@ -20,20 +20,15 @@ export default {
         
         // Search Input
         const searchWrapper = document.createElement('div');
-        searchWrapper.style.position = 'relative';
+        searchWrapper.className = 'search-wrapper';
         
         const searchInput = document.createElement('input');
         searchInput.type = 'text';
         searchInput.className = 'form-control history-search-input';
         searchInput.placeholder = t('history.search') || 'Search orders...';
-        searchInput.style.paddingLeft = '36px';
         
         const searchIcon = document.createElement('i');
-        searchIcon.className = 'fa-solid fa-magnifying-glass';
-        searchIcon.style.position = 'absolute';
-        searchIcon.style.left = '12px';
-        searchIcon.style.top = '14px';
-        searchIcon.style.color = 'var(--color-text-variant)';
+        searchIcon.className = 'fa-solid fa-magnifying-glass history-search-icon';
         
         searchWrapper.appendChild(searchInput);
         searchWrapper.appendChild(searchIcon);
@@ -194,9 +189,7 @@ export default {
                 const tr = document.createElement('tr');
                 const td = document.createElement('td');
                 td.colSpan = 6;
-                td.style.textAlign = 'center';
-                td.style.padding = 'var(--stack-xl)';
-                td.style.color = 'var(--color-text-variant)';
+                td.className = 'history-empty-msg';
                 td.textContent = t('history.empty') || 'No completed orders found.';
                 tr.appendChild(td);
                 tbody.appendChild(tr);
@@ -226,7 +219,7 @@ export default {
                 tr.appendChild(tdCust);
                 
                 const tdTotal = document.createElement('td');
-                tdTotal.style.fontWeight = '600';
+                tdTotal.className = 'history-total-col';
                 tdTotal.textContent = '$' + parseFloat(order.total).toFixed(2);
                 tr.appendChild(tdTotal);
                 
