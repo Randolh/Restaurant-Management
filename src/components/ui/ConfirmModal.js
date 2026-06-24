@@ -33,6 +33,7 @@ export default function showConfirm(message, onConfirm) {
     const text = document.createElement('p');
     text.textContent = message;
     text.style.margin = '0';
+    text.style.whiteSpace = 'pre-wrap';
     text.style.color = 'var(--brand-surface-text)';
     mBody.appendChild(text);
     modalContainer.appendChild(mBody);
