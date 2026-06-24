@@ -353,10 +353,16 @@ export default function AddDishModal() {
             }
         }
         
-        const dishes = getLocal('dishesItems', true) || [];
         const editId = saveBtn.dataset.editId;
         const currentRecipe = recipeBuilder.getRecipe();
         
+        if (currentRecipe.length === 0) {
+            formError.show([t('dishModal.err.ingredients') || 'You must add at least one ingredient.']);
+            return;
+        }
+        
+        const dishes = getLocal('dishesItems', true) || [];
+
         if (editId) {
             const index = dishes.findIndex(d => d.id == editId);
             if (index !== -1) {
