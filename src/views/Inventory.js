@@ -243,7 +243,7 @@ export default {
             if (index !== -1) {
                 items[index].deleted = true;
                 setLocal('inventoryItems', items);
-                window.dispatchEvent(new CustomEvent('inventoryUpdated'));
+                emitEvent('inventoryUpdated');
             }
         });
 
