@@ -64,11 +64,11 @@ export default function RecipeBuilder() {
             qtyInput.type = 'number';
             qtyInput.className = 'form-control inline-qty';
             qtyInput.value = item.qty;
-            qtyInput.min = '0.01';
-            qtyInput.step = '0.01';
+            qtyInput.min = '1';
+            qtyInput.step = '1';
             qtyInput.dataset.index = index;
             qtyInput.addEventListener('change', (e) => {
-                currentRecipe[index].qty = parseFloat(e.target.value) || 1;
+                currentRecipe[index].qty = parseInt(e.target.value, 10) || 1;
             });
 
             const btnRemove = document.createElement('button');
@@ -99,7 +99,7 @@ export default function RecipeBuilder() {
             return;
         }
 
-        const activeItems = allInventoryItems.filter(i => !i.deleted);
+        const activeItems = allInventoryItems.filter(i => !i.deleted && !currentRecipe.some(r => r.id === i.id));
         const matches = activeItems.filter(item => item.name.toLowerCase().includes(query.toLowerCase()));
 
         if (matches.length === 0) {
@@ -133,17 +133,12 @@ export default function RecipeBuilder() {
             btnAdd.appendChild(iconAdd);
             
             btnAdd.addEventListener('click', () => {
-                const existing = currentRecipe.find(r => r.id === item.id);
-                if (existing) {
-                    existing.qty += 1;
-                } else {
-                    currentRecipe.push({
-                        id: item.id,
-                        name: item.name,
-                        unit: item.unit || 'unit',
-                        qty: 1
-                    });
-                }
+                currentRecipe.push({
+                    id: item.id,
+                    name: item.name,
+                    unit: item.unit || 'unit',
+                    qty: 1
+                });
                 inputSearch.value = '';
                 searchDropdown.style.display = 'none';
                 renderRecipeList();

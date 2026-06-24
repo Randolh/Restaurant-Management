@@ -183,7 +183,7 @@ export default function AddDishModal() {
     inputPrice.id = 'dish-price';
     inputPrice.className = 'form-control';
     inputPrice.min = '0';
-    inputPrice.step = '0.01';
+    inputPrice.step = '1';
     inputPrice.placeholder = t('dishModal.placeholder.price') || '10.00';
     inputPrice.required = true;
     groupPrice.appendChild(labelPrice);
@@ -295,7 +295,7 @@ export default function AddDishModal() {
     nextBtn.addEventListener('click', async () => {
         formError.hide();
         const name = inputName.value.trim();
-        const price = parseFloat(inputPrice.value);
+        const price = parseInt(inputPrice.value, 10);
         const image = inputImage.value.trim();
 
         const validation = validateDishForm({ name, price });
@@ -330,7 +330,7 @@ export default function AddDishModal() {
         // Validation is already done on 'Next' step, but to be absolutely safe:
         const name = inputName.value.trim();
         const category = selectCat.value;
-        const price = parseFloat(inputPrice.value);
+        const price = parseInt(inputPrice.value, 10);
         const image = inputImage.value.trim();
         const description = inputDesc.value.trim();
         const isAvailable = inputAvail.checked;
