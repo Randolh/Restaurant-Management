@@ -11,11 +11,13 @@ const locales = {
         'modal.confirmTitle': 'Confirm Action',
 
         'inventory.title': 'Inventory',
+        'inventory.search.placeholder': 'Search items...',
         'inventory.kpi.total': 'Total Items',
         'inventory.kpi.lowStock': 'Low Stock',
         'inventory.kpi.value': 'Inventory Value',
 
         'table.empty': 'No items found in inventory. Click "Add Item" to start.',
+        'table.searchEmpty': 'No items matched your search.',
         'table.showing': 'Showing {start}-{end} of {total}',
         'table.deleteConfirm': 'Are you sure you want to delete {name}?',
         'table.col.name': 'Name',
@@ -115,11 +117,13 @@ const locales = {
         'modal.confirmTitle': 'Confirmar Acción',
 
         'inventory.title': 'Inventario',
+        'inventory.search.placeholder': 'Buscar productos...',
         'inventory.kpi.total': 'Total de Productos',
         'inventory.kpi.lowStock': 'Stock Bajo',
         'inventory.kpi.value': 'Valor del Inventario',
 
         'table.empty': 'No hay productos en el inventario. Haz clic en "Añadir" para comenzar.',
+        'table.searchEmpty': 'No se han encontrado productos con esa búsqueda.',
         'table.showing': 'Mostrando {start}-{end} de {total}',
         'table.deleteConfirm': '¿Estás seguro de que deseas eliminar {name}?',
         'table.col.name': 'Nombre',

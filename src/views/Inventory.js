@@ -6,6 +6,7 @@ import { INVENTORY_CATEGORIES } from '../utils/constants.js';
 import { getLocal, setLocal } from '../utils/storage.js';
 import { onEvent, emitEvent } from '../utils/events.js';
 import { t } from '../utils/i18n.js';
+import SearchBar from '../components/ui/SearchBar.js';
 
 export default {
     render() {
@@ -44,6 +45,24 @@ export default {
         const kpiContainer = document.createElement('div');
         pageContent.appendChild(kpiContainer);
 
+        // Action Bar
+        const actionBar = document.createElement('div');
+        actionBar.className = 'action-bar';
+        actionBar.style.display = 'flex';
+        actionBar.style.marginBottom = 'var(--stack-md)';
+
+        let searchQuery = '';
+        const searchComponent = SearchBar({
+            placeholder: t('inventory.search.placeholder'),
+            onChange: (value) => {
+                searchQuery = value;
+                updateTable();
+            }
+        });
+        
+        actionBar.appendChild(searchComponent);
+        pageContent.appendChild(actionBar);
+
         // Data Table
         const tableContainer = document.createElement('div');
         tableContainer.className = 'data-table-wrapper'; // A wrapper to hold the dynamic table
@@ -76,7 +95,12 @@ export default {
             ];
             kpiContainer.appendChild(KpiGrid(kpis));
             
-            const formattedData = activeItems.map(item => {
+            const filteredItems = activeItems.filter(item => {
+                if (searchQuery && !item.name.toLowerCase().includes(searchQuery)) return false;
+                return true;
+            });
+            
+            const formattedData = filteredItems.map(item => {
                 const stockVal = Number(item.stock || 0);
                 const min = item.minStock !== undefined ? Number(item.minStock) : 50;
                 
@@ -108,7 +132,7 @@ export default {
                 emptyMessage.style.padding = '20px';
                 emptyMessage.style.textAlign = 'center';
                 emptyMessage.style.color = 'var(--color-text-variant)';
-                emptyMessage.textContent = t('table.empty');
+                emptyMessage.textContent = searchQuery ? t('table.searchEmpty') : t('table.empty');
                 tableContainer.appendChild(emptyMessage);
             } else {
                 tableContainer.appendChild(InventoryTable(formattedData));
