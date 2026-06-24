@@ -132,7 +132,7 @@
   top: 12px;
   right: 12px;
   background-color: var(--brand-primary);
-  color: var(--color-white);
+  color: black;
   font-weight: 700;
   font-size: var(--font-size-body-md);
   padding: 4px 12px;
@@ -217,11 +217,11 @@
 }
 .dish-badge.available {
   background: rgba(46, 204, 113, 0.9);
-  color: white;
+  color: black;
 }
 .dish-badge.unavailable {
   background: rgba(231, 76, 60, 0.9);
-  color: white;
+  color: black;
 }
 
 .dish-warning-badge {
@@ -231,7 +231,7 @@
   width: 28px;
   height: 28px;
   background: rgba(243, 156, 18, 0.9);
-  color: white;
+  color: black;
   border-radius: 50%;
   display: flex;
   align-items: center;

@@ -481,6 +481,7 @@ export default function AddDishModal() {
         saveBtn.dataset.editId = '';
         
         form.reset();
+        inputAvail.checked = true;
         formError.hide();
         imagePreview.reset();
         recipeBuilder.setInventoryItems(getLocal('inventoryItems', true) || []);
