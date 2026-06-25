@@ -1,6 +1,7 @@
 import { t } from '../../utils/i18n.js';
 import { removeLocal, setLocal } from '../../utils/storage.js';
 import { getDummyData } from '../../utils/dummyData.js';
+import { DEFAULT_PROFIT_MARGIN, DEFAULT_TAX_RATE } from '../../utils/constants.js';
 import showToast from '../ui/Toast.js';
 import showConfirm from '../ui/ConfirmModal.js';
 
@@ -42,8 +43,8 @@ export const DangerZoneCard = () => {
             setLocal('inventoryItems', dummyInventory);
             setLocal('dishesItems', dummyDishes);
             setLocal('ordersItems', dummyOrders);
-            setLocal('appProfitMargin', '30');
-            setLocal('appTaxRate', '16');
+            setLocal('appProfitMargin', DEFAULT_PROFIT_MARGIN.toString());
+            setLocal('appTaxRate', DEFAULT_TAX_RATE.toString());
             showToast('Datos de prueba cargados', 'success');
             setTimeout(() => window.location.reload(), 1000);
         });
