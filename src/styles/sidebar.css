@@ -51,6 +51,38 @@
   position: relative;
 }
 
+.top-bar-settings {
+  position: fixed;
+  top: 0px;
+  right: 0;
+  background-color: var(--brand-primary);
+  color: var(--color-white);
+  border: none;
+  font-size: 14px;
+  width: 32px;
+  height: 36px;
+  border-radius: 18px 0 0 18px;
+  padding: 0 0 0 4px; /* Visually center icon */
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.15);
+  z-index: 999;
+  text-decoration: none;
+}
+
+.top-bar-settings i {
+  position: relative;
+  top: 0;
+}
+
+.top-bar-settings:hover {
+  width: 42px;
+  background-color: var(--brand-primary-hover);
+  color: var(--color-white);
+}
+
 /* Bottom Navigation Menu (Mobile Only) */
 .bottom-nav {
   display: none;
@@ -63,8 +95,7 @@
   -webkit-backdrop-filter: blur(10px);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   z-index: 1000;
-  padding: 8px 16px;
-  padding-bottom: calc(8px + env(safe-area-inset-bottom));
+  padding: 10px 16px;
   justify-content: space-around;
   align-items: center;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
@@ -285,6 +316,10 @@
 /* Desktop */
 @media (min-width: 769px) {
   .sidebar-toggle {
+    display: none;
+  }
+
+  .top-bar-settings {
     display: none;
   }
 

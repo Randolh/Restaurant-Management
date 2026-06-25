@@ -159,7 +159,7 @@ export default {
                 else if (stockVal < min * 2.5) progressClass = 'warning';
                 
                 const maxTheoretical = min > 0 ? min * 5 : 100;
-                const progressWidth = `${Math.min((stockVal / maxTheoretical) * 100, 100)}%`;
+                const progressWidth = `${Math.round(Math.min((stockVal / maxTheoretical) * 100, 100))}%`;
                 const stockPercent = progressWidth;
 
                 return {
@@ -207,76 +207,6 @@ export default {
             if (toggle) toggle.checked = true;
         });
 
-        onEvent('openAddItemModal', () => {
-            const title = document.getElementById('add-item-modal-title');
-            if (title) title.textContent = t('itemModal.title.add');
-            
-            const saveBtn = document.getElementById('add-item-modal-save-btn');
-            if (saveBtn) {
-                saveBtn.dataset.editId = '';
-                saveBtn.textContent = t('btn.add');
-            }
-            
-            const nameInput = document.getElementById('item-name');
-            if (nameInput) nameInput.value = '';
-            
-            const stockInput = document.getElementById('item-stock');
-            if (stockInput) stockInput.value = '';
-            
-            const minStockInput = document.getElementById('item-min-stock');
-            if (minStockInput) minStockInput.value = '50';
-            
-            const costInput = document.getElementById('item-cost');
-            if (costInput) costInput.value = '';
-            
-            const catSelect = document.getElementById('category-select');
-            if (catSelect) catSelect.value = 'Other';
-
-            const defaultCheck = document.getElementById('unit-default-checkbox');
-            if (defaultCheck) {
-                defaultCheck.checked = true;
-                defaultCheck.dispatchEvent(new Event('change'));
-            }
-
-            const toggle = document.getElementById('add-item-modal-toggle');
-            if (toggle) toggle.checked = true;
-        });
-
-        onEvent('openEditItemModal', (e) => {
-            const item = e.detail.item;
-            
-            const title = document.getElementById('add-item-modal-title');
-            if (title) title.textContent = t('itemModal.title.edit');
-            
-            document.getElementById('item-name').value = item.name;
-            
-            const catSelect = document.getElementById('category-select');
-            if (catSelect) catSelect.value = item.category;
-            
-            const defaultCheck = document.getElementById('unit-default-checkbox');
-            if (defaultCheck) {
-                defaultCheck.checked = false; // Disable auto-sync for edit to preserve specific unit
-                defaultCheck.dispatchEvent(new Event('change'));
-            }
-            
-            const unitSelect = document.getElementById('unit-select');
-            if (unitSelect) unitSelect.value = item.unit;
-            
-            document.getElementById('item-stock').value = item.stock;
-            const minStockInput = document.getElementById('item-min-stock');
-            if (minStockInput) minStockInput.value = item.minStock !== undefined ? item.minStock : 50;
-            document.getElementById('item-cost').value = item.cost;
-            
-            const saveBtn = document.getElementById('add-item-modal-save-btn');
-            if (saveBtn) {
-                saveBtn.dataset.editId = item.id;
-                saveBtn.textContent = t('btn.saveChanges');
-            }
-            
-            const toggle = document.getElementById('add-item-modal-toggle');
-            if (toggle) toggle.checked = true;
-        });
-
         onEvent('deleteItem', (e) => {
             const id = e.detail.id;
             const items = getLocal('inventoryItems', true) || [];
@@ -302,7 +232,6 @@ export default {
         wrapper.appendChild(pageContent);
 
         // --- 3. Modals ---
-        wrapper.appendChild(AddItemModal());
         wrapper.appendChild(AddStockModal());
 
         return wrapper;

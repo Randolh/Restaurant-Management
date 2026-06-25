@@ -1,4 +1,10 @@
 import { t } from '../../utils/i18n.js';
+import { removeLocal, setLocal } from '../../utils/storage.js';
+import { getDummyData } from '../../utils/dummyData.js';
+import { DEFAULT_PROFIT_MARGIN, DEFAULT_TAX_RATE } from '../../utils/constants.js';
+import showToast from '../ui/Toast.js';
+import showConfirm from '../ui/ConfirmModal.js';
+import { showLoader, hideLoader } from '../ui/GlobalLoader.js';
 
 export const DangerZoneCard = () => {
     const dangerCard = document.createElement('div');
@@ -19,16 +25,7 @@ export const DangerZoneCard = () => {
     devToolsBox.style.gap = '12px';
     devToolsBox.style.marginTop = '8px';
     
-    const loadDefBtn = document.createElement('button');
-    loadDefBtn.className = 'btn-secondary';
-    loadDefBtn.style.justifyContent = 'flex-start';
-    loadDefBtn.style.gap = '12px';
-    const tagsIcon = document.createElement('i');
-    tagsIcon.className = 'fa-solid fa-tags';
-    tagsIcon.style.width = '24px';
-    loadDefBtn.appendChild(tagsIcon);
-    loadDefBtn.appendChild(document.createTextNode(' ' + t('settings.data.loadDefault')));
-    
+
     const loadDumBtn = document.createElement('button');
     loadDumBtn.className = 'btn-secondary';
     loadDumBtn.style.justifyContent = 'flex-start';
@@ -39,8 +36,22 @@ export const DangerZoneCard = () => {
     loadDumBtn.appendChild(dbIcon);
     loadDumBtn.appendChild(document.createTextNode(' ' + t('settings.data.loadDummy')));
     
-    devToolsBox.appendChild(loadDefBtn);
     devToolsBox.appendChild(loadDumBtn);
+    
+    loadDumBtn.addEventListener('click', () => {
+        showConfirm(t('settings.data.warning') + ' (Load Dummy Data)', () => {
+            showLoader(t('settings.data.loadDummy') + '...');
+            
+            const { dummyInventory, dummyDishes, dummyOrders } = getDummyData();
+            setLocal('inventoryItems', dummyInventory);
+            setLocal('dishesItems', dummyDishes);
+            setLocal('ordersItems', dummyOrders);
+            setLocal('appProfitMargin', DEFAULT_PROFIT_MARGIN.toString());
+            setLocal('appTaxRate', DEFAULT_TAX_RATE.toString());
+            showToast('Datos de prueba cargados', 'success');
+            setTimeout(() => window.location.reload(), 1500);
+        });
+    });
     
     const divider = document.createElement('hr');
     divider.className = 'form-divider';
@@ -67,6 +78,20 @@ export const DangerZoneCard = () => {
     
     wipeBox.appendChild(wipeWarning);
     wipeBox.appendChild(wipeBtn);
+    
+    wipeBtn.addEventListener('click', () => {
+        showConfirm(t('settings.data.warning'), () => {
+            showLoader(t('settings.data.wipe') + '...');
+            
+            removeLocal('inventoryItems');
+            removeLocal('dishesItems');
+            removeLocal('ordersItems');
+            removeLocal('appProfitMargin');
+            removeLocal('appTaxRate');
+            showToast('Datos eliminados', 'success');
+            setTimeout(() => window.location.reload(), 1500);
+        });
+    });
     
     dangerCard.appendChild(dangerHeader);
     dangerCard.appendChild(devToolsBox);

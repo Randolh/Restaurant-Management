@@ -1,4 +1,5 @@
 import { t } from '../utils/i18n.js';
+import FloatingActionButton from './FloatingActionButton.js';
 
 export default function BottomNav() {
     const nav = document.createElement('nav');
@@ -8,11 +9,15 @@ export default function BottomNav() {
         { path: '/orders', icon: 'fa-receipt', text: t('nav.orders') },
         { path: '/history', icon: 'fa-clock-rotate-left', text: t('nav.history') },
         { path: '/dishes', icon: 'fa-utensils', text: t('nav.dishes') },
-        { path: '/inventory', icon: 'fa-box', text: t('nav.inventory') },
-        { path: '/settings', icon: 'fa-gear', text: t('nav.settings') }
+        { path: '/inventory', icon: 'fa-box', text: t('nav.inventory') }
     ];
 
-    links.forEach(link => {
+    links.forEach((link, index) => {
+        // Insert FAB exactly in the middle
+        if (index === 2) {
+            nav.appendChild(FloatingActionButton());
+        }
+
         const a = document.createElement('a');
         a.href = '#' + link.path;
         a.className = 'bottom-nav-item';

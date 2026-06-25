@@ -2,6 +2,7 @@ import { router } from './router.js'
 import Sidebar from './components/Sidebar.js'
 import BottomNav from './components/BottomNav.js'
 import TopBar from './components/TopBar.js'
+import FloatingActionButton from './components/FloatingActionButton.js'
 import Inventory from './views/Inventory.js'
 import Dishes from './views/Dishes.js'
 import Orders from './views/Orders.js'
@@ -9,6 +10,11 @@ import History from './views/History.js'
 import Settings from './views/Settings.js'
 import Login from './views/Login.js'
 import AccessDenied from './views/AccessDenied.js'
+import AddItemModal from './components/inventory/AddItemModal.js'
+import AddDishModal from './components/dishes/AddDishModal.js'
+import ViewDishModal from './components/dishes/ViewDishModal.js'
+import AddOrderModal from './components/orders/AddOrderModal.js'
+import { OrderDetailsModal } from './components/orders/OrderDetailsModal.js'
 import { getLocal, setLocal, getSession, setSession, removeLocal, removeSession } from './utils/storage.js'
 import { onEvent, emitEvent } from './utils/events.js'
 import { t } from './utils/i18n.js'
@@ -45,6 +51,12 @@ const renderLayout = (isProtected) => {
         
         appContainer.appendChild(mainContent)
         appContainer.appendChild(BottomNav())
+        appContainer.appendChild(FloatingActionButton())
+        appContainer.appendChild(AddItemModal())
+        appContainer.appendChild(AddDishModal())
+        appContainer.appendChild(ViewDishModal())
+        appContainer.appendChild(AddOrderModal())
+        appContainer.appendChild(OrderDetailsModal())
         
         router.container = pageContainer;
     } else {
@@ -68,6 +80,14 @@ window.onRouteChanged = (basePath, isProtected) => {
     
     // Set active link states
     if (isProtected) {
+        document.querySelectorAll('.fab-container').forEach(fab => {
+            if (basePath === '/settings') {
+                fab.classList.add('hide-on-desktop');
+            } else {
+                fab.classList.remove('hide-on-desktop');
+            }
+        });
+
         document.querySelectorAll('.nav-item').forEach(el => {
             if(el.getAttribute('href') === '#' + basePath) {
                 el.classList.add('active');
@@ -92,6 +112,7 @@ const initializeSession = () => {
             email: 'admin@restaurant.com',
             password: 'password123'
         });
+        setLocal('first_time_login_alert', 'true');
     }
 
     // Check if user requested to stay logged in

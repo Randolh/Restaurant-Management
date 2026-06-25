@@ -2,6 +2,7 @@ import { t } from '../../utils/i18n.js';
 import { getLocal, setLocal } from '../../utils/storage.js';
 import { emitEvent } from '../../utils/events.js';
 import showToast from '../ui/Toast.js';
+import { showLoader, hideLoader } from '../ui/GlobalLoader.js';
 
 export const ProfileCard = () => {
     const profileCard = document.createElement('div');
@@ -29,8 +30,8 @@ export const ProfileCard = () => {
             const img = document.createElement('img');
             img.style.width = '100%';
             img.style.height = '100%';
-            img.style.objectFit = 'contain';
-            img.style.borderRadius = '8px';
+            img.style.objectFit = 'cover';
+            img.style.borderRadius = '50%';
             
             img.onload = () => {
                 isLogoValid = true;
@@ -137,9 +138,15 @@ export const ProfileCard = () => {
             return;
         }
         
-        setLocal('restaurant_profile', { name, subtitle, logo }, true);
-        showToast(t('settings.profile.success'), 'success');
-        emitEvent('profileUpdated');
+        showLoader(t('btn.save') + '...');
+
+        setTimeout(() => {
+            setLocal('restaurant_profile', { name, subtitle, logo }, true);
+            showToast(t('settings.profile.success'), 'success');
+            emitEvent('profileUpdated');
+            
+            hideLoader();
+        }, 800);
     });
     
     profileActions.appendChild(profileSaveBtn);

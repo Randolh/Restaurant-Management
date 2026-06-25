@@ -13,7 +13,7 @@ export default {
         
         // Header
         const header = document.createElement('div');
-        header.className = 'page-header';
+        header.className = 'page-header history-header';
         
         const h1 = document.createElement('h1');
         h1.textContent = t('history.title') || 'Order History';
@@ -36,12 +36,37 @@ export default {
         searchWrapper.appendChild(searchInput);
         searchWrapper.appendChild(searchIcon);
         
+        const filtersRow = document.createElement('div');
+        filtersRow.className = 'history-filters-row';
+
         const dateInput = document.createElement('input');
         dateInput.type = 'date';
         dateInput.className = 'form-control';
+
+        const statusSelect = document.createElement('select');
+        statusSelect.className = 'form-control';
+        
+        const statuses = [
+            { value: '', label: t('history.filter.all') || 'Todos los Estados' },
+            { value: 'completed', label: t('orders.kanban.completed.singular') || 'Completada' },
+            { value: 'cancelled', label: t('orders.kanban.cancelled.singular') || 'Cancelada' },
+            { value: 'pending', label: t('orders.kanban.pending.singular') || 'Pendiente' },
+            { value: 'in-progress', label: t('orders.kanban.in-progress.singular') || 'En Preparación' },
+            { value: 'ready', label: t('orders.kanban.ready.singular') || 'Lista' }
+        ];
+        
+        statuses.forEach(s => {
+            const opt = document.createElement('option');
+            opt.value = s.value;
+            opt.textContent = s.label;
+            statusSelect.appendChild(opt);
+        });
+        
+        filtersRow.appendChild(dateInput);
+        filtersRow.appendChild(statusSelect);
         
         controls.appendChild(searchWrapper);
-        controls.appendChild(dateInput);
+        controls.appendChild(filtersRow);
         
         header.appendChild(h1);
         header.appendChild(controls);
@@ -80,6 +105,7 @@ export default {
         trHead.appendChild(thStatus);
 
         const thAction = document.createElement('th');
+        thAction.className = 'history-action-col';
         thAction.textContent = t('history.col.action') || 'Action';
         trHead.appendChild(thAction);
 
@@ -95,15 +121,12 @@ export default {
         pageContent.appendChild(header);
         pageContent.appendChild(dataContainer);
         
-        // Append Modal
-        const detailsModal = OrderDetailsModal();
-        wrapper.appendChild(detailsModal);
-        
         let allOrders = [];
         let currentPage = 1;
         const itemsPerPage = 12;
         let currentQuery = '';
         let currentDate = '';
+        let currentStatus = '';
         
         const tableFooter = document.createElement('div');
         tableFooter.className = 'table-footer pagination';
@@ -206,6 +229,11 @@ export default {
                     return oDate === currentDate;
                 });
             }
+
+            // Apply status filter
+            if (currentStatus) {
+                orders = orders.filter(o => o.status === currentStatus);
+            }
             
             const totalItems = orders.length;
             
@@ -238,6 +266,11 @@ export default {
                 
                 const tdId = document.createElement('td');
                 tdId.textContent = '#' + order.id;
+                tdId.className = 'history-order-id-link';
+                tdId.title = t('orders.card.btn.ready') || 'View Details'; // Optional tooltip
+                tdId.addEventListener('click', () => {
+                    emitEvent('openOrderDetails', { order });
+                });
                 tr.appendChild(tdId);
                 
                 const tdDate = document.createElement('td');
@@ -261,6 +294,7 @@ export default {
                 tr.appendChild(tdStatus);
                 
                 const actionTd = document.createElement('td');
+                actionTd.className = 'history-action-col';
                 const viewBtn = document.createElement('button');
                 viewBtn.className = 'btn-icon';
                 viewBtn.title = 'View Details';
@@ -293,6 +327,13 @@ export default {
         // Date filter listener
         dateInput.addEventListener('change', (e) => {
             currentDate = e.target.value;
+            currentPage = 1;
+            renderTable();
+        });
+
+        // Status filter listener
+        statusSelect.addEventListener('change', (e) => {
+            currentStatus = e.target.value;
             currentPage = 1;
             renderTable();
         });

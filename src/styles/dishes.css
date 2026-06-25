@@ -335,7 +335,20 @@
   z-index: 100;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-y: auto;
+  max-height: 250px;
+  width: 300px;
+}
+
+@media (min-width: 601px) {
+  .search-results-dropdown {
+    position: static;
+    margin-top: 8px;
+    box-shadow: none;
+    border: 1px solid var(--elevation-border-color);
+    display: flex !important; /* always visible on desktop */
+    min-height: 120px;
+  }
 }
 
 .search-result-item {
@@ -375,7 +388,12 @@
 .btn-icon {
   width: 32px;
   height: 32px;
-  border-radius: var(--radius-sm);
+  min-height: 32px;
+  min-width: 32px;
+  padding: 0;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  border-radius: 50%;
   background: transparent;
   color: var(--color-text-variant);
   border: 1px solid transparent;
@@ -426,6 +444,8 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  max-height: 450px;
+  overflow-y: auto;
 }
 
 .recipe-item {
@@ -472,6 +492,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--stack-sm);
+  width: 310px;
 }
 
 .form-col-center {
@@ -733,15 +754,19 @@
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .dishes-action-bar {
-    flex-direction: column;
-    align-items: stretch;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--stack-md);
   }
   
-  .dishes-action-bar .search-bar-component {
+  .dishes-action-bar .search-bar-component,
+  .dishes-action-bar .search-wrapper {
+    grid-column: 1 / -1;
     max-width: 100%;
   }
   
   .filter-select {
     width: 100%;
+    min-width: 0;
   }
 }

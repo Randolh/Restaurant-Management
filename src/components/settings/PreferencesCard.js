@@ -2,6 +2,7 @@ import { t, getLang, setLang, getCurrency, setCurrency } from '../../utils/i18n.
 import { CURRENCIES, DEFAULT_PROFIT_MARGIN, DEFAULT_TAX_RATE } from '../../utils/constants.js';
 import { getLocal, setLocal } from '../../utils/storage.js';
 import showToast from '../ui/Toast.js';
+import { showLoader, hideLoader } from '../ui/GlobalLoader.js';
 
 export const PreferencesCard = () => {
     const prefsCard = document.createElement('div');
@@ -146,25 +147,31 @@ export const PreferencesCard = () => {
     prefsSaveBtn.textContent = t('btn.save');
     
     prefsSaveBtn.addEventListener('click', () => {
-        setLang(langSelect.value);
-        setCurrency(currSelect.value);
-        
-        const marginVal = parseFloat(marginInput.value) / 100;
-        const taxVal = parseFloat(taxInput.value) / 100;
-        
-        let saved = false;
-        if (!isNaN(marginVal) && marginVal >= 0) {
-            setLocal('appProfitMargin', marginVal.toString(), false);
-            saved = true;
-        }
-        if (!isNaN(taxVal) && taxVal >= 0) {
-            setLocal('appTaxRate', taxVal.toString(), false);
-            saved = true;
-        }
-        
-        if (saved) {
-            showToast(t('settings.profile.success') || 'Settings saved successfully');
-        }
+        showLoader(t('btn.save') + '...');
+
+        setTimeout(() => {
+            setLang(langSelect.value);
+            setCurrency(currSelect.value);
+
+            const marginVal = parseFloat(marginInput.value) / 100;
+            const taxVal = parseFloat(taxInput.value) / 100;
+
+            let saved = false;
+            if (!isNaN(marginVal) && marginVal >= 0) {
+                setLocal('appProfitMargin', marginVal.toString(), false);
+                saved = true;
+            }
+            if (!isNaN(taxVal) && taxVal >= 0) {
+                setLocal('appTaxRate', taxVal.toString(), false);
+                saved = true;
+            }
+
+            if (saved) {
+                showToast(t('settings.profile.success') || 'Settings saved successfully');
+            }
+            
+            hideLoader();
+        }, 800);
     });
     
     prefsActions.appendChild(prefsSaveBtn);

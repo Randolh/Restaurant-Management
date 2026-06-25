@@ -64,10 +64,10 @@ const AddOrderModal = () => {
         let minPortions = Infinity;
         for (const ing of dish.recipe) {
             const invItem = inventoryItems.find(i => i.id === ing.id);
-            const invQty = invItem && !invItem.deleted ? parseFloat(invItem.quantity) : 0;
+            const invQty = invItem && !invItem.deleted ? parseFloat(invItem.stock) : 0;
             const requiredQty = parseFloat(ing.qty);
             if (requiredQty <= 0) continue;
-            const portions = Math.floor(invQty / requiredQty);
+            const portions = Math.floor((invQty / requiredQty) + 0.000001);
             if (portions < minPortions) minPortions = portions;
         }
         return minPortions === Infinity ? 0 : minPortions;
@@ -75,7 +75,6 @@ const AddOrderModal = () => {
 
     const renderDishGrid = () => {
         dishGrid.replaceChildren();
-        if (!searchQuery.trim()) return; // Solo mostrar si hay busqueda
         
         const allDishes = getLocal('dishesItems', true) || [];
         const inventoryItems = getLocal('inventoryItems', true) || [];
@@ -114,6 +113,14 @@ const AddOrderModal = () => {
                 outOfStockText.style.display = 'block';
                 outOfStockText.style.marginTop = '4px';
                 infoDiv.appendChild(outOfStockText);
+            } else if (availableToAdd <= 0) {
+                const limitText = document.createElement('span');
+                limitText.className = 'text-warning';
+                limitText.style.fontSize = 'var(--font-size-label-md)';
+                limitText.textContent = t('orders.modal.notEnoughStock') || 'Not enough stock';
+                limitText.style.display = 'block';
+                limitText.style.marginTop = '4px';
+                infoDiv.appendChild(limitText);
             }
 
             const actionsCol = document.createElement('div');
@@ -309,6 +316,19 @@ const AddOrderModal = () => {
     
     searchWrap.appendChild(searchInput);
 
+    const mobileTicketToggle = document.createElement('button');
+    mobileTicketToggle.className = 'btn-primary mobile-ticket-toggle';
+    const toggleIcon = document.createElement('i');
+    toggleIcon.className = 'fa-solid fa-receipt';
+    mobileTicketToggle.appendChild(toggleIcon);
+    
+    mobileTicketToggle.appendChild(document.createTextNode(' ' + (t('history.modal.title') || 'Detalles de Orden')));
+    
+    mobileTicketToggle.addEventListener('click', () => {
+        posLayout.classList.add('show-ticket');
+    });
+    searchWrap.appendChild(mobileTicketToggle);
+
     leftPanel.appendChild(formRow);
     leftPanel.appendChild(searchWrap);
     leftPanel.appendChild(dishGrid);
@@ -328,6 +348,17 @@ const AddOrderModal = () => {
     tSpan.textContent = ''; // Can display current time or walk-in status
     ticketHeader.appendChild(tH4);
     ticketHeader.appendChild(tSpan);
+
+    const mobileTicketBack = document.createElement('button');
+    mobileTicketBack.className = 'btn-secondary mobile-ticket-back';
+    const backIcon = document.createElement('i');
+    backIcon.className = 'fa-solid fa-arrow-left';
+    mobileTicketBack.appendChild(backIcon);
+    mobileTicketBack.appendChild(document.createTextNode(' ' + (t('filter.allCategories') || 'Menú')));
+    mobileTicketBack.addEventListener('click', () => {
+        posLayout.classList.remove('show-ticket');
+    });
+    ticketPanel.appendChild(mobileTicketBack);
 
     const ticketSummary = document.createElement('div');
     ticketSummary.className = 'ticket-summary';
@@ -402,6 +433,31 @@ const AddOrderModal = () => {
         currentOrders.unshift(newOrder); // add to top
         setLocal('ordersItems', currentOrders, true);
         
+        // Deduct inventory stock based on recipes
+        const inventoryItems = getLocal('inventoryItems', true) || [];
+        const allDishes = getLocal('dishesItems', true) || [];
+        let inventoryChanged = false;
+
+        cart.forEach(item => {
+            const dish = allDishes.find(d => d.id === item.dishId);
+            if (dish && dish.recipe && dish.recipe.length > 0) {
+                dish.recipe.forEach(ing => {
+                    const invItem = inventoryItems.find(i => i.id === ing.id);
+                    if (invItem && !invItem.deleted) {
+                        const newStock = parseFloat(invItem.stock) - (parseFloat(ing.qty) * item.qty);
+                        // Prevent negative stock just in case
+                        invItem.stock = Math.max(0, newStock).toString();
+                        inventoryChanged = true;
+                    }
+                });
+            }
+        });
+
+        if (inventoryChanged) {
+            setLocal('inventoryItems', inventoryItems, true);
+            emitEvent('inventoryUpdated'); // Refresh inventory view
+        }
+
         emitEvent('ordersUpdated');
         checkbox.checked = false; // close modal
     });
@@ -420,6 +476,7 @@ const AddOrderModal = () => {
         phoneInput.value = '';
         renderDishGrid();
         renderTicket();
+        posLayout.classList.remove('show-ticket');
         checkbox.checked = true;
     });
 
