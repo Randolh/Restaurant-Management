@@ -60,3 +60,15 @@
     color: var(--color-primary, #2196F3);
     font-size: 1.2rem;
 }
+
+@media (max-width: 768px) {
+    .toast-container {
+        bottom: calc(90px + env(safe-area-inset-bottom));
+        right: 16px;
+        left: 16px;
+    }
+    .toast {
+        min-width: auto;
+        width: 100%;
+    }
+}
