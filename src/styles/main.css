@@ -606,3 +606,16 @@ input:-webkit-autofill:active {
     pointer-events: auto;
   }
 }
+/* View Transition Fade Effect */
+#page-container, 
+#mainContent {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-exit {
+  opacity: 0 !important;
+  transform: translateY(10px) !important;
+}
+
