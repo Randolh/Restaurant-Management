@@ -172,18 +172,22 @@ export default {
     },
 
     async mount(container) {
+        const form = container.querySelector('#loginForm');
+        const togglePassword = container.querySelector('#togglePassword');
+        const passwordInput = container.querySelector('#password');
+        const emailInput = container.querySelector('#email');
+        const wrapper = container.querySelector('.login-wrapper');
+        const nextUrl = wrapper.dataset.nextUrl;
+
         if (getLocal('first_time_login_alert') === 'true') {
+            emailInput.value = 'admin@restaurant.com';
+            passwordInput.value = 'password123';
+            
             setTimeout(() => {
                 alert('¡Bienvenido!\n\nEstas son tus credenciales por defecto para ingresar al sistema:\n\nUsuario: admin@restaurant.com\nContraseña: password123');
                 removeLocal('first_time_login_alert');
             }, 500); // Pequeño retraso para que cargue la vista antes del alert
         }
-
-        const form = container.querySelector('#loginForm');
-        const togglePassword = container.querySelector('#togglePassword');
-        const passwordInput = container.querySelector('#password');
-        const wrapper = container.querySelector('.login-wrapper');
-        const nextUrl = wrapper.dataset.nextUrl;
 
         // Toggle password visibility
         togglePassword.addEventListener('click', () => {
