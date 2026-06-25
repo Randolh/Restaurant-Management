@@ -2,6 +2,7 @@ import { router } from './router.js'
 import Sidebar from './components/Sidebar.js'
 import BottomNav from './components/BottomNav.js'
 import TopBar from './components/TopBar.js'
+import FloatingActionButton from './components/FloatingActionButton.js'
 import Inventory from './views/Inventory.js'
 import Dishes from './views/Dishes.js'
 import Orders from './views/Orders.js'
@@ -9,6 +10,9 @@ import History from './views/History.js'
 import Settings from './views/Settings.js'
 import Login from './views/Login.js'
 import AccessDenied from './views/AccessDenied.js'
+import AddItemModal from './components/inventory/AddItemModal.js'
+import AddDishModal from './components/dishes/AddDishModal.js'
+import AddOrderModal from './components/orders/AddOrderModal.js'
 import { getLocal, setLocal, getSession, setSession, removeLocal, removeSession } from './utils/storage.js'
 import { onEvent, emitEvent } from './utils/events.js'
 import { t } from './utils/i18n.js'
@@ -45,6 +49,10 @@ const renderLayout = (isProtected) => {
         
         appContainer.appendChild(mainContent)
         appContainer.appendChild(BottomNav())
+        appContainer.appendChild(FloatingActionButton())
+        appContainer.appendChild(AddItemModal())
+        appContainer.appendChild(AddDishModal())
+        appContainer.appendChild(AddOrderModal())
         
         router.container = pageContainer;
     } else {

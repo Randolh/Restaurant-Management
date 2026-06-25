@@ -1,7 +1,7 @@
 import { INVENTORY_CATEGORIES, MEASUREMENT_UNITS } from '../../utils/constants.js';
 import { getLocal, setLocal } from '../../utils/storage.js';
 import FormError from '../ui/FormError.js';
-import { emitEvent } from '../../utils/events.js';
+import { emitEvent, onEvent } from '../../utils/events.js';
 import { t, getCurrencySymbol } from '../../utils/i18n.js';
 
 export default function AddItemModal() {
@@ -271,5 +271,75 @@ export default function AddItemModal() {
 
     modal.appendChild(modalContainer);
     wrapper.appendChild(modal);
+    onEvent('openAddItemModal', () => {
+        const title = document.getElementById('add-item-modal-title');
+        if (title) title.textContent = t('itemModal.title.add');
+        
+        const saveBtn = document.getElementById('add-item-modal-save-btn');
+        if (saveBtn) {
+            saveBtn.dataset.editId = '';
+            saveBtn.textContent = t('btn.add');
+        }
+        
+        const nameInput = document.getElementById('item-name');
+        if (nameInput) nameInput.value = '';
+        
+        const stockInput = document.getElementById('item-stock');
+        if (stockInput) stockInput.value = '';
+        
+        const minStockInput = document.getElementById('item-min-stock');
+        if (minStockInput) minStockInput.value = '50';
+        
+        const costInput = document.getElementById('item-cost');
+        if (costInput) costInput.value = '';
+        
+        const catSelect = document.getElementById('category-select');
+        if (catSelect) catSelect.value = 'Other';
+
+        const defaultCheck = document.getElementById('unit-default-checkbox');
+        if (defaultCheck) {
+            defaultCheck.checked = true;
+            defaultCheck.dispatchEvent(new Event('change'));
+        }
+
+        const toggle = document.getElementById('add-item-modal-toggle');
+        if (toggle) toggle.checked = true;
+    });
+
+    onEvent('openEditItemModal', (e) => {
+        const item = e.detail.item;
+        
+        const title = document.getElementById('add-item-modal-title');
+        if (title) title.textContent = t('itemModal.title.edit');
+        
+        document.getElementById('item-name').value = item.name;
+        
+        const catSelect = document.getElementById('category-select');
+        if (catSelect) catSelect.value = item.category;
+        
+        const defaultCheck = document.getElementById('unit-default-checkbox');
+        if (defaultCheck) {
+            defaultCheck.checked = false;
+            defaultCheck.dispatchEvent(new Event('change'));
+        }
+        
+        const unitSelect = document.getElementById('unit-select');
+        if (unitSelect) unitSelect.value = item.unit;
+        
+        document.getElementById('item-stock').value = item.stock;
+        const minStockInput = document.getElementById('item-min-stock');
+        if (minStockInput) minStockInput.value = item.minStock !== undefined ? item.minStock : 50;
+        document.getElementById('item-cost').value = item.cost;
+        
+        const saveBtn = document.getElementById('add-item-modal-save-btn');
+        if (saveBtn) {
+            saveBtn.dataset.editId = item.id;
+            saveBtn.textContent = t('btn.saveChanges');
+        }
+        
+        const toggle = document.getElementById('add-item-modal-toggle');
+        if (toggle) toggle.checked = true;
+    });
+
     return wrapper;
 }

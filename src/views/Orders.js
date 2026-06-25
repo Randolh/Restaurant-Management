@@ -50,9 +50,6 @@ export default {
         
         pageContent.appendChild(kanbanWrapper);
         wrapper.appendChild(pageContent);
-        
-        // Modal
-        wrapper.appendChild(AddOrderModal());
 
         return wrapper;
     }
