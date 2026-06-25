@@ -511,9 +511,40 @@ input:-webkit-autofill:active {
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
+.history-controls {
+  display: flex;
+  gap: var(--stack-sm);
+  align-items: center;
+}
+
+.history-filters-row {
+  display: flex;
+  gap: var(--stack-sm);
+  align-items: center;
+}
+
 @media (max-width: 768px) {
-  /* Hide page header on mobile */
-  .page-header {
+  /* Historial: search bar takes full width, filters share the row below */
+  .history-controls {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .history-filters-row {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .history-filters-row .form-control {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Hide page header title and add buttons on mobile, but keep filters visible */
+  .page-header h1,
+  .page-header button {
     display: none !important;
   }
 

@@ -36,12 +36,37 @@ export default {
         searchWrapper.appendChild(searchInput);
         searchWrapper.appendChild(searchIcon);
         
+        const filtersRow = document.createElement('div');
+        filtersRow.className = 'history-filters-row';
+
         const dateInput = document.createElement('input');
         dateInput.type = 'date';
         dateInput.className = 'form-control';
+
+        const statusSelect = document.createElement('select');
+        statusSelect.className = 'form-control';
+        
+        const statuses = [
+            { value: '', label: t('history.filter.all') || 'Todos los Estados' },
+            { value: 'completed', label: t('orders.kanban.completed.singular') || 'Completada' },
+            { value: 'cancelled', label: t('orders.kanban.cancelled.singular') || 'Cancelada' },
+            { value: 'pending', label: t('orders.kanban.pending.singular') || 'Pendiente' },
+            { value: 'in-progress', label: t('orders.kanban.in-progress.singular') || 'En Preparación' },
+            { value: 'ready', label: t('orders.kanban.ready.singular') || 'Lista' }
+        ];
+        
+        statuses.forEach(s => {
+            const opt = document.createElement('option');
+            opt.value = s.value;
+            opt.textContent = s.label;
+            statusSelect.appendChild(opt);
+        });
+        
+        filtersRow.appendChild(dateInput);
+        filtersRow.appendChild(statusSelect);
         
         controls.appendChild(searchWrapper);
-        controls.appendChild(dateInput);
+        controls.appendChild(filtersRow);
         
         header.appendChild(h1);
         header.appendChild(controls);
@@ -105,6 +130,7 @@ export default {
         const itemsPerPage = 12;
         let currentQuery = '';
         let currentDate = '';
+        let currentStatus = '';
         
         const tableFooter = document.createElement('div');
         tableFooter.className = 'table-footer pagination';
@@ -207,6 +233,11 @@ export default {
                     return oDate === currentDate;
                 });
             }
+
+            // Apply status filter
+            if (currentStatus) {
+                orders = orders.filter(o => o.status === currentStatus);
+            }
             
             const totalItems = orders.length;
             
@@ -300,6 +331,13 @@ export default {
         // Date filter listener
         dateInput.addEventListener('change', (e) => {
             currentDate = e.target.value;
+            currentPage = 1;
+            renderTable();
+        });
+
+        // Status filter listener
+        statusSelect.addEventListener('change', (e) => {
+            currentStatus = e.target.value;
             currentPage = 1;
             renderTable();
         });
