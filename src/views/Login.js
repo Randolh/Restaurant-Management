@@ -1,5 +1,5 @@
 import { emitEvent, onEvent, offEvent } from '../utils/events.js';
-import { getLocal } from '../utils/storage.js';
+import { getLocal, removeLocal } from '../utils/storage.js';
 import { t } from '../utils/i18n.js';
 
 export default {
@@ -172,6 +172,13 @@ export default {
     },
 
     async mount(container) {
+        if (getLocal('first_time_login_alert') === 'true') {
+            setTimeout(() => {
+                alert('¡Bienvenido!\n\nEstas son tus credenciales por defecto para ingresar al sistema:\n\nUsuario: admin@restaurant.com\nContraseña: password123');
+                removeLocal('first_time_login_alert');
+            }, 500); // Pequeño retraso para que cargue la vista antes del alert
+        }
+
         const form = container.querySelector('#loginForm');
         const togglePassword = container.querySelector('#togglePassword');
         const passwordInput = container.querySelector('#password');

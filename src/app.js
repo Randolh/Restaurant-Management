@@ -112,6 +112,7 @@ const initializeSession = () => {
             email: 'admin@restaurant.com',
             password: 'password123'
         });
+        setLocal('first_time_login_alert', 'true');
     }
 
     // Check if user requested to stay logged in

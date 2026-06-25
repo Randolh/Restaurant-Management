@@ -75,8 +75,8 @@ export const router = {
 
         // AUTHENTICATION GUARD
         if (routeObj.requiresAuth && !this.isAuthenticated()) {
-            // Redirect to access-denied or login with 'next' parameter
-            this.navigate(`/access-denied?next=${encodeURIComponent(path)}`);
+            // Redirect to login with 'next' parameter
+            this.navigate(`/login?next=${encodeURIComponent(path)}`);
             return;
         }
 
