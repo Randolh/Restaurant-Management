@@ -45,5 +45,26 @@ export const AccountCard = () => {
     accountCard.appendChild(accountHeader);
     accountCard.appendChild(accountActionsBox);
 
+    const developerInfo = document.createElement('div');
+    developerInfo.style.marginTop = '16px';
+    developerInfo.style.paddingTop = '16px';
+    developerInfo.style.borderTop = '1px solid var(--elevation-border-color)';
+    developerInfo.style.fontSize = '12px';
+    developerInfo.style.color = 'var(--color-text-variant)';
+    developerInfo.style.textAlign = 'center';
+    developerInfo.appendChild(document.createTextNode('Developed by '));
+    
+    const devLink = document.createElement('a');
+    devLink.href = 'https://github.com/Randolh';
+    devLink.target = '_blank';
+    devLink.style.color = 'var(--brand-primary)';
+    devLink.style.textDecoration = 'none';
+    devLink.style.fontWeight = '600';
+    devLink.textContent = 'Randolh';
+    
+    developerInfo.appendChild(devLink);
+    
+    accountCard.appendChild(developerInfo);
+
     return accountCard;
 };

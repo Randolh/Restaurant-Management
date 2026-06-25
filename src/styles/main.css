@@ -607,8 +607,7 @@ input:-webkit-autofill:active {
   }
 }
 /* View Transition Fade Effect */
-#page-container, 
-#mainContent {
+#page-container {
   transition: opacity 0.25s ease, transform 0.25s ease;
   opacity: 1;
   transform: translateY(0);
