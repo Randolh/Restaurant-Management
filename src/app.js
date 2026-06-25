@@ -62,9 +62,14 @@ const renderLayout = (isProtected) => {
     } else {
         const mainContent = document.createElement('main')
         mainContent.id = 'mainContent'
+        
+        const pageContainer = document.createElement('div')
+        pageContainer.id = 'page-container'
+        mainContent.appendChild(pageContainer)
+        
         appContainer.appendChild(mainContent)
         
-        router.container = mainContent;
+        router.container = pageContainer;
     }
 }
 
