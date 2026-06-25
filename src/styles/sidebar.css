@@ -53,24 +53,34 @@
 
 .top-bar-settings {
   position: fixed;
-  top: 16px;
-  right: 16px;
+  top: 0px;
+  right: 0;
+  background-color: var(--brand-primary);
+  color: var(--color-white);
+  border: none;
+  font-size: 14px;
+  width: 32px;
+  height: 36px;
+  border-radius: 18px 0 0 18px;
+  padding: 0 0 0 4px; /* Visually center icon */
+  transition: all 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  color: var(--color-text-variant);
+  box-shadow: -2px 0 8px rgba(0,0,0,0.15);
+  z-index: 999;
   text-decoration: none;
-  border-radius: 50%;
-  font-size: 20px;
-  transition: all 0.2s;
-  z-index: 60;
+}
+
+.top-bar-settings i {
+  position: relative;
+  top: 0;
 }
 
 .top-bar-settings:hover {
-  background-color: var(--elevation-2-bg);
-  color: var(--brand-primary);
+  width: 42px;
+  background-color: var(--brand-primary-hover);
+  color: var(--color-white);
 }
 
 /* Bottom Navigation Menu (Mobile Only) */
