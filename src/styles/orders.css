@@ -467,13 +467,21 @@
 }
 
 .mobile-ticket-toggle {
-  position: absolute;
-  bottom: var(--stack-md);
-  right: var(--stack-md);
-  z-index: 5;
-  box-shadow: var(--elevation-2-shadow);
-  border-radius: 100px;
-  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  /* Ocultar el texto en móviles muy pequeños para no apretar el buscador */
+  .mobile-ticket-toggle {
+    font-size: 0;
+  }
+  .mobile-ticket-toggle i {
+    font-size: 1rem;
+  }
 }
 
 .mobile-ticket-back {

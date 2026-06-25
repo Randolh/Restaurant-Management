@@ -75,7 +75,6 @@ const AddOrderModal = () => {
 
     const renderDishGrid = () => {
         dishGrid.replaceChildren();
-        if (!searchQuery.trim()) return; // Solo mostrar si hay busqueda
         
         const allDishes = getLocal('dishesItems', true) || [];
         const inventoryItems = getLocal('inventoryItems', true) || [];
@@ -317,20 +316,22 @@ const AddOrderModal = () => {
     
     searchWrap.appendChild(searchInput);
 
-    leftPanel.appendChild(formRow);
-    leftPanel.appendChild(searchWrap);
-    leftPanel.appendChild(dishGrid);
-
     const mobileTicketToggle = document.createElement('button');
     mobileTicketToggle.className = 'btn-primary mobile-ticket-toggle';
     const toggleIcon = document.createElement('i');
     toggleIcon.className = 'fa-solid fa-receipt';
     mobileTicketToggle.appendChild(toggleIcon);
+    
     mobileTicketToggle.appendChild(document.createTextNode(' ' + (t('history.modal.title') || 'Detalles de Orden')));
+    
     mobileTicketToggle.addEventListener('click', () => {
         posLayout.classList.add('show-ticket');
     });
-    leftPanel.appendChild(mobileTicketToggle);
+    searchWrap.appendChild(mobileTicketToggle);
+
+    leftPanel.appendChild(formRow);
+    leftPanel.appendChild(searchWrap);
+    leftPanel.appendChild(dishGrid);
 
     // --- Right Panel ---
     const rightPanel = document.createElement('div');
@@ -475,6 +476,7 @@ const AddOrderModal = () => {
         phoneInput.value = '';
         renderDishGrid();
         renderTicket();
+        posLayout.classList.remove('show-ticket');
         checkbox.checked = true;
     });
 
