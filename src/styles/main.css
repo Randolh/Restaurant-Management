@@ -409,21 +409,21 @@ input:-webkit-autofill:active {
 }
 
 .status-badge.cancelled {
-  background-color: rgba(244, 67, 54, 0.15);
-  color: var(--color-danger);
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
 }
 
 .status-badge.pending {
-  background-color: rgba(245, 158, 11, 0.15);
-  color: var(--color-warning, #f59e0b);
+  background-color: rgba(245, 105, 11, 0.15);
+  color: var(--color-warning, #f5740b);
 }
 
-.status-badge.inprogress {
-  background-color: rgba(59, 130, 246, 0.15);
-  color: var(--color-info, #3b82f6);
+.status-badge.in-progress {
+  background-color: rgba(245, 229, 11, 0.15);
+  color: #ffffff;
 }
 
 .status-badge.ready {
   background-color: rgba(139, 92, 246, 0.15);
-  color: var(--brand-primary, #8b5cf6);
+  color: #8b5cf6;
 }
