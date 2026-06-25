@@ -12,7 +12,9 @@ import Login from './views/Login.js'
 import AccessDenied from './views/AccessDenied.js'
 import AddItemModal from './components/inventory/AddItemModal.js'
 import AddDishModal from './components/dishes/AddDishModal.js'
+import ViewDishModal from './components/dishes/ViewDishModal.js'
 import AddOrderModal from './components/orders/AddOrderModal.js'
+import { OrderDetailsModal } from './components/orders/OrderDetailsModal.js'
 import { getLocal, setLocal, getSession, setSession, removeLocal, removeSession } from './utils/storage.js'
 import { onEvent, emitEvent } from './utils/events.js'
 import { t } from './utils/i18n.js'
@@ -52,7 +54,9 @@ const renderLayout = (isProtected) => {
         appContainer.appendChild(FloatingActionButton())
         appContainer.appendChild(AddItemModal())
         appContainer.appendChild(AddDishModal())
+        appContainer.appendChild(ViewDishModal())
         appContainer.appendChild(AddOrderModal())
+        appContainer.appendChild(OrderDetailsModal())
         
         router.container = pageContainer;
     } else {

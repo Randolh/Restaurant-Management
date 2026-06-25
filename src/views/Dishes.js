@@ -180,7 +180,7 @@ export default {
         });
 
         wrapper.appendChild(pageContent);
-        wrapper.appendChild(ViewDishModal());
+
 
         return wrapper;
     }

@@ -1,4 +1,6 @@
 import { t } from '../../utils/i18n.js';
+import { emitEvent } from '../../utils/events.js';
+import { getLocal } from '../../utils/storage.js';
 import showConfirm from '../ui/ConfirmModal.js';
 
 const OrderCard = ({ order, btnKey, onAction, onCancel }) => {
@@ -23,6 +25,10 @@ const OrderCard = ({ order, btnKey, onAction, onCancel }) => {
     const idSpan = document.createElement('span');
     idSpan.className = 'order-id';
     idSpan.textContent = `#${order.id}`;
+    idSpan.style.cursor = 'pointer';
+    idSpan.addEventListener('click', () => {
+        emitEvent('openOrderDetails', { order });
+    });
 
     const timeSpan = document.createElement('span');
     timeSpan.className = 'order-time';
@@ -62,6 +68,7 @@ const OrderCard = ({ order, btnKey, onAction, onCancel }) => {
     order.items.forEach(item => {
         const pill = document.createElement('span');
         pill.className = 'item-pill';
+        pill.style.cursor = 'pointer';
         
         const qtySpan = document.createElement('span');
         qtySpan.className = 'item-qty';
@@ -70,6 +77,15 @@ const OrderCard = ({ order, btnKey, onAction, onCancel }) => {
         pill.appendChild(qtySpan);
         const itemName = item.name.length > 10 ? item.name.substring(0, 10) + '...' : item.name;
         pill.appendChild(document.createTextNode(` ${itemName}`));
+        
+        pill.addEventListener('click', () => {
+            const allDishes = getLocal('dishesItems', true) || [];
+            const dish = allDishes.find(d => d.id === item.dishId);
+            if (dish) {
+                emitEvent('openViewDishModal', { dish });
+            }
+        });
+        
         itemsContainer.appendChild(pill);
     });
 

@@ -121,10 +121,6 @@ export default {
         pageContent.appendChild(header);
         pageContent.appendChild(dataContainer);
         
-        // Append Modal
-        const detailsModal = OrderDetailsModal();
-        wrapper.appendChild(detailsModal);
-        
         let allOrders = [];
         let currentPage = 1;
         const itemsPerPage = 12;
