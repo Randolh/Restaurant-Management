@@ -32,6 +32,7 @@
   /* Smooth scrolling for mobile */
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
+  justify-content: center;
 }
 
 /* Hide scrollbar for cleaner look, but keep functionality */
@@ -51,9 +52,9 @@
 
 /* Kanban Column */
 .kanban-column {
-  min-width: 320px;
-  width: 320px;
-  flex-shrink: 0;
+  flex: 1;
+  min-width: 300px;
+  max-width: 420px;
   background-color: var(--elevation-1-bg);
   border: none;
   border-radius: var(--radius-lg);
