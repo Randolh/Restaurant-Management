@@ -738,15 +738,19 @@
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .dishes-action-bar {
-    flex-direction: column;
-    align-items: stretch;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--stack-md);
   }
   
-  .dishes-action-bar .search-bar-component {
+  .dishes-action-bar .search-bar-component,
+  .dishes-action-bar .search-wrapper {
+    grid-column: 1 / -1;
     max-width: 100%;
   }
   
   .filter-select {
     width: 100%;
+    min-width: 0;
   }
 }
