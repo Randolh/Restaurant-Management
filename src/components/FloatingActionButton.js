@@ -11,7 +11,12 @@ export default function FloatingActionButton() {
     // Añadir Ingrediente
     const btnIngredient = document.createElement('button');
     btnIngredient.className = 'fab-menu-item';
-    btnIngredient.innerHTML = `<span>Añadir Ingrediente</span><i class="fa-solid fa-carrot"></i>`;
+    const spanIng = document.createElement('span');
+    spanIng.textContent = t('itemModal.title.add');
+    const iconIng = document.createElement('i');
+    iconIng.className = 'fa-solid fa-carrot';
+    btnIngredient.appendChild(spanIng);
+    btnIngredient.appendChild(iconIng);
     btnIngredient.addEventListener('click', () => {
         container.classList.remove('active');
         emitEvent('openAddItemModal');
@@ -20,7 +25,12 @@ export default function FloatingActionButton() {
     // Crear Platillo
     const btnDish = document.createElement('button');
     btnDish.className = 'fab-menu-item';
-    btnDish.innerHTML = `<span>Crear Platillo</span><i class="fa-solid fa-utensils"></i>`;
+    const spanDish = document.createElement('span');
+    spanDish.textContent = t('dishes.btn.add');
+    const iconDish = document.createElement('i');
+    iconDish.className = 'fa-solid fa-utensils';
+    btnDish.appendChild(spanDish);
+    btnDish.appendChild(iconDish);
     btnDish.addEventListener('click', () => {
         container.classList.remove('active');
         emitEvent('openAddDishModal');
@@ -29,7 +39,12 @@ export default function FloatingActionButton() {
     // Nueva Orden
     const btnOrder = document.createElement('button');
     btnOrder.className = 'fab-menu-item';
-    btnOrder.innerHTML = `<span>Nueva Orden</span><i class="fa-solid fa-receipt"></i>`;
+    const spanOrder = document.createElement('span');
+    spanOrder.textContent = t('orders.btn.new');
+    const iconOrder = document.createElement('i');
+    iconOrder.className = 'fa-solid fa-receipt';
+    btnOrder.appendChild(spanOrder);
+    btnOrder.appendChild(iconOrder);
     btnOrder.addEventListener('click', () => {
         container.classList.remove('active');
         emitEvent('openAddOrderModal');
@@ -41,7 +56,9 @@ export default function FloatingActionButton() {
 
     const mainBtn = document.createElement('button');
     mainBtn.className = 'fab-main-btn';
-    mainBtn.innerHTML = `<i class="fa-solid fa-plus"></i>`;
+    const mainIcon = document.createElement('i');
+    mainIcon.className = 'fa-solid fa-plus';
+    mainBtn.appendChild(mainIcon);
     mainBtn.addEventListener('click', () => {
         container.classList.toggle('active');
     });
