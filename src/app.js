@@ -80,6 +80,14 @@ window.onRouteChanged = (basePath, isProtected) => {
     
     // Set active link states
     if (isProtected) {
+        document.querySelectorAll('.fab-container').forEach(fab => {
+            if (basePath === '/settings') {
+                fab.classList.add('hide-on-desktop');
+            } else {
+                fab.classList.remove('hide-on-desktop');
+            }
+        });
+
         document.querySelectorAll('.nav-item').forEach(el => {
             if(el.getAttribute('href') === '#' + basePath) {
                 el.classList.add('active');

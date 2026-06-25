@@ -4,6 +4,7 @@ import { getDummyData } from '../../utils/dummyData.js';
 import { DEFAULT_PROFIT_MARGIN, DEFAULT_TAX_RATE } from '../../utils/constants.js';
 import showToast from '../ui/Toast.js';
 import showConfirm from '../ui/ConfirmModal.js';
+import { showLoader, hideLoader } from '../ui/GlobalLoader.js';
 
 export const DangerZoneCard = () => {
     const dangerCard = document.createElement('div');
@@ -39,6 +40,8 @@ export const DangerZoneCard = () => {
     
     loadDumBtn.addEventListener('click', () => {
         showConfirm(t('settings.data.warning') + ' (Load Dummy Data)', () => {
+            showLoader(t('settings.data.loadDummy') + '...');
+            
             const { dummyInventory, dummyDishes, dummyOrders } = getDummyData();
             setLocal('inventoryItems', dummyInventory);
             setLocal('dishesItems', dummyDishes);
@@ -46,7 +49,7 @@ export const DangerZoneCard = () => {
             setLocal('appProfitMargin', DEFAULT_PROFIT_MARGIN.toString());
             setLocal('appTaxRate', DEFAULT_TAX_RATE.toString());
             showToast('Datos de prueba cargados', 'success');
-            setTimeout(() => window.location.reload(), 1000);
+            setTimeout(() => window.location.reload(), 1500);
         });
     });
     
@@ -78,13 +81,15 @@ export const DangerZoneCard = () => {
     
     wipeBtn.addEventListener('click', () => {
         showConfirm(t('settings.data.warning'), () => {
+            showLoader(t('settings.data.wipe') + '...');
+            
             removeLocal('inventoryItems');
             removeLocal('dishesItems');
             removeLocal('ordersItems');
             removeLocal('appProfitMargin');
             removeLocal('appTaxRate');
             showToast('Datos eliminados', 'success');
-            setTimeout(() => window.location.reload(), 1000);
+            setTimeout(() => window.location.reload(), 1500);
         });
     });
     

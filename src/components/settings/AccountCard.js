@@ -1,6 +1,7 @@
 import { t } from '../../utils/i18n.js';
 import { getLocal } from '../../utils/storage.js';
 import { emitEvent } from '../../utils/events.js';
+import { showLoader, hideLoader } from '../ui/GlobalLoader.js';
 
 export const AccountCard = () => {
     const accountCard = document.createElement('div');
@@ -32,7 +33,12 @@ export const AccountCard = () => {
     logoutBtn.appendChild(document.createTextNode(' ' + t('nav.logout')));
     
     logoutBtn.addEventListener('click', () => {
-        emitEvent('auth:logout');
+        showLoader(t('nav.logout') + '...');
+        
+        setTimeout(() => {
+            emitEvent('auth:logout');
+            hideLoader();
+        }, 800);
     });
     
     accountActionsBox.appendChild(logoutBtn);

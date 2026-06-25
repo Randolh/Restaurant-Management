@@ -1,6 +1,7 @@
 import { t } from '../../utils/i18n.js';
 import { getLocal, setLocal } from '../../utils/storage.js';
 import showToast from '../ui/Toast.js';
+import { showLoader, hideLoader } from '../ui/GlobalLoader.js';
 
 export const SecurityCard = () => {
     const securityCard = document.createElement('div');
@@ -80,14 +81,20 @@ export const SecurityCard = () => {
             return;
         }
 
-        user.password = newPass;
-        setLocal('default_user', user, true);
-        
-        curPassInput.value = '';
-        newPassInput.value = '';
-        confPassInput.value = '';
-        
-        showToast(t('settings.security.success'), 'success');
+        showLoader(t('btn.save') + '...');
+
+        setTimeout(() => {
+            user.password = newPass;
+            setLocal('default_user', user, true);
+
+            curPassInput.value = '';
+            newPassInput.value = '';
+            confPassInput.value = '';
+
+            showToast(t('settings.security.success'), 'success');
+            
+            hideLoader();
+        }, 800);
     });
     
     secActions.appendChild(secSaveBtn);

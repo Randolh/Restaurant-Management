@@ -4,6 +4,7 @@ import { CURRENCIES } from './constants.js';
 
 const locales = {
     en: {
+        'loading': 'Loading...',
         'btn.add': 'Add Item',
         'btn.cancel': 'Cancel',
         'btn.accept': 'Accept',
@@ -263,6 +264,7 @@ const locales = {
         'unit.Clove (garlic)': 'Clove'
     },
     es: {
+        'loading': 'Cargando...',
         'btn.add': 'Añadir',
         'btn.cancel': 'Cancelar',
         'btn.accept': 'Aceptar',
