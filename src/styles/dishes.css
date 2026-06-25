@@ -335,7 +335,19 @@
   z-index: 100;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-y: auto;
+  max-height: 250px;
+}
+
+@media (min-width: 601px) {
+  .search-results-dropdown {
+    position: static;
+    margin-top: 8px;
+    box-shadow: none;
+    border: 1px solid var(--elevation-border-color);
+    display: flex !important; /* always visible on desktop */
+    min-height: 120px;
+  }
 }
 
 .search-result-item {
@@ -431,6 +443,8 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  max-height: 450px;
+  overflow-y: auto;
 }
 
 .recipe-item {

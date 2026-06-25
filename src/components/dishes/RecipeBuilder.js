@@ -21,8 +21,8 @@ export default function RecipeBuilder(onChange) {
     searchDropdown.style.display = 'none';
 
     recipeSearch.appendChild(inputSearch);
-    recipeSearch.appendChild(searchDropdown);
     colSearch.appendChild(recipeSearch);
+    colSearch.appendChild(searchDropdown);
 
     const colList = document.createElement('div');
     colList.className = 'form-col';
@@ -126,13 +126,16 @@ export default function RecipeBuilder(onChange) {
 
     const renderSearchDropdown = (query) => {
         searchDropdown.textContent = '';
-        if (!query) {
+        
+        // On mobile (<=600px), if no query, hide dropdown and return.
+        // On desktop, we want to show all available items if query is empty.
+        if (!query && window.innerWidth <= 600) {
             searchDropdown.style.display = 'none';
             return;
         }
 
-        const activeItems = allInventoryItems.filter(i => !i.deleted && !currentRecipe.some(r => r.id === i.id));
-        const matches = activeItems.filter(item => item.name.toLowerCase().includes(query.toLowerCase()));
+        const activeItems = allInventoryItems.filter(i => !i.deleted);
+        const matches = query ? activeItems.filter(item => item.name.toLowerCase().includes(query.toLowerCase())) : activeItems;
 
         if (matches.length === 0) {
             const noRes = document.createElement('div');
@@ -169,14 +172,23 @@ export default function RecipeBuilder(onChange) {
             btnAdd.appendChild(iconAdd);
 
             btnAdd.addEventListener('click', () => {
-                currentRecipe.push({
-                    id: item.id,
-                    name: item.name,
-                    unit: item.unit || 'unit',
-                    qty: 1
-                });
+                const existingIndex = currentRecipe.findIndex(r => r.id === item.id);
+                if (existingIndex !== -1) {
+                    currentRecipe[existingIndex].qty += 1;
+                } else {
+                    currentRecipe.push({
+                        id: item.id,
+                        name: item.name,
+                        unit: item.unit || 'unit',
+                        qty: 1
+                    });
+                }
                 inputSearch.value = '';
-                searchDropdown.style.display = 'none';
+                if (window.innerWidth <= 600) {
+                    searchDropdown.style.display = 'none';
+                } else {
+                    renderSearchDropdown(''); // Refresh list on desktop to show all items again
+                }
                 renderRecipeList();
                 if (onChange) onChange();
             });
@@ -195,8 +207,14 @@ export default function RecipeBuilder(onChange) {
         renderSearchDropdown(e.target.value.trim());
     });
 
+    inputSearch.addEventListener('focus', () => {
+        if (window.innerWidth <= 600) {
+            renderSearchDropdown(inputSearch.value.trim());
+        }
+    });
+
     document.addEventListener('click', (e) => {
-        if (!e.target.closest('.recipe-search')) {
+        if (window.innerWidth <= 600 && !e.target.closest('.recipe-search')) {
             searchDropdown.style.display = 'none';
         }
     });
@@ -207,6 +225,7 @@ export default function RecipeBuilder(onChange) {
         setRecipe: (recipe) => {
             currentRecipe = recipe ? [...recipe] : [];
             renderRecipeList();
+            renderSearchDropdown(inputSearch.value.trim()); // refresh left list too
         },
         getRecipe: () => [...currentRecipe]
     };
