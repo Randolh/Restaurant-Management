@@ -29,14 +29,28 @@ export default {
         const logoImg = document.createElement('img');
         logoImg.src = profile.logo || './favicon.svg';
         logoImg.alt = 'Restaurant Logo';
-        logoImg.style.objectFit = 'contain';
+        logoImg.style.objectFit = 'cover';
+        logoImg.style.borderRadius = '50%';
+        logoImg.style.width = '100%';
+        logoImg.style.height = '100%';
         logoDiv.appendChild(logoImg);
         
         const title = document.createElement('h1');
-        title.textContent = t('login.title');
+        title.textContent = profile.name || t('login.title');
         
         header.appendChild(logoDiv);
         header.appendChild(title);
+
+        if (profile.subtitle) {
+            const subtitle = document.createElement('p');
+            subtitle.textContent = profile.subtitle;
+            subtitle.className = 'login-subtitle';
+            subtitle.style.color = 'var(--text-secondary)';
+            subtitle.style.marginTop = '-16px';
+            subtitle.style.marginBottom = '24px';
+            subtitle.style.fontSize = '14px';
+            header.appendChild(subtitle);
+        }
         mainCard.appendChild(header);
 
         // Error Message Container

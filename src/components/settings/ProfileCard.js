@@ -29,8 +29,8 @@ export const ProfileCard = () => {
             const img = document.createElement('img');
             img.style.width = '100%';
             img.style.height = '100%';
-            img.style.objectFit = 'contain';
-            img.style.borderRadius = '8px';
+            img.style.objectFit = 'cover';
+            img.style.borderRadius = '50%';
             
             img.onload = () => {
                 isLogoValid = true;
