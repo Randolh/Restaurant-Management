@@ -512,6 +512,11 @@ input:-webkit-autofill:active {
 }
 
 @media (max-width: 768px) {
+  /* Hide page header on mobile */
+  .page-header {
+    display: none !important;
+  }
+
   /* Hide the globally appended FAB on mobile */
   body > #app > main > .fab-container,
   body > #app > .fab-container {
