@@ -1,0 +1,109 @@
+import { t } from '../../utils/i18n.js';
+import { getLocal, setLocal } from '../../utils/storage.js';
+import showToast from '../ui/Toast.js';
+import { showLoader, hideLoader } from '../ui/GlobalLoader.js';
+
+export const SecurityCard = () => {
+    const securityCard = document.createElement('div');
+    securityCard.className = 'settings-card';
+    
+    const securityHeader = document.createElement('div');
+    securityHeader.className = 'settings-card-header';
+    const secH3 = document.createElement('h3');
+    secH3.textContent = t('settings.security.title');
+    const secP = document.createElement('p');
+    secP.textContent = t('settings.security.desc');
+    securityHeader.appendChild(secH3);
+    securityHeader.appendChild(secP);
+    
+    const curPassGroup = document.createElement('div');
+    curPassGroup.className = 'form-group';
+    const curPassLabel = document.createElement('label');
+    curPassLabel.className = 'form-label';
+    curPassLabel.textContent = t('settings.security.current');
+    const curPassInput = document.createElement('input');
+    curPassInput.type = 'password';
+    curPassInput.className = 'form-control';
+    curPassInput.placeholder = '••••••••';
+    curPassGroup.appendChild(curPassLabel);
+    curPassGroup.appendChild(curPassInput);
+    
+    const newPassGroup = document.createElement('div');
+    newPassGroup.className = 'form-group';
+    const newPassLabel = document.createElement('label');
+    newPassLabel.className = 'form-label';
+    newPassLabel.textContent = t('settings.security.new');
+    const newPassInput = document.createElement('input');
+    newPassInput.type = 'password';
+    newPassInput.className = 'form-control';
+    newPassInput.placeholder = t('settings.security.new');
+    newPassGroup.appendChild(newPassLabel);
+    newPassGroup.appendChild(newPassInput);
+    
+    const confPassGroup = document.createElement('div');
+    confPassGroup.className = 'form-group';
+    const confPassLabel = document.createElement('label');
+    confPassLabel.className = 'form-label';
+    confPassLabel.textContent = t('settings.security.confirm');
+    const confPassInput = document.createElement('input');
+    confPassInput.type = 'password';
+    confPassInput.className = 'form-control';
+    confPassInput.placeholder = t('settings.security.confirm');
+    confPassGroup.appendChild(confPassLabel);
+    confPassGroup.appendChild(confPassInput);
+    
+    const secActions = document.createElement('div');
+    secActions.style.display = 'flex';
+    secActions.style.justifyContent = 'flex-end';
+    secActions.style.marginTop = 'auto';
+    const secSaveBtn = document.createElement('button');
+    secSaveBtn.className = 'btn-primary';
+    secSaveBtn.textContent = t('btn.save');
+    
+    secSaveBtn.addEventListener('click', () => {
+        const currentPass = curPassInput.value;
+        const newPass = newPassInput.value;
+        const confPass = confPassInput.value;
+
+        if (!currentPass || !newPass || !confPass) {
+            showToast(t('settings.security.err.empty'), 'warning');
+            return;
+        }
+
+        const user = getLocal('default_user', true);
+        if (!user || user.password !== currentPass) {
+            showToast(t('settings.security.err.current'), 'error');
+            return;
+        }
+
+        if (newPass !== confPass) {
+            showToast(t('settings.security.err.match'), 'error');
+            return;
+        }
+
+        showLoader(t('btn.save') + '...');
+
+        setTimeout(() => {
+            user.password = newPass;
+            setLocal('default_user', user, true);
+
+            curPassInput.value = '';
+            newPassInput.value = '';
+            confPassInput.value = '';
+
+            showToast(t('settings.security.success'), 'success');
+            
+            hideLoader();
+        }, 800);
+    });
+    
+    secActions.appendChild(secSaveBtn);
+    
+    securityCard.appendChild(securityHeader);
+    securityCard.appendChild(curPassGroup);
+    securityCard.appendChild(newPassGroup);
+    securityCard.appendChild(confPassGroup);
+    securityCard.appendChild(secActions);
+
+    return securityCard;
+};

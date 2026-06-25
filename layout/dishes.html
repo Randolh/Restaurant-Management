@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Management</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Base Styles -->
+  <link rel="stylesheet" href="./main.css">
+  <link rel="stylesheet" href="./sidebar.css">
+  <link rel="stylesheet" href="./dishes.css">
+</head>
+
+<body>
+  <!-- Hidden Checkbox for Pure CSS Toggle -->
+  <input type="checkbox" id="sidebar-toggle-checkbox" class="sidebar-toggle-checkbox">
+  <input type="checkbox" id="add-dish-modal-toggle" class="modal-toggle" hidden>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <img src="./favicon.svg" alt="Restaurant Logo">
+      </div>
+      <h2>
+        Restaurant
+        <span>Management</span>
+      </h2>
+      <label for="sidebar-toggle-checkbox" class="sidebar-close-btn">
+        <i class="fa-solid fa-chevron-left"></i>
+      </label>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <a href="./inventory.html" class="nav-item">
+        <i class="fa-solid fa-box"></i>
+        <span>Inventory</span>
+      </a>
+      <a href="./dishes.html" class="nav-item active">
+        <i class="fa-solid fa-utensils"></i>
+        <span>Dishes</span>
+      </a>
+      <a href="./orders.html" class="nav-item">
+        <i class="fa-solid fa-receipt"></i>
+        <span>Orders</span>
+      </a>
+      <a href="./history.html" class="nav-item">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <span>History</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+
+      <a href="./settings.html" class="nav-item">
+        <i class="fa-solid fa-gear"></i>
+        <span>Settings</span>
+      </a>
+      <a href="./login.html" class="nav-item logout-item">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content" id="mainContent">
+    <header class="top-bar">
+      <label for="sidebar-toggle-checkbox" class="sidebar-toggle">
+        <i class="fa-solid fa-chevron-right"></i>
+      </label>
+
+    </header>
+
+    <div class="page-content">
+      <div class="controls-bar">
+        <div class="controls-left">
+          <div class="search-input-wrapper">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" class="search-input" placeholder="Search dishes...">
+          </div>
+          <button class="btn-filter" title="Filters">
+            <i class="fa-solid fa-sliders"></i>
+          </button>
+        </div>
+        <label for="add-dish-modal-toggle" class="btn-primary">
+          <i class="fa-solid fa-plus"></i> Add New Dish
+        </label>
+      </div>
+
+      <div class="dishes-grid">
+        <!-- Dish Card 1 -->
+        <article class="dish-card">
+          <div class="dish-image-container">
+            <div class="dish-price">$14.50</div>
+            <img src="./images/dish_ramen.png" alt="Tonkotsu Ramen" class="dish-image">
+          </div>
+          <div class="dish-info">
+            <h3>Tonkotsu Ramen</h3>
+            <p>Rich pork broth, fresh noodles, chashu pork, soft boiled egg, nori, and green onions.</p>
+          </div>
+          <div class="dish-footer">
+            <a href="#" class="btn-details">
+              View Details
+            </a>
+          </div>
+        </article>
+
+        <!-- Dish Card 2 -->
+        <article class="dish-card">
+          <div class="dish-image-container">
+            <div class="dish-price">$12.00</div>
+            <img src="./images/dish_burger.png" alt="Classic Cheeseburger" class="dish-image">
+          </div>
+          <div class="dish-info">
+            <h3>Classic Cheeseburger</h3>
+            <p>Juicy beef patty, melted cheddar, lettuce, tomato, and special sauce on a toasted sesame bun.</p>
+          </div>
+          <div class="dish-footer">
+            <a href="#" class="btn-details">
+              View Details
+            </a>
+          </div>
+        </article>
+
+        <!-- Dish Card 3 -->
+        <article class="dish-card">
+          <div class="dish-image-container">
+            <div class="dish-price">$16.00</div>
+            <!-- Placeholder for third dish -->
+            <div style="width: 100%; height: 100%; background: #ab8985; display: flex; align-items: center; justify-content: center; position: absolute; top:0; left:0;">
+              <i class="fa-solid fa-bowl-rice fa-3x" style="color: #1e293b;"></i>
+            </div>
+          </div>
+          <div class="dish-info">
+            <h3>Teriyaki Chicken Bowl</h3>
+            <p>Grilled chicken breast glazed in sweet teriyaki sauce over steamed jasmine rice.</p>
+          </div>
+          <div class="dish-footer">
+            <a href="#" class="btn-details">
+              View Details
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add Dish Modal -->
+  <div class="modal">
+    <label for="add-dish-modal-toggle" class="modal-overlay"></label>
+    <div class="modal-container" style="max-width: 800px;">
+      <div class="modal-header">
+        <h2>Create Dish</h2>
+      </div>
+      <div class="modal-body">
+        <!-- A. Information & Image -->
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label class="form-label">Name</label>
+              <input type="text" class="form-control" placeholder="e.g. Tonkotsu Ramen">
+            </div>
+            <div class="form-group">
+              <label class="form-label">URL Image</label>
+              <input type="url" class="form-control" placeholder="https://www...">
+            </div>
+          </div>
+          <div class="image-preview-box">
+            <i class="fa-regular fa-image"></i>
+          </div>
+        </div>
+        <hr class="form-divider">
+        
+        <!-- B. Commercial Details -->
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select class="form-select">
+                <option>Ramen</option>
+                <option>Burgers</option>
+                <option>Bowls</option>
+                <option>Drinks</option>
+                <option>Desserts</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label class="form-label">Price</label>
+              <input type="text" class="form-control" placeholder="$ 10.00">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" placeholder="Describe the dish..."></textarea>
+        </div>
+
+        <hr class="form-divider">
+
+        <!-- C. Recipe Builder -->
+        <h3 style="margin-bottom: -10px; font-size: var(--font-size-body-lg); color: var(--brand-surface-text);">Ingredients</h3>
+        <div class="recipe-builder">
+          <div class="form-col">
+            <div class="recipe-search">
+              <input type="text" class="form-control" placeholder="Search ingredient..." value="Pork">
+              <button class="btn-primary" style="padding: 0 16px;"><i class="fa-solid fa-magnifying-glass"></i></button>
+              
+              <!-- Mock Search Results -->
+              <div class="search-results-dropdown">
+                <div class="search-result-item">
+                  <span>Pork Belly <span class="stock-info">(kg)</span></span>
+                  <div class="search-result-actions">
+                    <button class="btn-icon" title="Add"><i class="fa-solid fa-plus"></i></button>
+                  </div>
+                </div>
+                <div class="search-result-item">
+                  <span>Pork Broth <span class="stock-info">(L)</span></span>
+                  <div class="search-result-actions">
+                    <button class="btn-icon danger" title="Remove"><i class="fa-solid fa-trash"></i></button>
+                  </div>
+                </div>
+                <div class="search-result-item">
+                  <span>Pork Chashu <span class="stock-info">(kg)</span></span>
+                  <div class="search-result-actions">
+                    <button class="btn-icon" title="Add"><i class="fa-solid fa-plus"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="recipe-list-box">
+              <div class="recipe-item">
+                <div class="recipe-item-name">
+                  <span>Noodles <span class="stock-info">(portions)</span></span>
+                </div>
+                <div class="recipe-item-actions">
+                  <input type="number" class="form-control inline-qty" value="2" min="1">
+                  <button class="btn-icon btn-small danger" title="Remove"><i class="fa-solid fa-trash"></i></button>
+                </div>
+              </div>
+              <div class="recipe-item">
+                <div class="recipe-item-name">
+                  <span>Pork Broth <span class="stock-info">(L)</span></span>
+                </div>
+                <div class="recipe-item-actions">
+                  <input type="number" class="form-control inline-qty" value="1" min="1">
+                  <button class="btn-icon btn-small danger" title="Remove"><i class="fa-solid fa-trash"></i></button>
+                </div>
+              </div>
+              <div class="recipe-item">
+                <div class="recipe-item-name">
+                  <span>Egg <span class="stock-info">(units)</span></span>
+                </div>
+                <div class="recipe-item-actions">
+                  <input type="number" class="form-control inline-qty" value="1" min="1">
+                  <button class="btn-icon btn-small danger" title="Remove"><i class="fa-solid fa-trash"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <label for="add-dish-modal-toggle" class="btn-secondary">Cancel</label>
+        <button class="btn-primary">Save Dish</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Bottom Navigation (Mobile) -->
+  <nav class="bottom-nav">
+    <a href="./orders.html" class="bottom-nav-item">
+      <i class="fa-solid fa-receipt"></i>
+      <span>Orders</span>
+    </a>
+    <a href="./dishes.html" class="bottom-nav-item active">
+      <i class="fa-solid fa-utensils"></i>
+      <span>Dishes</span>
+    </a>
+    <a href="./inventory.html" class="bottom-nav-item">
+      <i class="fa-solid fa-box"></i>
+      <span>Inventory</span>
+    </a>
+    <a href="./history.html" class="bottom-nav-item">
+      <i class="fa-solid fa-clock-rotate-left"></i>
+      <span>History</span>
+    </a>
+    <a href="./settings.html" class="bottom-nav-item">
+      <i class="fa-solid fa-gear"></i>
+      <span>Settings</span>
+    </a>
+  </nav>
+</body>
+
+</html>

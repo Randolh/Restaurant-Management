@@ -1,0 +1,293 @@
+/* Header */
+/* KPI Grid */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--stack-md);
+}
+
+.kpi-card {
+  background-color: var(--elevation-1-bg);
+  border: var(--elevation-border);
+  border-radius: var(--radius-md);
+  padding: var(--stack-md);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.kpi-card h3 {
+  color: var(--color-text-variant);
+  font-size: var(--font-size-body-md);
+  font-weight: 500;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.kpi-card .kpi-value {
+  color: var(--brand-surface-text);
+  font-size: var(--font-size-headline-lg);
+  font-weight: 700;
+}
+
+/* Data Table Container */
+.data-table-container {
+  background-color: var(--elevation-1-bg);
+  border: var(--elevation-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden; /* For border radius */
+  display: flex;
+  flex-direction: column;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  min-width: 600px; /* Force scroll on very small screens */
+}
+
+.data-table th, .data-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--elevation-2-bg);
+}
+
+.data-table th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  color: var(--color-text-variant);
+  font-size: var(--font-size-label-md);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: var(--elevation-2-bg);
+}
+
+.data-table td {
+  color: var(--brand-surface-text);
+  font-size: var(--font-size-body-md);
+  vertical-align: middle;
+}
+
+.data-table tr:hover td {
+  background-color: var(--brand-secondary-alpha-50);
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Item Name with Icon */
+.item-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+}
+
+.item-icon {
+  width: 32px;
+  height: 32px;
+  background-color: var(--elevation-2-bg);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-variant);
+}
+
+/* Progress Bar */
+.stock-level {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stock-text {
+  font-size: var(--font-size-label-md);
+  color: var(--color-text-variant);
+  min-width: 60px;
+}
+
+.progress-container {
+  flex-grow: 1;
+  max-width: 120px;
+  height: 8px;
+  background-color: var(--elevation-2-bg);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--color-text-variant);
+  border-radius: 4px;
+}
+
+/* Modifier classes for progress colors */
+.progress-fill.safe {
+  background-color: #10b981; /* Green */
+}
+.progress-fill.warning {
+  background-color: #f59e0b; /* Yellow */
+}
+.progress-fill.danger {
+  background-color: var(--brand-primary); /* Red */
+}
+
+.stock-percent {
+  font-size: var(--font-size-label-md);
+  color: var(--brand-surface-text);
+  font-weight: 600;
+  min-width: 40px;
+  text-align: right;
+}
+
+/* Table Actions */
+.table-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Pagination Footer */
+.table-footer {
+  padding: 12px 16px;
+  background-color: var(--elevation-2-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: var(--elevation-border);
+}
+
+.table-info {
+  font-size: var(--font-size-label-md);
+  color: var(--color-text-variant);
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.page-btn {
+  min-width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--color-text-variant);
+  font-size: var(--font-size-label-md);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.page-btn:hover {
+  background-color: var(--elevation-1-bg);
+  color: var(--brand-surface-text);
+}
+
+.page-btn.active {
+  background-color: var(--brand-primary);
+  color: var(--color-white);
+  border-color: var(--brand-primary);
+}
+
+/* Global layout for history page to keep pagination at bottom and scroll table internally */
+.history-layout .main-content {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh; /* Better for mobile browsers with address bars */
+}
+.history-layout .page-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.history-layout .data-table-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* Ensures the container shrinks and allows internal scrolling */
+}
+
+.history-layout .table-responsive {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.history-layout .pagination {
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  /* Layout para estirar la tabla y empujar la paginación al fondo */
+  .page-content {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .data-table-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .table-responsive {
+    flex-grow: 1;
+    overflow-y: auto; /* Permite scroll interno si hay muchas filas */
+  }
+
+  .pagination {
+    margin-top: auto;
+  }
+
+  /* History table mobile layout: Show only Order #, Status, and Action */
+  .history-table {
+    min-width: 100%; /* Remove the forced horizontal scroll */
+  }
+  
+  .history-table th:nth-child(2),
+  .history-table td:nth-child(2),
+  .history-table th:nth-child(3),
+  .history-table td:nth-child(3),
+  .history-table th:nth-child(4),
+  .history-table td:nth-child(4) {
+    display: none;
+  }
+
+  /* Inventory table mobile layout: Show Name, Stock Level (text only), and Actions */
+  .inventory-table {
+    min-width: 100%;
+  }
+
+  /* Hide Unit column (3) */
+  .inventory-table th:nth-child(3),
+  .inventory-table td:nth-child(3) {
+    display: none;
+  }
+
+  /* Hide progress bar and percent in Stock Level */
+  .inventory-table .progress-container,
+  .inventory-table .stock-percent {
+    display: none;
+  }
+}

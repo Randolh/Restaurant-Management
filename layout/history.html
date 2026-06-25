@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order History - Restaurant Management</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Base Styles -->
+  <link rel="stylesheet" href="./main.css">
+  <link rel="stylesheet" href="./sidebar.css">
+  <link rel="stylesheet" href="./inventory.css">
+</head>
+
+<body class="history-layout">
+  <!-- Hidden Checkbox for Pure CSS Toggle -->
+  <input type="checkbox" id="sidebar-toggle-checkbox" class="sidebar-toggle-checkbox">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <img src="./favicon.svg" alt="Restaurant Logo">
+      </div>
+      <h2>
+        Restaurant
+        <span>Management</span>
+      </h2>
+      <label for="sidebar-toggle-checkbox" class="sidebar-close-btn">
+        <i class="fa-solid fa-chevron-left"></i>
+      </label>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <a href="./inventory.html" class="nav-item">
+        <i class="fa-solid fa-box"></i>
+        <span>Inventory</span>
+      </a>
+      <a href="./dishes.html" class="nav-item">
+        <i class="fa-solid fa-utensils"></i>
+        <span>Dishes</span>
+      </a>
+      <a href="./orders.html" class="nav-item">
+        <i class="fa-solid fa-receipt"></i>
+        <span>Orders</span>
+      </a>
+      <a href="./history.html" class="nav-item active">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <span>History</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="./settings.html" class="nav-item">
+        <i class="fa-solid fa-gear"></i>
+        <span>Settings</span>
+      </a>
+      <a href="./login.html" class="nav-item logout-item">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Overlay for mobiles -->
+  <label for="sidebar-toggle-checkbox" class="sidebar-overlay"></label>
+
+  <!-- Main Content -->
+  <main class="main-content" id="mainContent">
+    <header class="top-bar">
+      <label for="sidebar-toggle-checkbox" class="sidebar-toggle">
+        <i class="fa-solid fa-chevron-right"></i>
+      </label>
+
+    </header>
+
+    <div class="page-content">
+      <div class="page-header">
+        <h1>Order History</h1>
+        <div style="display: flex; gap: var(--stack-md);">
+          <button class="btn-icon" style="width: 44px; height: 44px; background-color: var(--elevation-1-bg); border: 1px solid var(--color-outline); border-radius: var(--radius-md);" title="Filter by Date">
+            <i class="fa-regular fa-calendar"></i>
+          </button>
+          <div style="position: relative;">
+            <input type="text" class="form-control" placeholder="Search orders..." style="padding-left: 36px; width: 250px;">
+            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 14px; color: var(--color-text-variant);"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="data-table-container">
+        <div class="table-responsive">
+          <table class="data-table history-table">
+          <thead>
+            <tr>
+              <th>Order #</th>
+              <th>Date & Time</th>
+              <th>Customer</th>
+              <th>Total Amount</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#1235</td>
+              <td>2023-10-25 14:30</td>
+              <td>John Doe</td>
+              <td style="font-weight: 600;">$ 30.78</td>
+              <td><span class="status-badge completed">Completed</span></td>
+              <td>
+                <button class="btn-icon" title="View Details"><i class="fa-regular fa-eye"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>#1234</td>
+              <td>2023-10-25 14:15</td>
+              <td>Jane Smith</td>
+              <td style="font-weight: 600;">$ 45.00</td>
+              <td><span class="status-badge completed">Completed</span></td>
+              <td>
+                <button class="btn-icon" title="View Details"><i class="fa-regular fa-eye"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>#1233</td>
+              <td>2023-10-25 13:40</td>
+              <td>Walk-in</td>
+              <td style="font-weight: 600;">$ 12.50</td>
+              <td><span class="status-badge cancelled">Cancelled</span></td>
+              <td>
+                <button class="btn-icon" title="View Details"><i class="fa-regular fa-eye"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>#1232</td>
+              <td>2023-10-25 13:10</td>
+              <td>Walk-in</td>
+              <td style="font-weight: 600;">$ 28.00</td>
+              <td><span class="status-badge completed">Completed</span></td>
+              <td>
+                <button class="btn-icon" title="View Details"><i class="fa-regular fa-eye"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>#1231</td>
+              <td>2023-10-25 12:45</td>
+              <td>Michael B.</td>
+              <td style="font-weight: 600;">$ 55.20</td>
+              <td><span class="status-badge completed">Completed</span></td>
+              <td>
+                <button class="btn-icon" title="View Details"><i class="fa-regular fa-eye"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>#1230</td>
+              <td>2023-10-25 12:00</td>
+              <td>Walk-in</td>
+              <td style="font-weight: 600;">$ 8.00</td>
+              <td><span class="status-badge completed">Completed</span></td>
+              <td>
+                <button class="btn-icon" title="View Details"><i class="fa-regular fa-eye"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>#1230</td>
+              <td>2023-10-25 12:00</td>
+              <td>Walk-in</td>
+              <td style="font-weight: 600;">$ 8.00</td>
+              <td><span class="status-badge completed">Completed</span></td>
+              <td>
+                <button class="btn-icon" title="View Details"><i class="fa-regular fa-eye"></i></button>
+              </td>
+            </tr><tr>
+              <td>#1230</td>
+              <td>2023-10-25 12:00</td>
+              <td>Walk-in</td>
+              <td style="font-weight: 600;">$ 8.00</td>
+              <td><span class="status-badge completed">Completed</span></td>
+              <td>
+                <button class="btn-icon" title="View Details"><i class="fa-regular fa-eye"></i></button>
+              </td>
+            </tr><tr>
+              <td>#1230</td>
+              <td>2023-10-25 12:00</td>
+              <td>Walk-in</td>
+              <td style="font-weight: 600;">$ 8.00</td>
+              <td><span class="status-badge completed">Completed</span></td>
+              <td>
+                <button class="btn-icon" title="View Details"><i class="fa-regular fa-eye"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <button class="page-btn"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <button class="page-btn"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Bottom Navigation (Mobile) -->
+  <nav class="bottom-nav">
+    <a href="./orders.html" class="bottom-nav-item">
+      <i class="fa-solid fa-receipt"></i>
+      <span>Orders</span>
+    </a>
+    <a href="./dishes.html" class="bottom-nav-item">
+      <i class="fa-solid fa-utensils"></i>
+      <span>Dishes</span>
+    </a>
+    <a href="./inventory.html" class="bottom-nav-item">
+      <i class="fa-solid fa-box"></i>
+      <span>Inventory</span>
+    </a>
+    <a href="./history.html" class="bottom-nav-item active">
+      <i class="fa-solid fa-clock-rotate-left"></i>
+      <span>History</span>
+    </a>
+    <a href="./settings.html" class="bottom-nav-item">
+      <i class="fa-solid fa-gear"></i>
+      <span>Settings</span>
+    </a>
+  </nav>
+</body>
+
+</html>

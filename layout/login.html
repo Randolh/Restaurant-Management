@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Management</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Base and Specific Login Styles -->
+  <link rel="stylesheet" href="./main.css">
+  <link rel="stylesheet" href="./login.css">
+</head>
+<body>
+  
+  <div class="login-wrapper">
+    <!-- Background grid pattern -->
+    <div class="bg-grid-pattern"></div>
+    
+
+    <!-- Main Container -->
+    <main class="login-card" id="loginCard">
+      
+      <!-- Header / Logo -->
+      <header class="login-header">
+        <div class="login-logo">
+          <img src="./favicon.svg" alt="Restaurant Logo">
+        </div>
+        <h1>Restaurant Management</h1>
+      </header>
+
+      <!-- Login Form -->
+      <form class="login-form" onsubmit="event.preventDefault()">
+        
+        <div class="form-group">
+          <label for="email">Email</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-envelope"></i>
+            <input type="email" id="email" placeholder="name@restaurant.com">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="password-header">
+            <label for="password">Password</label>
+          </div>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" id="password" placeholder="••••••••">
+            <button type="button" id="togglePassword" aria-label="Show password">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Remember session checkbox -->
+        <div class="remember-me">
+          <input type="checkbox" id="remember">
+          <label for="remember">Stay signed in</label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-primary">
+          <span>Login</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+      </form>
+    </main>
+
+  </div>
+</body>
+</html>

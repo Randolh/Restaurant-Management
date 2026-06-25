@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - Restaurant Management</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Base Styles -->
+  <link rel="stylesheet" href="./main.css">
+  <link rel="stylesheet" href="./sidebar.css">
+</head>
+
+<body>
+  <!-- Hidden Checkbox for Pure CSS Toggle -->
+  <input type="checkbox" id="sidebar-toggle-checkbox" class="sidebar-toggle-checkbox">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <img src="./favicon.svg" alt="Restaurant Logo">
+      </div>
+      <h2>
+        Restaurant
+        <span>Management</span>
+      </h2>
+      <label for="sidebar-toggle-checkbox" class="sidebar-close-btn">
+        <i class="fa-solid fa-chevron-left"></i>
+      </label>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <a href="./inventory.html" class="nav-item">
+        <i class="fa-solid fa-box"></i>
+        <span>Inventory</span>
+      </a>
+      <a href="./dishes.html" class="nav-item">
+        <i class="fa-solid fa-utensils"></i>
+        <span>Dishes</span>
+      </a>
+      <a href="./orders.html" class="nav-item">
+        <i class="fa-solid fa-receipt"></i>
+        <span>Orders</span>
+      </a>
+      <a href="./history.html" class="nav-item">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <span>History</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="./settings.html" class="nav-item active">
+        <i class="fa-solid fa-gear"></i>
+        <span>Settings</span>
+      </a>
+      <a href="./login.html" class="nav-item logout-item">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Overlay for mobiles -->
+  <label for="sidebar-toggle-checkbox" class="sidebar-overlay"></label>
+
+  <!-- Main Content -->
+  <main class="main-content" id="mainContent">
+    <header class="top-bar">
+      <label for="sidebar-toggle-checkbox" class="sidebar-toggle">
+        <i class="fa-solid fa-chevron-right"></i>
+      </label>
+
+    </header>
+
+    <div class="page-content">
+      <div class="page-header">
+        <h1>Settings</h1>
+      </div>
+
+      <div class="settings-grid">
+        
+        <!-- General Profile -->
+        <div class="settings-card">
+          <div class="settings-card-header">
+            <h3>General Profile</h3>
+            <p>Update your restaurant's core information.</p>
+          </div>
+          
+          <div class="settings-avatar-upload">
+            <div class="settings-avatar">
+              <i class="fa-solid fa-shop"></i>
+            </div>
+            <div style="flex: 1;">
+              <label class="form-label">Logo Image URL</label>
+              <input type="url" class="form-control" placeholder="https://example.com/logo.png">
+              <p style="font-size: 12px; color: var(--color-text-variant); margin: 4px 0 0 0;">Paste a valid image URL (JPG, PNG)</p>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Restaurant Name</label>
+            <input type="text" class="form-control" value="My Awesome Restaurant">
+          </div>
+          
+          <div style="display: flex; justify-content: flex-end; margin-top: auto;">
+            <button class="btn-primary">Save Profile</button>
+          </div>
+        </div>
+
+        <!-- Account Actions -->
+        <div class="settings-card">
+          <div class="settings-card-header">
+            <h3>Account Actions</h3>
+          </div>
+          <div style="display: flex;">
+            <a href="./login.html" class="btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+            </a>
+          </div>
+        </div>
+
+        <!-- Preferences -->
+        <div class="settings-card">
+          <div class="settings-card-header">
+            <h3>Preferences</h3>
+            <p>Customize your regional settings.</p>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-col">
+              <div class="form-group">
+                <label class="form-label">Language</label>
+                <select class="form-select">
+                  <option>English</option>
+                  <option>Español</option>
+                  <option>Français</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-col">
+              <div class="form-group">
+                <label class="form-label">Currency Symbol</label>
+                <select class="form-select">
+                  <option>USD ($)</option>
+                  <option>EUR (€)</option>
+                  <option>GBP (£)</option>
+                  <option>MXN ($)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <div style="display: flex; justify-content: flex-end; margin-top: auto;">
+            <button class="btn-primary">Save Preferences</button>
+          </div>
+        </div>
+
+        <!-- Security -->
+        <div class="settings-card">
+          <div class="settings-card-header">
+            <h3>Security</h3>
+            <p>Ensure your account stays secure.</p>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Current Password</label>
+            <input type="password" class="form-control" placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label class="form-label">New Password</label>
+            <input type="password" class="form-control" placeholder="New Password">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirm New Password</label>
+            <input type="password" class="form-control" placeholder="Confirm Password">
+          </div>
+          
+          <div style="display: flex; justify-content: flex-end; margin-top: auto;">
+            <button class="btn-primary">Update Password</button>
+          </div>
+        </div>
+
+        <!-- Data Management (Danger Zone) -->
+        <div class="settings-card danger-zone">
+          <div class="settings-card-header">
+            <h3>Data Management</h3>
+            <p>Development tools and destructive actions.</p>
+          </div>
+          
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 8px;">
+            <button class="btn-secondary" style="justify-content: flex-start;">
+              <i class="fa-solid fa-tags" style="width: 24px;"></i> Load Default Categories
+            </button>
+            <button class="btn-secondary" style="justify-content: flex-start;">
+              <i class="fa-solid fa-database" style="width: 24px;"></i> Load Dummy Data (Test Data)
+            </button>
+          </div>
+          
+          <hr class="form-divider" style="margin: 16px 0; border-color: rgba(220, 20, 60, 0.2);">
+          
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <p style="font-size: 13px; color: var(--color-text-variant); margin: 0;">This action is irreversible and will delete all your inventory, dishes, and orders.</p>
+            <button class="btn-danger">
+              <i class="fa-solid fa-triangle-exclamation"></i> Wipe Data & Start from Scratch
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Navigation (Mobile) -->
+  <nav class="bottom-nav">
+    <a href="./orders.html" class="bottom-nav-item">
+      <i class="fa-solid fa-receipt"></i>
+      <span>Orders</span>
+    </a>
+    <a href="./dishes.html" class="bottom-nav-item">
+      <i class="fa-solid fa-utensils"></i>
+      <span>Dishes</span>
+    </a>
+    <a href="./inventory.html" class="bottom-nav-item">
+      <i class="fa-solid fa-box"></i>
+      <span>Inventory</span>
+    </a>
+    <a href="./history.html" class="bottom-nav-item">
+      <i class="fa-solid fa-clock-rotate-left"></i>
+      <span>History</span>
+    </a>
+    <a href="./settings.html" class="bottom-nav-item active">
+      <i class="fa-solid fa-gear"></i>
+      <span>Settings</span>
+    </a>
+  </nav>
+</body>
+
+</html>
