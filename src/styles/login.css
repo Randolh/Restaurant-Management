@@ -18,7 +18,7 @@
   background-color: var(--elevation-1-bg);
   border: var(--elevation-border);
   border-radius: var(--radius-lg);
-  padding: var(--stack-lg);
+  padding: var(--stack-sm);
   display: flex;
   flex-direction: column;
   gap: var(--stack-md);

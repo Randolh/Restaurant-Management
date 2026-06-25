@@ -168,6 +168,25 @@ export default {
         // Store params on wrapper so mount can read them
         wrapper.dataset.nextUrl = params.next || '/';
 
+        const developerInfo = document.createElement('div');
+        developerInfo.style.marginTop = '24px';
+        developerInfo.style.fontSize = '12px';
+        developerInfo.style.color = 'var(--text-secondary, #64748b)';
+        developerInfo.style.textAlign = 'center';
+        developerInfo.appendChild(document.createTextNode('Developed by '));
+        
+        const devLink = document.createElement('a');
+        devLink.href = 'https://github.com/Randolh';
+        devLink.target = '_blank';
+        devLink.style.color = 'var(--brand-primary)';
+        devLink.style.textDecoration = 'none';
+        devLink.style.fontWeight = '600';
+        devLink.textContent = 'Randolh';
+        
+        developerInfo.appendChild(devLink);
+        
+        mainCard.appendChild(developerInfo);
+
         return wrapper;
     },
 
