@@ -290,7 +290,7 @@
   /* optional distinct background */
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1130px) {
   .pos-layout {
     flex-direction: row;
     align-items: stretch;
@@ -493,7 +493,7 @@
   gap: 8px;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1130px) {
   .pos-left-panel {
     flex: 1;
     width: auto;
