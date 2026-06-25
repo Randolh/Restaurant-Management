@@ -321,6 +321,17 @@ const AddOrderModal = () => {
     leftPanel.appendChild(searchWrap);
     leftPanel.appendChild(dishGrid);
 
+    const mobileTicketToggle = document.createElement('button');
+    mobileTicketToggle.className = 'btn-primary mobile-ticket-toggle';
+    const toggleIcon = document.createElement('i');
+    toggleIcon.className = 'fa-solid fa-receipt';
+    mobileTicketToggle.appendChild(toggleIcon);
+    mobileTicketToggle.appendChild(document.createTextNode(' ' + (t('history.modal.title') || 'Detalles de Orden')));
+    mobileTicketToggle.addEventListener('click', () => {
+        posLayout.classList.add('show-ticket');
+    });
+    leftPanel.appendChild(mobileTicketToggle);
+
     // --- Right Panel ---
     const rightPanel = document.createElement('div');
     rightPanel.className = 'pos-right-panel';
@@ -336,6 +347,17 @@ const AddOrderModal = () => {
     tSpan.textContent = ''; // Can display current time or walk-in status
     ticketHeader.appendChild(tH4);
     ticketHeader.appendChild(tSpan);
+
+    const mobileTicketBack = document.createElement('button');
+    mobileTicketBack.className = 'btn-secondary mobile-ticket-back';
+    const backIcon = document.createElement('i');
+    backIcon.className = 'fa-solid fa-arrow-left';
+    mobileTicketBack.appendChild(backIcon);
+    mobileTicketBack.appendChild(document.createTextNode(' ' + (t('filter.allCategories') || 'Menú')));
+    mobileTicketBack.addEventListener('click', () => {
+        posLayout.classList.remove('show-ticket');
+    });
+    ticketPanel.appendChild(mobileTicketBack);
 
     const ticketSummary = document.createElement('div');
     ticketSummary.className = 'ticket-summary';

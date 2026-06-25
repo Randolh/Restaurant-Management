@@ -432,18 +432,73 @@
 .pos-layout {
   height: 100%;
   width: 100%;
+  position: relative;
+  overflow: hidden;
 }
 
 .pos-left-panel {
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
+  transition: transform 0.3s ease;
 }
 
 .pos-right-panel {
   display: flex;
   flex-direction: column;
-  min-height: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  background-color: var(--brand-neutral);
+  z-index: 10;
+}
+
+.pos-layout.show-ticket .pos-left-panel {
+  transform: translateX(-100%);
+}
+
+.pos-layout.show-ticket .pos-right-panel {
+  transform: translateX(0);
+}
+
+.mobile-ticket-toggle {
+  position: absolute;
+  bottom: var(--stack-md);
+  right: var(--stack-md);
+  z-index: 5;
+  box-shadow: var(--elevation-2-shadow);
+  border-radius: 100px;
+  padding: 12px 24px;
+}
+
+.mobile-ticket-back {
+  margin-bottom: var(--stack-md);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (min-width: 900px) {
+  .pos-left-panel {
+    width: auto;
+    transform: none !important;
+  }
+  
+  .pos-right-panel {
+    position: relative;
+    transform: none !important;
+    width: auto;
+  }
+  
+  .mobile-ticket-toggle,
+  .mobile-ticket-back {
+    display: none !important;
+  }
 }
 
 /* Grids and Containers */

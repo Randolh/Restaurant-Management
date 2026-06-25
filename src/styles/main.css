@@ -542,9 +542,12 @@ input:-webkit-autofill:active {
     min-width: 0;
   }
 
-  /* Hide page header title and add buttons on mobile, but keep filters visible */
-  .page-header h1,
-  .page-header button {
+  /* Hide page header on mobile unless it's history-header (which contains filters) */
+  .page-header:not(.history-header) {
+    display: none !important;
+  }
+  
+  .page-header.history-header h1 {
     display: none !important;
   }
 

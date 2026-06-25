@@ -13,7 +13,7 @@ export default {
         
         // Header
         const header = document.createElement('div');
-        header.className = 'page-header';
+        header.className = 'page-header history-header';
         
         const h1 = document.createElement('h1');
         h1.textContent = t('history.title') || 'Order History';
