@@ -312,7 +312,8 @@
   box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column;
-  height: 100%;
+  flex: 1;
+  min-height: 0;
 }
 
 .ticket-header {
@@ -414,8 +415,9 @@
 
 /* POS Modal Overrides */
 .pos-modal-container {
-  max-width: 1000px;
-  height: 85vh;
+  width: 95% !important;
+  max-width: 1400px !important;
+  height: 90vh;
   display: flex;
   flex-direction: column;
   padding: 0;
@@ -493,6 +495,7 @@
 
 @media (min-width: 900px) {
   .pos-left-panel {
+    flex: 1;
     width: auto;
     transform: none !important;
   }
@@ -500,7 +503,8 @@
   .pos-right-panel {
     position: relative;
     transform: none !important;
-    width: auto;
+    width: 400px;
+    flex: none;
   }
   
   .mobile-ticket-toggle,
