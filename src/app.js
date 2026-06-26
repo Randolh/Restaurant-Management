@@ -21,7 +21,7 @@ import { t } from './utils/i18n.js'
 
 // Define routes with requiresAuth flag
 const routes = {
-    '/': { component: Inventory, requiresAuth: true },
+    '/': { component: Login, requiresAuth: false },
     '/inventory': { component: Inventory, requiresAuth: true },
     '/dishes': { component: Dishes, requiresAuth: true },
     '/orders': { component: Orders, requiresAuth: true },
@@ -120,25 +120,19 @@ const initializeSession = () => {
         setLocal('first_time_login_alert', 'true');
     }
 
-    // Check if user requested to stay logged in
-    if (getLocal('keep_logged_in') === 'true') {
-        setSession('session_token', 'active');
-    }
+
 
 
 }
 
 const setupEventListeners = () => {
     onEvent('auth:login', (e) => {
-        const { email, password, remember, nextUrl } = e.detail;
+        const { email, password, nextUrl } = e.detail;
         const defaultUser = getLocal('default_user', true);
         
         if (defaultUser && email === defaultUser.email && password === defaultUser.password) {
             // Success
-            setSession('session_token', 'active');
-            if (remember) {
-                setLocal('keep_logged_in', 'true');
-            }
+            setLocal('session_token', 'active');
             router.navigate(nextUrl);
         } else {
             // Failed
@@ -147,20 +141,19 @@ const setupEventListeners = () => {
     });
 
     onEvent('auth:logout', () => {
-        removeSession('session_token');
-        removeLocal('keep_logged_in');
+        removeLocal('session_token');
         router.navigate('/login');
     });
 
     onEvent('langChanged', () => {
-        const isProtected = !!getSession('session_token'); // Check if protected to re-render layout
+        const isProtected = !!getLocal('session_token'); // Check if protected to re-render layout
         renderLayout(isProtected);
         const currentPath = window.location.hash.replace('#', '') || '/';
         router.navigate(currentPath, false);
     });
 
     onEvent('currencyChanged', () => {
-        const isProtected = !!getSession('session_token');
+        const isProtected = !!getLocal('session_token');
         renderLayout(isProtected);
         const currentPath = window.location.hash.replace('#', '') || '/';
         router.navigate(currentPath, false);
@@ -174,7 +167,7 @@ const setupEventListeners = () => {
             link.href = profile.logo || './favicon.svg';
         }
         
-        const isProtected = !!getSession('session_token');
+        const isProtected = !!getLocal('session_token');
         renderLayout(isProtected);
         const currentPath = window.location.hash.replace('#', '') || '/';
         router.navigate(currentPath, false);
