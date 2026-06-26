@@ -122,7 +122,7 @@ const initializeSession = () => {
 
     // Check if user requested to stay logged in
     if (getLocal('keep_logged_in') === 'true') {
-        setSession('session_token', 'active');
+        setLocal('session_token', 'active');
     }
 
 
@@ -135,7 +135,7 @@ const setupEventListeners = () => {
         
         if (defaultUser && email === defaultUser.email && password === defaultUser.password) {
             // Success
-            setSession('session_token', 'active');
+            setLocal('session_token', 'active');
             if (remember) {
                 setLocal('keep_logged_in', 'true');
             }
@@ -147,20 +147,20 @@ const setupEventListeners = () => {
     });
 
     onEvent('auth:logout', () => {
-        removeSession('session_token');
         removeLocal('keep_logged_in');
+        removeLocal('session_token');
         router.navigate('/login');
     });
 
     onEvent('langChanged', () => {
-        const isProtected = !!getSession('session_token'); // Check if protected to re-render layout
+        const isProtected = !!getLocal('session_token'); // Check if protected to re-render layout
         renderLayout(isProtected);
         const currentPath = window.location.hash.replace('#', '') || '/';
         router.navigate(currentPath, false);
     });
 
     onEvent('currencyChanged', () => {
-        const isProtected = !!getSession('session_token');
+        const isProtected = !!getLocal('session_token');
         renderLayout(isProtected);
         const currentPath = window.location.hash.replace('#', '') || '/';
         router.navigate(currentPath, false);
@@ -174,16 +174,40 @@ const setupEventListeners = () => {
             link.href = profile.logo || './favicon.svg';
         }
         
-        const isProtected = !!getSession('session_token');
+        const isProtected = !!getLocal('session_token');
         renderLayout(isProtected);
         const currentPath = window.location.hash.replace('#', '') || '/';
         router.navigate(currentPath, false);
     });
 }
 
+const setupSessionCleanup = () => {
+    let esRecargaONavegacion = false;
+
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('a') || e.target.closest('button')) {
+            esRecargaONavegacion = true;
+        }
+    });
+
+    document.addEventListener('submit', () => {
+        esRecargaONavegacion = true;
+    });
+
+    window.addEventListener('unload', () => {
+        const navEntries = performance.getEntriesByType('navigation');
+        const isReload = navEntries.length > 0 && navEntries[0].type === 'reload';
+
+        if (!esRecargaONavegacion && !isReload && getLocal('keep_logged_in') !== 'true') {
+            removeLocal('session_token');
+        }
+    });
+}
+
 const initApp = () => {
     initializeSession()
     setupEventListeners()
+    setupSessionCleanup()
     
     // Set initial title and favicon if exists
     const profile = getLocal('restaurant_profile', true) || {};

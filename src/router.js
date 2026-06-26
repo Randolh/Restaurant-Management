@@ -1,9 +1,10 @@
-import { getSession } from './utils/storage.js';
+import { getSession, getLocal, setLocal } from './utils/storage.js';
 
 export const router = {
     routes: {},
     container: null,
     currentView: null,
+    currentRouteRequiresAuth: false,
 
     init(routes, container) {
         this.routes = routes;
@@ -19,6 +20,22 @@ export const router = {
                 this.navigate(target.getAttribute('href'));
             }
         });
+
+        // Monitor session changes via storage event (works across tabs and DevTools for localStorage)
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'session_token' && !e.newValue) {
+                // Si la opción de mantener sesión está activa, la recreamos inmediatamente
+                if (getLocal('keep_logged_in') === 'true') {
+                    setLocal('session_token', 'active');
+                    return;
+                }
+
+                if (this.currentRouteRequiresAuth) {
+                    const currentPath = this.getPath();
+                    this.navigate(`/access-denied?next=${encodeURIComponent(currentPath)}`);
+                }
+            }
+        });
         
         // Initial load
         this.navigate(this.getPath(), false);
@@ -30,7 +47,7 @@ export const router = {
     },
 
     isAuthenticated() {
-        return getSession('session_token') === 'active';
+        return getLocal('session_token') === 'active';
     },
 
     async navigate(path, pushState = true) {
@@ -80,9 +97,10 @@ export const router = {
             return;
         }
 
-        // Redirect away from login or root if already authenticated
-        if ((basePath === '/login' || basePath === '/') && this.isAuthenticated()) {
-            this.navigate('/inventory');
+        // Redirect away from login, root or access-denied if already authenticated
+        if ((basePath === '/login' || basePath === '/' || basePath === '/access-denied') && this.isAuthenticated()) {
+            const targetUrl = params.next && params.next !== '/' ? params.next : '/inventory';
+            this.navigate(targetUrl);
             return;
         }
 
@@ -94,6 +112,7 @@ export const router = {
         }
 
         this.currentView = ViewComponent;
+        this.currentRouteRequiresAuth = routeObj.requiresAuth;
 
         // If there's an app layout hook, we can notify it so it can show/hide headers
         if (window.onRouteChanged) {
