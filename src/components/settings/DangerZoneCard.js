@@ -42,10 +42,11 @@ export const DangerZoneCard = () => {
         showConfirm(t('settings.data.warning') + ' (Load Dummy Data)', () => {
             showLoader(t('settings.data.loadDummy') + '...');
             
-            const { dummyInventory, dummyDishes, dummyOrders } = getDummyData();
+            const { dummyInventory, dummyDishes, dummyOrders, dummyInvoices } = getDummyData();
             setLocal('inventoryItems', dummyInventory);
             setLocal('dishesItems', dummyDishes);
             setLocal('ordersItems', dummyOrders);
+            setLocal('invoices', dummyInvoices);
             setLocal('appProfitMargin', DEFAULT_PROFIT_MARGIN.toString());
             setLocal('appTaxRate', DEFAULT_TAX_RATE.toString());
             showToast('Datos de prueba cargados', 'success');
@@ -86,6 +87,7 @@ export const DangerZoneCard = () => {
             removeLocal('inventoryItems');
             removeLocal('dishesItems');
             removeLocal('ordersItems');
+            removeLocal('invoices');
             removeLocal('appProfitMargin');
             removeLocal('appTaxRate');
             showToast('Datos eliminados', 'success');

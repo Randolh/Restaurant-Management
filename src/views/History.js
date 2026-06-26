@@ -296,7 +296,7 @@ export default {
                 const actionTd = document.createElement('td');
                 actionTd.className = 'history-action-col';
                 const viewBtn = document.createElement('button');
-                viewBtn.className = 'btn-icon';
+                viewBtn.className = 'btn-icon view-btn';
                 viewBtn.title = 'View Details';
                 const eyeIcon = document.createElement('i');
                 eyeIcon.className = 'fa-regular fa-eye';
@@ -307,6 +307,19 @@ export default {
                 });
                 
                 actionTd.appendChild(viewBtn);
+                
+                const invoiceBtn = document.createElement('button');
+                invoiceBtn.className = 'btn-icon invoice-btn';
+                invoiceBtn.title = 'View Invoice';
+                const receiptIcon = document.createElement('i');
+                receiptIcon.className = 'fa-solid fa-receipt';
+                invoiceBtn.appendChild(receiptIcon);
+                
+                invoiceBtn.addEventListener('click', () => {
+                    emitEvent('openInvoice', { order });
+                });
+                
+                actionTd.appendChild(invoiceBtn);
                 tr.appendChild(actionTd);
                 
                 tbody.appendChild(tr);
