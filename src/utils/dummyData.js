@@ -147,5 +147,24 @@ export const getDummyData = () => {
         }
     ];
 
-    return { dummyInventory, dummyDishes, dummyOrders };
+    const dummyInvoices = {
+        'ORD-0999': {
+            method: 'cash',
+            timestamp: new Date(past1).toISOString(),
+            amountReceived: 20.00,
+            change: 5.01
+        },
+        'ORD-0998': {
+            method: 'card',
+            timestamp: new Date(past2).toISOString()
+        },
+        'ORD-0997': {
+            method: 'cash',
+            timestamp: new Date(past2).toISOString(),
+            amountReceived: 12.00,
+            change: 0.03
+        }
+    };
+
+    return { dummyInventory, dummyDishes, dummyOrders, dummyInvoices };
 };
