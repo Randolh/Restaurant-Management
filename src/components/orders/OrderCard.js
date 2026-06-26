@@ -80,7 +80,8 @@ const OrderCard = ({ order, btnKey, onAction, onCancel }) => {
         
         pill.addEventListener('click', () => {
             const allDishes = getLocal('dishesItems', true) || [];
-            const dish = allDishes.find(d => d.id === item.dishId);
+            const dishIdToFind = item.dishId || item.id;
+            const dish = allDishes.find(d => d.id === dishIdToFind);
             if (dish) {
                 emitEvent('openViewDishModal', { dish });
             }

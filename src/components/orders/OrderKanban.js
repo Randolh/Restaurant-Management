@@ -53,7 +53,8 @@ const OrderKanban = () => {
             let inventoryChanged = false;
 
             orderToCancel.items.forEach(item => {
-                const dish = allDishes.find(d => d.id === item.dishId);
+                const dishIdToFind = item.dishId || item.id;
+                const dish = allDishes.find(d => d.id === dishIdToFind);
                 if (dish && dish.recipe && dish.recipe.length > 0) {
                     dish.recipe.forEach(ing => {
                         const invItem = inventoryItems.find(i => i.id === ing.id);
