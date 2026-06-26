@@ -90,6 +90,7 @@ export default {
         emailInput.id = 'email';
         emailInput.placeholder = 'name@restaurant.com';
         emailInput.required = true;
+        emailInput.autocomplete = 'username';
         
         emailWrapper.appendChild(emailIcon);
         emailWrapper.appendChild(emailInput);
@@ -119,6 +120,7 @@ export default {
         passwordInput.id = 'password';
         passwordInput.placeholder = '••••••••';
         passwordInput.required = true;
+        passwordInput.autocomplete = 'current-password';
         
         const toggleBtn = document.createElement('button');
         toggleBtn.type = 'button';
@@ -135,21 +137,7 @@ export default {
         passwordGroup.appendChild(passwordWrapper);
         form.appendChild(passwordGroup);
 
-        // Remember Me
-        const rememberDiv = document.createElement('div');
-        rememberDiv.className = 'remember-me';
-        
-        const rememberInput = document.createElement('input');
-        rememberInput.type = 'checkbox';
-        rememberInput.id = 'remember';
-        
-        const rememberLabel = document.createElement('label');
-        rememberLabel.htmlFor = 'remember';
-        rememberLabel.textContent = t('login.remember');
-        
-        rememberDiv.appendChild(rememberInput);
-        rememberDiv.appendChild(rememberLabel);
-        form.appendChild(rememberDiv);
+
 
         // Submit Button
         const submitBtn = document.createElement('button');
@@ -166,7 +154,7 @@ export default {
         form.appendChild(submitBtn);
 
         // Store params on wrapper so mount can read them
-        wrapper.dataset.nextUrl = params.next || '/';
+        wrapper.dataset.nextUrl = params.next && params.next !== '/' ? params.next : '/inventory';
 
         const developerInfo = document.createElement('div');
         developerInfo.style.marginTop = '24px';
@@ -235,9 +223,7 @@ export default {
             
             const email = form.querySelector('#email').value;
             const password = passwordInput.value;
-            const remember = form.querySelector('#remember').checked;
-
-            emitEvent('auth:login', { email, password, remember, nextUrl });
+            emitEvent('auth:login', { email, password, nextUrl });
         });
     },
 

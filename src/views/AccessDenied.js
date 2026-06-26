@@ -44,7 +44,7 @@ export default {
         actionButtons.className = 'action-buttons';
         
         const loginLink = document.createElement('a');
-        const nextUrl = params.next || '/';
+        const nextUrl = params.next && params.next !== '/' ? params.next : '/inventory';
         loginLink.href = `/login?next=${encodeURIComponent(nextUrl)}`;
         loginLink.className = 'btn-primary';
         loginLink.setAttribute('data-link', '');

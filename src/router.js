@@ -1,9 +1,10 @@
-import { getSession } from './utils/storage.js';
+import { getSession, getLocal, setLocal } from './utils/storage.js';
 
 export const router = {
     routes: {},
     container: null,
     currentView: null,
+    currentRouteRequiresAuth: false,
 
     init(routes, container) {
         this.routes = routes;
@@ -19,6 +20,25 @@ export const router = {
                 this.navigate(target.getAttribute('href'));
             }
         });
+
+        // Monitor session changes via storage event (works across tabs and DevTools for localStorage)
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'session_token') {
+                if (!e.newValue) {
+                    // Session removed (logout)
+                    if (this.currentRouteRequiresAuth) {
+                        const currentPath = this.getPath();
+                        this.navigate(`/access-denied?next=${encodeURIComponent(currentPath)}`);
+                    }
+                } else if (e.newValue === 'active') {
+                    // Session added (login)
+                    const basePath = this.getPath().split('?')[0];
+                    if (basePath === '/login' || basePath === '/' || basePath === '/access-denied') {
+                        this.navigate(this.getPath(), false);
+                    }
+                }
+            }
+        });
         
         // Initial load
         this.navigate(this.getPath(), false);
@@ -30,7 +50,7 @@ export const router = {
     },
 
     isAuthenticated() {
-        return getSession('session_token') === 'active';
+        return getLocal('session_token') === 'active';
     },
 
     async navigate(path, pushState = true) {
@@ -75,14 +95,15 @@ export const router = {
 
         // AUTHENTICATION GUARD
         if (routeObj.requiresAuth && !this.isAuthenticated()) {
-            // Redirect to login with 'next' parameter
-            this.navigate(`/login?next=${encodeURIComponent(path)}`);
+            // Redirect to access-denied or login with 'next' parameter
+            this.navigate(`/access-denied?next=${encodeURIComponent(path)}`);
             return;
         }
 
-        // Redirect away from login if already authenticated
-        if (basePath === '/login' && this.isAuthenticated()) {
-            this.navigate('/');
+        // Redirect away from login, root or access-denied if already authenticated
+        if ((basePath === '/login' || basePath === '/' || basePath === '/access-denied') && this.isAuthenticated()) {
+            const targetUrl = params.next && params.next !== '/' ? params.next : '/inventory';
+            this.navigate(targetUrl);
             return;
         }
 
@@ -94,6 +115,7 @@ export const router = {
         }
 
         this.currentView = ViewComponent;
+        this.currentRouteRequiresAuth = routeObj.requiresAuth;
 
         // If there's an app layout hook, we can notify it so it can show/hide headers
         if (window.onRouteChanged) {
