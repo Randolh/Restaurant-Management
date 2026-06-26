@@ -24,11 +24,7 @@ export const router = {
         // Monitor session changes via storage event (works across tabs and DevTools for localStorage)
         window.addEventListener('storage', (e) => {
             if (e.key === 'session_token' && !e.newValue) {
-                // Si la opción de mantener sesión está activa, la recreamos inmediatamente
-                if (getLocal('keep_logged_in') === 'true') {
-                    setLocal('session_token', 'active');
-                    return;
-                }
+
 
                 if (this.currentRouteRequiresAuth) {
                     const currentPath = this.getPath();

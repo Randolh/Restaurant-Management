@@ -130,15 +130,12 @@ const initializeSession = () => {
 
 const setupEventListeners = () => {
     onEvent('auth:login', (e) => {
-        const { email, password, remember, nextUrl } = e.detail;
+        const { email, password, nextUrl } = e.detail;
         const defaultUser = getLocal('default_user', true);
         
         if (defaultUser && email === defaultUser.email && password === defaultUser.password) {
             // Success
             setLocal('session_token', 'active');
-            if (remember) {
-                setLocal('keep_logged_in', 'true');
-            }
             router.navigate(nextUrl);
         } else {
             // Failed
@@ -147,7 +144,6 @@ const setupEventListeners = () => {
     });
 
     onEvent('auth:logout', () => {
-        removeLocal('keep_logged_in');
         removeLocal('session_token');
         router.navigate('/login');
     });

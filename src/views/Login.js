@@ -137,21 +137,7 @@ export default {
         passwordGroup.appendChild(passwordWrapper);
         form.appendChild(passwordGroup);
 
-        // Remember Me
-        const rememberDiv = document.createElement('div');
-        rememberDiv.className = 'remember-me';
-        
-        const rememberInput = document.createElement('input');
-        rememberInput.type = 'checkbox';
-        rememberInput.id = 'remember';
-        
-        const rememberLabel = document.createElement('label');
-        rememberLabel.htmlFor = 'remember';
-        rememberLabel.textContent = t('login.remember');
-        
-        rememberDiv.appendChild(rememberInput);
-        rememberDiv.appendChild(rememberLabel);
-        form.appendChild(rememberDiv);
+
 
         // Submit Button
         const submitBtn = document.createElement('button');
@@ -237,9 +223,7 @@ export default {
             
             const email = form.querySelector('#email').value;
             const password = passwordInput.value;
-            const remember = form.querySelector('#remember').checked;
-
-            emitEvent('auth:login', { email, password, remember, nextUrl });
+            emitEvent('auth:login', { email, password, nextUrl });
         });
     },
 
