@@ -21,7 +21,7 @@ import { t } from './utils/i18n.js'
 
 // Define routes with requiresAuth flag
 const routes = {
-    '/': { component: Inventory, requiresAuth: true },
+    '/': { component: Login, requiresAuth: false },
     '/inventory': { component: Inventory, requiresAuth: true },
     '/dishes': { component: Dishes, requiresAuth: true },
     '/orders': { component: Orders, requiresAuth: true },

@@ -166,7 +166,7 @@ export default {
         form.appendChild(submitBtn);
 
         // Store params on wrapper so mount can read them
-        wrapper.dataset.nextUrl = params.next || '/';
+        wrapper.dataset.nextUrl = params.next && params.next !== '/' ? params.next : '/inventory';
 
         const developerInfo = document.createElement('div');
         developerInfo.style.marginTop = '24px';

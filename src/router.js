@@ -75,14 +75,14 @@ export const router = {
 
         // AUTHENTICATION GUARD
         if (routeObj.requiresAuth && !this.isAuthenticated()) {
-            // Redirect to login with 'next' parameter
-            this.navigate(`/login?next=${encodeURIComponent(path)}`);
+            // Redirect to access-denied or login with 'next' parameter
+            this.navigate(`/access-denied?next=${encodeURIComponent(path)}`);
             return;
         }
 
-        // Redirect away from login if already authenticated
-        if (basePath === '/login' && this.isAuthenticated()) {
-            this.navigate('/');
+        // Redirect away from login or root if already authenticated
+        if ((basePath === '/login' || basePath === '/') && this.isAuthenticated()) {
+            this.navigate('/inventory');
             return;
         }
 
