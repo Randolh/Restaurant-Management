@@ -90,6 +90,7 @@ export default {
         emailInput.id = 'email';
         emailInput.placeholder = 'name@restaurant.com';
         emailInput.required = true;
+        emailInput.autocomplete = 'username';
         
         emailWrapper.appendChild(emailIcon);
         emailWrapper.appendChild(emailInput);
@@ -119,6 +120,7 @@ export default {
         passwordInput.id = 'password';
         passwordInput.placeholder = '••••••••';
         passwordInput.required = true;
+        passwordInput.autocomplete = 'current-password';
         
         const toggleBtn = document.createElement('button');
         toggleBtn.type = 'button';
