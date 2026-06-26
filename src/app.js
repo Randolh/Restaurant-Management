@@ -181,33 +181,9 @@ const setupEventListeners = () => {
     });
 }
 
-const setupSessionCleanup = () => {
-    let esRecargaONavegacion = false;
-
-    document.addEventListener('click', (e) => {
-        if (e.target.closest('a') || e.target.closest('button')) {
-            esRecargaONavegacion = true;
-        }
-    });
-
-    document.addEventListener('submit', () => {
-        esRecargaONavegacion = true;
-    });
-
-    window.addEventListener('unload', () => {
-        const navEntries = performance.getEntriesByType('navigation');
-        const isReload = navEntries.length > 0 && navEntries[0].type === 'reload';
-
-        if (!esRecargaONavegacion && !isReload && getLocal('keep_logged_in') !== 'true') {
-            removeLocal('session_token');
-        }
-    });
-}
-
 const initApp = () => {
     initializeSession()
     setupEventListeners()
-    setupSessionCleanup()
     
     // Set initial title and favicon if exists
     const profile = getLocal('restaurant_profile', true) || {};
