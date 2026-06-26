@@ -1,0 +1,330 @@
+/* Invoice Modal and Print Styles */
+
+.invoice-modal {
+  /* Inherit modal styles from main.css but override for invoice look */
+}
+
+.modal-container.invoice-modal {
+  background-color: var(--color-white, #ffffff);
+  color: #000000;
+  /* Black text for receipt */
+  max-width: 400px;
+  /* Receipt width */
+  font-family: 'Courier New', Courier, monospace;
+  /* Monospace for receipt look */
+  padding: 0;
+  border-radius: 0;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* Restored normal centering for wrapper */
+.invoice-modal-wrapper {
+  align-items: center !important;
+}
+
+.invoice-paper {
+  padding: 24px;
+  background-color: #f9f9f9;
+  color: #000000;
+  /* Force black text */
+  border: 1px solid #ddd;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.invoice-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.invoice-header h1 {
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 0 0 10px 0;
+  color: #000;
+}
+
+.invoice-header h2 {
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 0 0 5px 0;
+  color: #000;
+}
+
+.invoice-header p {
+  font-size: 14px;
+  margin: 0;
+  color: #000;
+}
+
+.invoice-items {
+  width: 100%;
+  border-bottom: 2px solid #000;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.invoice-item-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.invoice-item-name {
+  flex-grow: 1;
+  padding-right: 10px;
+}
+
+.invoice-item-price {
+  white-space: nowrap;
+}
+
+.invoice-totals {
+  width: 100%;
+  border-bottom: 2px solid #000;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.invoice-total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.invoice-total-row.tax-row {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.invoice-payment-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.invoice-footer {
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.invoice-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: var(--brand-neutral);
+  border-top: 1px solid var(--elevation-border);
+}
+
+.invoice-actions button {
+  flex: 1;
+  margin: 0 5px;
+}
+
+/* Modal specific overrides for payment modal */
+.payment-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.payment-method-selector {
+  display: flex;
+  gap: 10px;
+}
+
+.payment-method-selector label {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background-color: var(--elevation-1-bg);
+  border: 2px solid var(--elevation-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.payment-method-selector label:hover {
+  border-color: var(--color-outline);
+}
+
+.payment-method-selector input[type="radio"] {
+  display: none;
+}
+
+.payment-method-selector input[type="radio"]:checked+label {
+  border-color: var(--brand-primary);
+  background-color: rgba(220, 20, 60, 0.1);
+}
+
+.payment-method-selector input[type="radio"]:checked+label .method-icon,
+.payment-method-selector input[type="radio"]:checked+label div {
+  color: var(--brand-primary);
+}
+
+.payment-method-selector .method-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: var(--color-text-variant);
+  transition: color 0.2s;
+}
+
+/* Payment Modal Extracted Styles */
+.payment-amount-input {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 12px;
+  height: auto;
+}
+
+.payment-change-display {
+  margin-top: 12px;
+  font-weight: bold;
+  font-size: 22px;
+  color: var(--color-success);
+}
+
+.payment-total-display {
+  text-align: right;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--brand-primary);
+  margin-top: var(--stack-md);
+}
+
+/* Floating buttons for Invoice */
+.floating-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #ffffff;
+  font-size: 28px;
+  z-index: 10000;
+  background: var(--brand-primary, #dc143c); /* Red */
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(220, 20, 60, 0.3);
+  border: none;
+}
+
+.floating-close-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+.floating-close-btn:active {
+  transform: translateY(0);
+}
+
+.floating-print-btn {
+  position: absolute;
+  top: 80px; /* Below the close button (20px + 48px + 12px gap) */
+  right: 20px;
+  color: #ffffff;
+  font-size: 20px;
+  z-index: 10000;
+  background: #28a745; /* Green */
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3); /* Soft green shadow */
+  border: none;
+  padding: 0;
+}
+
+.floating-print-btn i {
+  margin-right: 0;
+}
+
+.floating-print-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+.floating-print-btn:active {
+  transform: translateY(0);
+}
+
+/* Print Styles */
+@media print {
+  @page {
+    margin: 0;
+    /* Removes browser's default header (date/title) and footer (url/page number) */
+  }
+
+  body>*:not(#app) {
+    display: none !important;
+  }
+
+  #app>*:not(.invoice-modal-wrapper) {
+    display: none !important;
+  }
+
+  .invoice-modal-wrapper {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    background: transparent !important;
+  }
+
+  .invoice-modal-wrapper .modal-overlay {
+    display: none !important;
+  }
+
+  .floating-close-btn,
+  .floating-print-btn {
+    display: none !important;
+  }
+
+  .invoice-modal-wrapper .modal-container {
+    box-shadow: none !important;
+    border: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .invoice-modal-wrapper .modal-header {
+    display: none !important;
+  }
+
+  .invoice-modal-wrapper .invoice-actions {
+    display: none !important;
+  }
+
+  .invoice-paper {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 24px !important;
+    margin: 10mm !important;
+    max-width: none !important;
+    width: auto !important;
+  }
+}

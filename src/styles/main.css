@@ -393,6 +393,19 @@ input:-webkit-autofill:active {
   gap: var(--stack-md);
 }
 
+/* JS-managed Modal Wrapper */
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  /* display is managed by JS (none/flex) */
+}
+
 /* Status Badges */
 .status-badge {
   display: inline-block;

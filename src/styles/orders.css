@@ -701,9 +701,9 @@
   color: var(--brand-primary-dark);
 }
 
-/* Hide Actions Column on Mobile */
+/* Adjust Actions Column on Mobile */
 @media (max-width: 768px) {
-  .history-action-col {
+  .history-action-col .view-btn {
     display: none;
   }
 }
