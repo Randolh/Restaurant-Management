@@ -23,12 +23,19 @@ export const router = {
 
         // Monitor session changes via storage event (works across tabs and DevTools for localStorage)
         window.addEventListener('storage', (e) => {
-            if (e.key === 'session_token' && !e.newValue) {
-
-
-                if (this.currentRouteRequiresAuth) {
-                    const currentPath = this.getPath();
-                    this.navigate(`/access-denied?next=${encodeURIComponent(currentPath)}`);
+            if (e.key === 'session_token') {
+                if (!e.newValue) {
+                    // Session removed (logout)
+                    if (this.currentRouteRequiresAuth) {
+                        const currentPath = this.getPath();
+                        this.navigate(`/access-denied?next=${encodeURIComponent(currentPath)}`);
+                    }
+                } else if (e.newValue === 'active') {
+                    // Session added (login)
+                    const basePath = this.getPath().split('?')[0];
+                    if (basePath === '/login' || basePath === '/' || basePath === '/access-denied') {
+                        this.navigate(this.getPath(), false);
+                    }
                 }
             }
         });

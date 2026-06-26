@@ -120,10 +120,7 @@ const initializeSession = () => {
         setLocal('first_time_login_alert', 'true');
     }
 
-    // Check if user requested to stay logged in
-    if (getLocal('keep_logged_in') === 'true') {
-        setLocal('session_token', 'active');
-    }
+
 
 
 }
